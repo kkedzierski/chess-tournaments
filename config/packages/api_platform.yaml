@@ -1,0 +1,31 @@
+api_platform:
+    title: 'Chess master API'
+    description: 'Chess master API'
+    version: '1.0.0'
+    show_webby: false
+    enable_re_doc: true
+    defaults:
+        pagination_client_enabled: true
+        pagination_client_items_per_page: true
+        pagination_items_per_page: 20
+    path_segment_name_generator: api_platform.path_segment_name_generator.dash
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Tournament/Domain'
+    patch_formats:
+        json: [ 'application/merge-patch+json' ]
+    exception_to_status:
+        # The 4 following handlers are registered by default, keep those lines to prevent unexpected side effects
+        Symfony\Component\Serializer\Exception\ExceptionInterface: 400 # Use a raw status code (recommended)
+        ApiPlatform\Core\Exception\InvalidArgumentException: !php/const Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST
+        ApiPlatform\Core\Exception\FilterValidationException: 400
+        Doctrine\ORM\OptimisticLockException: 409
+        # Validation exception
+        ApiPlatform\Core\Bridge\Symfony\Validator\Exception\ValidationException: !php/const Symfony\Component\HttpFoundation\Response::HTTP_UNPROCESSABLE_ENTITY
+        # Custom
+        Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException: 403
+        Symfony\Component\HttpKernel\Exception\NotFoundHttpException: 404
+        ApiPlatform\Core\Exception\ItemNotFoundException: 404
+        ApiPlatform\Core\Exception\InvalidIdentifierException: 400
+
+

@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}login.adminPanel{% endtrans %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="login__content">
+{#            <img src={{ asset('/images/bg-login.png') }} alt="login image" class="login__img">#}
+
+            <form method="POST" class="needs-validation login__form" novalidate="" autocomplete="off">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <div>
+                    <h1 class="login__title">
+                        {% trans %}login.adminPanel{% endtrans %}
+                    </h1>
+                    <p class="login__description">
+                        {% trans %}login.login{% endtrans %}
+                    </p>
+                </div>
+
+                <div>
+                    <div class="login__inputs">
+                        <div>
+                            <label for="input-email" class="login__label">{% trans %}login.email{% endtrans %}</label>
+                            <input
+                                    id="email"
+                                    type="email"
+                                    required
+                                    class="login__input"
+                                    name="email"
+                                    value="{{ last_username }}"
+                                    autocomplete="email"
+                                    autofocus
+                            >
+                        </div>
+
+                        <div>
+                            <label for="input-pass" class="login__label">{% trans %}login.password{% endtrans %}</label>
+
+                            <div class="login__box">
+                                <input
+                                        type="password"
+                                        name="password"
+                                        required
+                                        class="login__input"
+                                        id="password"
+                                        autocomplete="current-password"
+                                >
+                                <i class="ri-eye-off-line login__eye" id="input-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="login__check">
+                        <input type="checkbox" class="login__check-input" id="input-check">
+                        <label for="input-check" class="login__check-label">{% trans %}login.rememberMe{% endtrans %}</label>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="login__buttons">
+                        <button type="submit" class="login__button">{% trans %}login.login{% endtrans %}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
