@@ -1,0 +1,17 @@
+dashboard:
+  mainTitle: "Szachowymistrz.pl"
+  authentication:
+    login:
+      title: "Logowanie"
+      email: "Adres e-mail"
+      password: "Hasło"
+      submit: "Zaloguj"
+      forgotPassword: "Zapomniałeś hasła?"
+    register:
+      title: "Rejestracja"
+      email: "Adres e-mail"
+      password: "Hasło"
+      passwordConfirmation: "Potwierdź hasło"
+      submit: "Zarejestruj"
+      alreadyRegistered: "Masz już konto?"
+      login: "Zaloguj się"

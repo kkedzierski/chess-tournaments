@@ -17,12 +17,12 @@ class DashboardSecurityController extends AbstractBaseController
             return $this->redirectToRoute(DashboardAuthenticatorService::DASHBOARD_ROUTE);
         }
 
-        // get the login error if there is one
+        // get the authentication error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('dashboard/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('dashboard/authentication/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
