@@ -2,7 +2,7 @@
 
 namespace App\Kernel;
 
-use App\User\Domain\ValueObject\Role\RoleEnum;
+use App\User\Domain\RoleEnum;
 use Symfony\Component\ExpressionLanguage\Expression;
 
 class MultiplyRolesExpression extends Expression
