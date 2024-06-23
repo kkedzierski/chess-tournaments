@@ -1,0 +1,5 @@
+realEstate.all:
+  controller: 'App\Tournament\Ui\TournamentController'
+  svg: 'assets/dashboard-ui/main/images/tournaments.svg'
+  translate: 'dashboard.tournaments.all'
+# website used to svg: https://www.svgrepo.com/

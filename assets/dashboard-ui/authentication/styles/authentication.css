@@ -21,8 +21,8 @@ body{
     }
 }
 .form-container-background .chess-board-img{
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     position: absolute;
     border-radius: 50%;
 }
@@ -34,8 +34,8 @@ body{
     right: -30px;
     bottom: -80px;
 }
-form{
-    height: 520px;
+
+.form-container {
     width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -46,21 +46,30 @@ form{
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
-    padding: 50px 35px;
+    padding: 25px 35px;
 
     @media (max-width: 768px){
         height: 80vh;
         width: 90%;
     }
 }
-form *{
+
+.form-login-container {
+    height: 520px;
+}
+
+.form-register-container {
+    height: 820px;
+}
+
+.form-container *{
     font-family: 'Poppins',sans-serif;
     color: #000;
     letter-spacing: 0.5px;
     outline: none;
     border: none;
 }
-form h3{
+.form-login-container h3{
     font-size: 32px;
     font-weight: 500;
     line-height: 42px;
@@ -87,21 +96,38 @@ input{
 ::placeholder{
     color: #e5e5e5;
 }
-.login-button{
-    margin-top: 50px;
-    width: 100%;
+.button{
     background-color: #8d1519;
     color: #fff;
-    padding: 15px 0;
+    cursor: pointer;
     font-size: 18px;
     font-weight: 600;
+    text-decoration: none;
     border-radius: 5px;
-    cursor: pointer;
 }
 
-.alert
- .alert-danger
-{
+.button-login {
+    margin-top: 50px;
+    width: 100%;
+    padding: 15px 0;
+}
+
+.additional-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.forgot-password {
+    display: flex;
+    align-items: center;
+}
+
+.button-register {
+    padding: 1rem;
+}
+
+.alert-danger {
     color: #721c24;
     background-color: #f8d7da;
     border-color: #f5c6cb;

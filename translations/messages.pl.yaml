@@ -12,6 +12,11 @@ dashboard:
       email: "Adres e-mail"
       password: "Hasło"
       passwordConfirmation: "Potwierdź hasło"
-      submit: "Zarejestruj"
+      submit: "Zarejestruj się"
       alreadyRegistered: "Masz już konto?"
-      login: "Zaloguj się"
+      fields:
+        email: "Adres e-mail"
+        password: "Hasło"
+        repeatPassword: "Potwierdź hasło"
+  tournaments:
+    all: "Wszystkie turnieje"

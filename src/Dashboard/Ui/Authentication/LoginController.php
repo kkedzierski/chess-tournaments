@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Dashboard\Ui;
+namespace App\Dashboard\Ui\Authentication;
 
 use App\Dashboard\Application\DashboardAuthenticatorService;
+use App\Dashboard\Ui\AbstractBaseController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class DashboardSecurityController extends AbstractBaseController
+class LoginController extends AbstractBaseController
 {
     #[Route(path: '/dashboard/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         $user = $this->getUser();
+
         if ($user && $user->isAdmin()) {
             return $this->redirectToRoute(DashboardAuthenticatorService::DASHBOARD_ROUTE);
         }
@@ -22,7 +25,16 @@ class DashboardSecurityController extends AbstractBaseController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('dashboard/authentication/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        $form = $this->createForm(LoginFormType::class);
+
+        return $this->render(
+            'dashboard/authentication/login.html.twig',
+            [
+                'last_username' => $lastUsername,
+                'error' => $error,
+                'loginForm' => $form->createView(),
+            ]
+        );
     }
 
     #[Route(path: '/logout', name: 'app_logout')]

@@ -24,7 +24,9 @@
         "symfony/dotenv": "7.0.*",
         "symfony/expression-language": "7.0.*",
         "symfony/flex": "^2",
+        "symfony/form": "7.0.*",
         "symfony/framework-bundle": "7.0.*",
+        "symfony/http-client": "7.0.*",
         "symfony/property-access": "7.0.*",
         "symfony/property-info": "7.0.*",
         "symfony/runtime": "7.0.*",
@@ -93,6 +95,9 @@
         "infection/infection": "^0.28.1",
         "phpro/grumphp": "^2.5",
         "phpstan/phpstan": "^1.11",
-        "phpunit/phpunit": "^11"
+        "phpunit/phpunit": "^10",
+        "symfony/maker-bundle": "^1.60",
+        "symfony/stopwatch": "7.0.*",
+        "symfony/web-profiler-bundle": "7.0.*"
     }
 }
