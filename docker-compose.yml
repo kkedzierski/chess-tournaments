@@ -73,7 +73,7 @@ services:
       - chess-tournaments-network
     volumes:
       - ./:/var/www/html
-    command: sh -c "npm install && encore dev --watch"
+    command: sh -c "npm install && npm run watch"
 
 volumes:
     mysql-data:
