@@ -9,3 +9,6 @@ exec-root: ## Shell into container
 
 rebuilt-node: ## Rebuild node container
 	docker-compose run --rm ${NODE_CONTAINER_NAME} npm run build
+
+exec-node: ## Shell into node container
+	docker exec -it -u root $(NODE_CONTAINER_NAME) /bin/bash
