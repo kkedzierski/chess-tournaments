@@ -3,9 +3,8 @@
 namespace App\User\Domain;
 
 use ApiPlatform\Metadata\ApiProperty;
+use App\Kernel\EventSubscriber\TimestampableResourceInterface;
 use App\Kernel\Traits\TimestampableTrait;
-use App\User\Domain\ValueObject\Password;
-use App\User\Domain\ValueObject\Role\Role;
 use App\User\Domain\ValueObject\TotpSecret;
 use App\User\Infrastructure\Rest\UserRepository;
 use Doctrine\DBAL\Types\Types;
@@ -13,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
 use Scheb\TwoFactorBundle\Model\Totp\TotpConfigurationInterface;
 use Scheb\TwoFactorBundle\Model\Totp\TwoFactorInterface;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Uid\Uuid;
@@ -20,15 +21,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
+#[UniqueEntity(fields: ['email'], message: 'validation.email.alreadyExists')]
+class User implements
+    UserInterface,
+    PasswordAuthenticatedUserInterface,
+    TwoFactorInterface,
+    TimestampableResourceInterface
 {
     use TimestampableTrait;
 
+    #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ApiProperty(identifier: true)]
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "IDENTITY")]
-    private Uuid $id;
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id;
 
     #[ORM\Column(type: Types::STRING, length: 180, unique: true, nullable: false)]
     #[Assert\NotNull]
@@ -39,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     private string $email;
 
     /**
-     * @var Role[]
+     * @var string[]
      */
     #[ORM\Column]
     private array $roles = [];
@@ -47,9 +54,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     /**
      * The hashed password.
      */
-    #[ORM\Embedded(class: Password::class, columnPrefix: false)]
-    private ?Password $password = null;
-    private ?Password $actualPassword = null;
+    #[ORM\Column(type: Types::STRING, length: 191, nullable: false)]
+    #[Assert\NotCompromisedPassword]
+    private ?string $password = null;
+
+    #[Assert\Length(max: 191)]
+    private ?string $actualPassword = null;
+
     #[ORM\Embedded(class: TotpSecret::class, columnPrefix: false)]
     private ?TotpSecret $totpSecret = null;
 
@@ -62,6 +73,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(nullable: true)]
     private ?int $avatarSize = null;
 
+    #[ORM\Column]
+    private bool $isVerified = false;
+
     public function __construct(Uuid $id = null)
     {
         $this->id = $id ?: Uuid::v4();
@@ -72,9 +86,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         return $this->getEmail();
     }
 
-    public function getId(): Uuid
+    public function getId(): ?Uuid
     {
         return $this->id;
+    }
+
+    public function setId(?Uuid $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getEmail(): string
@@ -108,15 +129,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     {
         $actualRoles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $actualRoles[] = Role::user();
+        $actualRoles[] = RoleEnum::USER->value;
 
-        $roles = array_map(static fn (Role $role) => $role->toString(), $actualRoles);
-
-        return array_unique($roles);
+        return array_unique($actualRoles);
     }
 
     /**
-     * @param Role[] $roles
+     * @param string[] $roles
      */
     public function setRoles(array $roles): self
     {
@@ -130,10 +149,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
      */
     public function getPassword(): ?string
     {
-        return $this->password?->getPassword();
+        return $this->password;
     }
 
-    public function setPassword(?Password $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -142,10 +161,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     public function getActualPassword(): ?string
     {
-        return $this->actualPassword?->getPassword();
+        return $this->actualPassword;
     }
 
-    public function setActualPassword(Password $actualPassword): self
+    public function setActualPassword(string $actualPassword): self
     {
         $this->actualPassword = $actualPassword;
 
@@ -161,7 +180,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     public function isTotpAuthenticationEnabled(): bool
     {
-        return (bool) $this->totpSecret?->isEnable();
+        return (bool)$this->totpSecret?->isEnable();
     }
 
     public function getTotpAuthenticationUsername(): string
@@ -237,31 +256,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function __serialize(): array
     {
         return [
-            'id' => $this->id,
-            'email' => $this->getEmail(),
-            'password' => $this->password?->getPassword(),
+            'id'       => $this->id,
+            'email'    => $this->getEmail(),
+            'password' => $this->password,
         ];
     }
 
     public function isSuperAdmin(): bool
     {
-        foreach($this->roles as $role) {
-            if ($role->isSuperAdmin()) {
-                return true;
-            }
-        }
-
-        return false;
+        return in_array(RoleEnum::SUPER_ADMIN->value, $this->roles, true);
     }
 
     public function isAdmin(): bool
     {
-        foreach($this->roles as $role) {
-            if ($role->isAdmin()) {
-                return true;
-            }
-        }
+        return in_array(RoleEnum::ADMIN->value, $this->roles, true);
+    }
 
-        return false;
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function setAsAdmin(): void
+    {
+        $this->roles[] = RoleEnum::ADMIN->value;
     }
 }

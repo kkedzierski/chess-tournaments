@@ -2,7 +2,6 @@
 
 namespace App\User\Domain;
 
-use App\User\Domain\ValueObject\Email;
 use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 use Symfony\Component\Uid\Uuid;
 
