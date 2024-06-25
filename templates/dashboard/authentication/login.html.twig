@@ -33,14 +33,17 @@
             name: 'password',
             id: 'password'
         }) }}
-        <button class='button button-login'
-                type="submit">{% trans %}dashboard.authentication.login.submit{% endtrans %}</button>
+        <button class='button button-login' type="submit">
+            {% trans %}dashboard.authentication.login.submit{% endtrans %}
+        </button>
 
         <div class="additional-links">
-            <a href="#"
-               class="forgot-password">{% trans %}dashboard.authentication.login.forgotPassword{% endtrans %}</a>
-            <a href="{{ path('app_register') }}"
-               class="button button-register">{% trans %}dashboard.authentication.register.submit{% endtrans %}</a>
+            <a href="{{ path('app_forgot_password') }}" class="forgot-password">
+                {% trans %}dashboard.authentication.login.forgotPassword{% endtrans %}
+            </a>
+            <a href="{{ path('app_register') }}" class="button button-additional">
+                {% trans %}dashboard.authentication.register.submit{% endtrans %}
+            </a>
         </div>
         {{ form_end(loginForm) }}
     </div>

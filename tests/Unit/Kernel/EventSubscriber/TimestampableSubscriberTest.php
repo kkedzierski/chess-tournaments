@@ -4,7 +4,7 @@ namespace App\Tests\Unit\Kernel\EventSubscriber;
 
 use App\Kernel\EventSubscriber\TimestampableResourceInterface;
 use App\Kernel\EventSubscriber\TimestampableSubscriber;
-use App\User\Domain\User;
+use App\Account\Domain\User;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

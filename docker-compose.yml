@@ -75,5 +75,16 @@ services:
       - ./:/var/www/html
     command: sh -c "npm install && npm run watch"
 
+  chess-tournaments-mailhog:
+    image: mailhog/mailhog:latest
+    container_name: chess-tournaments-mailhog
+    platform: linux/amd64
+    restart: on-failure
+    ports:
+      - '${DOCKER_MAILHOG_SMTP_PORT:-36504}:1025'
+      - '${DOCKER_MAILHOG_HTTP_PORT:-36594}:8025'
+    networks:
+      - chess-tournaments-network
+
 volumes:
     mysql-data:

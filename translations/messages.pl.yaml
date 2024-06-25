@@ -7,16 +7,45 @@ dashboard:
       password: "Hasło"
       submit: "Zaloguj"
       forgotPassword: "Zapomniałeś hasła?"
+      verifyEmail: "Odwiedź swoją skrzynkę i kliknij w link, aby zweryfikować adres e-mail."
     register:
       title: "Rejestracja"
-      email: "Adres e-mail"
       password: "Hasło"
       passwordConfirmation: "Potwierdź hasło"
       submit: "Zarejestruj się"
       alreadyRegistered: "Masz już konto?"
+      verificationEmailSent: "Na podany adres e-mail został wysłany link weryfikacyjny. Sprawdź swoją skrzynkę."
+      tokenIsInvalid: "Token wygasł lub jest niepoprawny."
       fields:
         email: "Adres e-mail"
         password: "Hasło"
         repeatPassword: "Potwierdź hasło"
+      confirmation:
+        title: 'Potwierdź adres e-mail'
+      email:
+        description: 'Kliknij w link, aby potwierdzić adres e-mail.'
+        submit: 'Kliknij w link, aby potwierdzić adres e-mail'
+        ignoreInfo: 'Jeśli nie prosiłeś o potwierdzenie adresu e-mail, zignoruj tę wiadomość.'
+    resetPassword:
+      title: "Zresetuj hasło"
+      description: "Zresetuj hasło"
+      email:
+        description: "Podaj adres e-mail, na który wyślemy link do zresetowania hasła"
+        sent: 'Na podany adres e-mail został wysłany link do zresetowania hasła. Sprawdź swoją skrzynkę.'
+        submit: "Wyślij"
+        template:
+          description: 'Wygląda na to, że poprosiłeś o zresetowanie hasła. Kliknij w link, aby zresetować hasło. Jeśli nie prosiłeś o zresetowanie hasła, zignoruj tę wiadomość.'
+          submit: 'Kliknij w link, aby zresetować hasło'
+          ignoreInfo: 'Jeśli nie prosiłeś o zresetowanie hasła, zignoruj tę wiadomość.'
   tournaments:
     all: "Wszystkie turnieje"
+
+exception:
+  cannotSendEmail: "Nie udało się wysłać e-maila."
+  emailRequired: "Adres e-mail jest wymagany."
+  userNotFound: "Użytkownik nie został znaleziony."
+  resetPassword: "Nie udało się zresetować hasła."
+  passwordRequired: "Hasło jest wymagane."
+  tokenGeneratingFailed: "Nie udało się wygenerować tokenu."
+  createNewUserFailed: "Nie udało się utworzyć nowego użytkownika."
+  tokenNotFound: "Token wygasł lub jest niepoprawny."

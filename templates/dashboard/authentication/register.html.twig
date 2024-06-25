@@ -21,12 +21,14 @@
         {{ form_row(registrationForm.password.first) }}
         {{ form_row(registrationForm.password.second) }}
         {{ form_row(registrationForm.agreeTerms) }}
-        <button class='button button-login'
-                type="submit">{% trans %}dashboard.authentication.register.submit{% endtrans %}</button>
+        <button class='button button-login' type="submit">
+            {% trans %}dashboard.authentication.register.submit{% endtrans %}
+        </button>
 
         <div class="additional-links">
-            <a href="{{ path('app_login') }}"
-               class="button button-register">{% trans %}dashboard.authentication.login.submit{% endtrans %}</a>
+            <a href="{{ path('app_login') }}" class="button button-additional">
+                {% trans %}dashboard.authentication.login.submit{% endtrans %}
+            </a>
         </div>
         {{ form_end(registrationForm) }}
     </div>

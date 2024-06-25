@@ -2,10 +2,11 @@
 
 namespace App\Dashboard\Ui;
 
+use App\Kernel\Infrastructure\YamlParser;
 use App\Kernel\MultiplyRolesExpression;
-use App\User\Domain\User;
-use App\User\Domain\UserInterface;
-use App\User\Domain\ValueObject\Role\RoleEnum;
+use App\Kernel\Ui\UserInterface;
+use App\Account\Domain\RoleEnum;
+use App\Account\Domain\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -14,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -26,8 +28,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class DashboardController extends AbstractDashboardController
 {
     public function __construct(
-        //        private readonly AdminUrlGenerator $adminUrlGenerator,
-        //        private readonly YamlParser $yamlParser,
+        private readonly AdminUrlGenerator $adminUrlGenerator,
+        private readonly YamlParser $yamlParser,
         private readonly AuthorizationCheckerInterface $authorizationChecker,
     ) {
     }
@@ -35,18 +37,18 @@ class DashboardController extends AbstractDashboardController
     #[Route('/dashboard', name: 'dashboard')]
     public function index(): Response
     {
-        $dashboardData = [];
+        $dashboardData = $this->getDashboardData();
 
-        return $this->render('admin/index.html.twig', [
+        return $this->render('dashboard/main/index.html.twig', [
             'dashboardData' => $dashboardData,
         ]);
     }
 
     public function configureAssets(): Assets
     {
-        return parent::configureAssets();
-        //            ->addWebpackEncoreEntry('admin')
-        //            ->addCssFile('build/admin.css');
+        return parent::configureAssets()
+            ->addWebpackEncoreEntry('dashboard-main')
+            ->addCssFile('build/dashboard-main.css');
     }
 
     public function configureDashboard(): Dashboard
@@ -74,7 +76,7 @@ class DashboardController extends AbstractDashboardController
             return parent::configureUserMenu($user)
                 ->setAvatarUrl($user->getAvatarUrl())
                 ->addMenuItems([
-//                    MenuItem::linkToCrud('admin.account.edit.page', 'fa fa-user-cog', User::class)
+//                    MenuItem::linkToCrud('admin.account.edit.page', 'fa fa-user-cog', Account::class)
 //                        ->setController(AccountController::class)
 //                        ->setAction(Action::EDIT)
 //                        ->setEntityId($user->getId() ?: 0),
@@ -82,10 +84,6 @@ class DashboardController extends AbstractDashboardController
 //                        ->setController(CompanyController::class)
 //                        ->setAction(Action::EDIT)
 //                        ->setEntityId($company->getId() ?: 0),
-//                    MenuItem::linkToCrud('admin.settings.edit.page', 'fa fa-gears', Setting::class)
-//                        ->setController(SettingController::class)
-//                        ->setAction(Action::EDIT)
-//                        ->setEntityId($setting?->getId() ?: 0),
 //                    MenuItem::linkToCrud('admin.errorLog.index.page', 'fa fa-circle-exclamation', ErrorLog::class)
 //                        ->setController(ErrorLogController::class)
 //                        ->setAction(Action::INDEX),
@@ -95,7 +93,7 @@ class DashboardController extends AbstractDashboardController
             return parent::configureUserMenu($user)
                 ->setAvatarUrl($user->getAvatarUrl())
                 ->addMenuItems([
-//                    MenuItem::linkToCrud('admin.account.edit.page', 'fa fa-user-cog', User::class)
+//                    MenuItem::linkToCrud('admin.account.edit.page', 'fa fa-user-cog', Account::class)
 //                        ->setController(AccountController::class)
 //                        ->setAction(Action::EDIT)
 //                        ->setEntityId($user->getId() ?: 0),
@@ -109,7 +107,7 @@ class DashboardController extends AbstractDashboardController
         return parent::configureUserMenu($user)
             ->setAvatarUrl($user->getAvatarUrl())
             ->addMenuItems([
-//                MenuItem::linkToCrud('admin.account.edit.page', 'fa fa-user-cog', User::class)
+//                MenuItem::linkToCrud('admin.account.edit.page', 'fa fa-user-cog', Account::class)
 //                    ->setController(AccountController::class)
 //                    ->setAction(Action::EDIT)
 //                    ->setEntityId($user->getId() ?: 0),
@@ -143,25 +141,25 @@ class DashboardController extends AbstractDashboardController
         //        yield MenuItem::linkToCrud('admin.partnerCompany.all', 'fa fa-sitemap', PartnerCompany::class);
         //        if ($this->authorizationChecker->isGranted(RoleEnum::SUPER_ADMIN->value)) {
         //            yield MenuItem::section('admin.advancedSettings');
-        //            yield MenuItem::linkToCrud('admin.user.all', 'fa fa-users', User::class)
+        //            yield MenuItem::linkToCrud('admin.user.all', 'fa fa-users', Account::class)
         //                ->setController(UserController::class);
     }
 
-    //    /**
-    //     * @return array<int|string, mixed>
-    //     */
-    //    private function getDashboardData(): array
-    //    {
-    //        $filePath = sprintf('%s/../../Assets/menu-dashboard-items.yaml', __DIR__);
-    //
-    //        $dashboardData = $this->yamlParser->getDataFromFile($filePath);
-    //        foreach ($dashboardData as $menuItem => $data) {
-    //            $dashboardData[$menuItem]['url'] = $this->adminUrlGenerator
-    //                ->setController($data['controller'])
-    //                ->setAction(Action::INDEX)
-    //                ->generateUrl();
-    //        }
-    //
-    //        return $dashboardData;
-    //    }
+    /**
+     * @return array<int|string, mixed>
+     */
+    private function getDashboardData(): array
+    {
+        $filePath = sprintf('%s/./Assets/menu-dashboard-items.yaml', __DIR__);
+
+        $dashboardData = $this->yamlParser->getDataFromFile($filePath);
+        foreach ($dashboardData as $menuItem => $data) {
+            $dashboardData[$menuItem]['url'] = $this->adminUrlGenerator
+                ->setController($data['controller'])
+                ->setAction(Action::INDEX)
+                ->generateUrl();
+        }
+
+        return $dashboardData;
+    }
 }
