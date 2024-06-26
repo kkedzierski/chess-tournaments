@@ -1,6 +1,6 @@
 site_name: Chess tourmanents
-docs_dir: ./docs/pl
-site_dir: ./site/pl
+docs_dir: ../../docs/en
+site_dir: ../../site/en
 nav:
   - Home: index.md
   - Tournaments:
@@ -9,7 +9,8 @@ nav:
     - "Tournament 3": tournament3.md
   - About: about.md
 theme:
-  language: pl
+  direction: ltr
+  language: en
   name: readthedocs
   palette:
       primary: green
@@ -20,7 +21,8 @@ theme:
   logo: "images/chess-master-logo.png"
   favicon: "images/chess-master-favicon.png"
 plugins:
-  - search
+  - search:
+      lang: en
 
 extra:
   alternate:
