@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-while getopts e:r: flag
+while getopts l: flag
 do
     case "${flag}" in
         l) local=${OPTARG};;
     esac
 done
 
+echo "$local";
 if [ "$local" == "true" ]; then
   echo "Serving documentation locally..."
   mkdocs serve -f documentation/config/pl/mkdocs.yml
@@ -31,5 +32,3 @@ else
     mkdocs gh-deploy -f documentation/config/pl/mkdocs.yml
     mkdocs gh-deploy -f documentation/config/en/mkdocs.yml
 fi
-
-
