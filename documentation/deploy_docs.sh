@@ -7,7 +7,7 @@ do
     esac
 done
 
-if [ "local" == "true" ]; then
+if [ "$local" == "true" ]; then
   echo "Serving documentation locally..."
   mkdocs serve -f documentation/config/pl/mkdocs.yml
 else
