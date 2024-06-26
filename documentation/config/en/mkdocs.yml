@@ -9,9 +9,8 @@ nav:
     - "Tournament 3": tournament3.md
   - About: about.md
 theme:
-  direction: ltr
   language: en
-  name: readthedocs
+  name: material
   palette:
       primary: green
       accent: blue
