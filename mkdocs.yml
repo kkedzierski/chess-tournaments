@@ -1,0 +1,32 @@
+site_name: Chess tourmanents
+docs_dir: ./docs/pl
+site_dir: ./site/pl
+nav:
+  - Home: index.md
+  - Tournaments:
+    - "Tournament 1": tournament1.md
+    - "Tournament 2": tournament2.md
+    - "Tournament 3": tournament3.md
+  - About: about.md
+theme:
+  language: pl
+  name: readthedocs
+  palette:
+      primary: green
+      accent: blue
+  font:
+      text: "Roboto"
+      code: "Roboto Mono"
+  logo: "images/chess-master-logo.png"
+  favicon: "images/chess-master-favicon.png"
+plugins:
+  - search
+
+extra:
+  alternate:
+    - name: English
+      link: /en/
+      lang: en
+    - name: Polski
+      link: /pl/
+      lang: pl
