@@ -10,7 +10,7 @@ nav:
   - About: about.md
 theme:
   language: en
-  name: material
+  name: readthedocs
   palette:
       primary: green
       accent: blue
