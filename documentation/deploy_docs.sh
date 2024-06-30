@@ -18,28 +18,18 @@ else
     echo "Current branch: $branch_name";
     if [ ${branch_name} == 'main' ]; then
         git add documentation/
-        sleep 3
-
-        # Sprawdź, czy zmiany zostały dodane do stage
-        git diff --cached --exit-code > /dev/null
-        if [ $? -ne 0 ]; then
-            echo "Zmiany zostały dodane do stage."
-        else
-            echo "Nie udało się dodać zmian do stage."
-            exit 1
-        fi
 
         git commit -m "#main Documentation update"
-        git push origin main
+#        git push origin main
     else
       echo "Skipping pushing documentation to repository for branch $branch_name.";
     fi
 
-    echo "Building documentation..."
-    mkdocs build -f documentation/config/pl/mkdocs.yml
-    mkdocs build -f documentation/config/en/mkdocs.yml
+#    echo "Building documentation..."
+#    mkdocs build -f documentation/config/pl/mkdocs.yml
+#    mkdocs build -f documentation/config/en/mkdocs.yml
 
-    echo "Deploying documentation..."
-    mkdocs gh-deploy -f documentation/config/pl/mkdocs.yml
-    mkdocs gh-deploy -f documentation/config/en/mkdocs.yml
+#    echo "Deploying documentation..."
+#    mkdocs gh-deploy -f documentation/config/pl/mkdocs.yml
+#    mkdocs gh-deploy -f documentation/config/en/mkdocs.yml
 fi
