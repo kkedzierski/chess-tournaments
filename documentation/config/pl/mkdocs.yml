@@ -3,12 +3,17 @@ docs_dir: ../../docs/pl
 site_dir: ../../site/pl
 site_url: https://kkedzierski.github.io/chess-tournaments/pl/
 nav:
-  - Home: index.md
-  - Tournaments:
-    - "Tournament 1": tournament1.md
-    - "Tournament 2": tournament2.md
-    - "Tournament 3": tournament3.md
-  - About: about.md
+  - Strona główna: index.md
+  - O projekcie: about.md
+  - Podręcznik użytkownika:
+    - "Panel administratora": userGuide/administrationPanel.md
+    - "Panel użytkownika": userGuide/userPanel.md
+  - Podręcznik techniczny:
+    - "Instalacja": technicalGuide/installation.md
+    - "Konfiguracja": technicalGuide/configuration.md
+    - "Dokumentacja API": technicalGuide/api.md
+    - "Testy": technicalGuide/tests.md
+    - "Wydanie": technicalGuide/release.md
 theme:
   language: pl
   name: readthedocs

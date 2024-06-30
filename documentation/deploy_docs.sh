@@ -20,15 +20,15 @@ else
         git add documentation/
 
         git commit -m "#main Documentation update"
-#        git push origin main
+        git push origin main
     else
       echo "Skipping pushing documentation to repository for branch $branch_name.";
     fi
-
+#
 #    echo "Building documentation..."
 #    mkdocs build -f documentation/config/pl/mkdocs.yml
 #    mkdocs build -f documentation/config/en/mkdocs.yml
-
+#
 #    echo "Deploying documentation..."
 #    mkdocs gh-deploy -f documentation/config/pl/mkdocs.yml
 #    mkdocs gh-deploy -f documentation/config/en/mkdocs.yml
