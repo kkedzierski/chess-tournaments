@@ -25,14 +25,13 @@ else
       echo "Skipping pushing documentation to repository for branch $branch_name.";
     fi
 
-    echo "Building documentation..."
-    if [ $? -e 0 ]; then
+    if [ $? -eq 0 ]; then
+        echo "Building documentation..."
         mkdocs build -f documentation/config/pl/mkdocs.yml
         mkdocs build -f documentation/config/en/mkdocs.yml
-    fi
 
-#
-#    echo "Deploying documentation..."
-#    mkdocs gh-deploy -f documentation/config/pl/mkdocs.yml
-#    mkdocs gh-deploy -f documentation/config/en/mkdocs.yml
+        echo "Deploying documentation..."
+        mkdocs gh-deploy -f documentation/config/pl/mkdocs.yml
+        mkdocs gh-deploy -f documentation/config/en/mkdocs.yml
+    fi
 fi

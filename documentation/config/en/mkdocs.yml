@@ -4,11 +4,16 @@ site_dir: ../../site/en
 site_url: https://kkedzierski.github.io/chess-tournaments/en/
 nav:
   - Home: index.md
-  - Tournaments:
-    - "Tournament 1": tournament1.md
-    - "Tournament 2": tournament2.md
-    - "Tournament 3": tournament3.md
   - About: about.md
+  - User quide:
+      - "Administration panel": userGuide/administrationPanel.md
+      - "User panel": userGuide/userPanel.md
+  - Technical guide:
+      - Instalation: technicalGuide/installation.md
+      - Configuration: technicalGuide/configuration.md
+      - Api documentation: technicalGuide/api.md
+      - Tests: technicalGuide/tests.md
+      - Release: technicalGuide/release.md
 theme:
   language: en
   name: readthedocs
