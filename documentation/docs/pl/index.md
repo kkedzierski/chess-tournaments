@@ -1,17 +1,17 @@
 # Dokumentacja portalu szachowymistrz.pl
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Witaj na stronie dokumentacji portalu szachowymistrz.pl!
 
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Spis treści
+- [O projekcie](about.md)
+- [FAQ](faq.md)
+- [Autorzy](authors.md)
+### Podręcznik techniczny
+- [Instalacja](technicalGuide/installation.md)
+- [Uruchamianie projektu](technicalGuide/running.md)
+- [Testowanie](technicalGuide/testing.md)
+- [Dokumentacja API](technicalGuide/api.md)
+- [Dokumentacja kodu](technicalGuide/code.md)
+### Podręcznik użytkownika
+- [Panel administratora](userGuide/administrationPanel.md)
+- [Panel użytkownika](userGuide/userPanel.md)

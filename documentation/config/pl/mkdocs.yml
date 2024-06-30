@@ -5,15 +5,17 @@ site_url: https://kkedzierski.github.io/chess-tournaments/pl/
 nav:
   - Strona główna: index.md
   - O projekcie: about.md
+  - FAQ: faq.md
   - Podręcznik użytkownika:
     - "Panel administratora": userGuide/administrationPanel.md
     - "Panel użytkownika": userGuide/userPanel.md
   - Podręcznik techniczny:
     - "Instalacja": technicalGuide/installation.md
-    - "Konfiguracja": technicalGuide/configuration.md
+    - "Uruchamianie": technicalGuide/running.md
     - "Dokumentacja API": technicalGuide/api.md
+    - "Dokumentacja kodu": technicalGuide/code.md
     - "Testy": technicalGuide/tests.md
-    - "Wydanie": technicalGuide/release.md
+  - Autorzy: authors.md
 theme:
   language: pl
   name: readthedocs
