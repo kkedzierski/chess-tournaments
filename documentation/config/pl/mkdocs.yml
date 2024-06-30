@@ -1,7 +1,7 @@
 site_name: Chess tourmanents
 docs_dir: ../../docs/pl
 site_dir: ../../site/pl
-site_url: https://kkedzierski.github.io/chess-tournaments/pl/
+site_url: https://kkedzierski.github.io/pl/
 nav:
   - Strona główna: index.md
   - O projekcie: about.md
@@ -18,15 +18,16 @@ nav:
   - Autorzy: authors.md
 theme:
   language: pl
-  name: readthedocs
+  name: material
+  custom_dir: '../../overrides/'
   palette:
       primary: green
       accent: blue
   font:
       text: "Roboto"
       code: "Roboto Mono"
-  logo: "images/chess-master-logo.png"
-  favicon: "images/chess-master-favicon.png"
+  logo: "assets/images/chess-master-logo.png"
+  favicon: "assets/images/chess-master-favicon.ico"
 plugins:
   - search:
       lang: en
