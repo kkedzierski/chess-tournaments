@@ -57,12 +57,3 @@ plugins:
             Code documentation: Dokumentacja kodu
             Tests: Testy
             Authors: Autorzy
-
-extra:
-  alternate:
-    - name: English
-      link: /en/
-      lang: en
-    - name: Polski
-      link: /pl/
-      lang: pl
