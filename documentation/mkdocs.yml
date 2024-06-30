@@ -19,15 +19,14 @@ nav:
 theme:
   language: pl
   name: material
-  custom_dir: 'overrides/'
   palette:
       primary: green
       accent: blue
   font:
       text: "Roboto"
       code: "Roboto Mono"
-  logo: "overrides/assets/images/chess-master-logo.png"
-  favicon: "overrides/assets/images/chess-master-favicon.ico"
+  logo: "assets/images/chess-master-logo.png"
+  favicon: "assets/images/chess-master-favicon.ico"
 plugins:
   - search:
       lang: en
