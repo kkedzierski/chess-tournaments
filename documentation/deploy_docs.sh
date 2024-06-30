@@ -18,10 +18,17 @@ else
     echo "Current branch: $branch_name";
     if [ ${branch_name} == 'main' ]; then
         git add documentation/
+        sleep 3
+
+        # Sprawdź, czy zmiany zostały dodane do stage
+        git diff --cached --exit-code > /dev/null
         if [ $? -ne 0 ]; then
-            echo "Błąd przy dodawaniu zmian do stage."
+            echo "Zmiany zostały dodane do stage."
+        else
+            echo "Nie udało się dodać zmian do stage."
             exit 1
         fi
+
         git commit -m "#main Documentation update"
         git push origin main
     else
