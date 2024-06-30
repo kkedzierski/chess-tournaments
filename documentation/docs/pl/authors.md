@@ -1,1 +1,0 @@
-Kamil Kędzierski
