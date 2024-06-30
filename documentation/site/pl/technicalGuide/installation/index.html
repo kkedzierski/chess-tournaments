@@ -48,6 +48,10 @@
                 <li class="toctree-l1"><a class="reference internal" href="../../about/">O projekcie</a>
                 </li>
               </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../faq/">FAQ</a>
+                </li>
+              </ul>
               <p class="caption"><span class="caption-text">Podręcznik użytkownika</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../userGuide/administrationPanel/">Panel administratora</a>
@@ -58,15 +62,25 @@
               <p class="caption"><span class="caption-text">Podręcznik techniczny</span></p>
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">Instalacja</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#sprawdzanie-instalacji-dockera">Sprawdzanie instalacji Dockera</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sprawdzanie-instalacji-docker-compose">Sprawdzanie instalacji Docker Compose</a>
+    </li>
+    </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../configuration/">Konfiguracja</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../running/">Uruchamianie</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../api/">Dokumentacja API</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../code/">Dokumentacja kodu</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../tests/">Testy</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../release/">Wydanie</a>
-                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../authors/">Autorzy</a>
+                </li>
               </ul>
       </div>
     </div>
@@ -92,13 +106,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h2 id="wymagania">Wymagania</h2>
+<p>Aby uruchomić ten projekt, musisz mieć zainstalowany Docker oraz Docker Compose. Poniżej znajdują się instrukcje, jak sprawdzić, czy te narzędzia są zainstalowane oraz jak je zainstalować, jeśli nie są.</p>
+<h3 id="sprawdzanie-instalacji-dockera">Sprawdzanie instalacji Dockera</h3>
+<p>Aby sprawdzić, czy Docker jest zainstalowany na Twoim systemie, wykonaj następujące polecenie w terminalu:</p>
+<pre><code class="language-sh">docker --version
+</code></pre>
+<p>Jeśli Docker nie jest zainstalowany, postępuj zgodnie z instrukcjami <a href="https://docs.docker.com/get-docker/">na oficjalnej stronie Dockera</a>, aby go zainstalować.</p>
+<h3 id="sprawdzanie-instalacji-docker-compose">Sprawdzanie instalacji Docker Compose</h3>
+<p>Aby sprawdzić, czy Docker Compose jest zainstalowany na Twoim systemie, wykonaj następujące polecenie w terminalu:</p>
+<pre><code class="language-sh">docker-compose --version
+</code></pre>
+<p>Jeśli Docker Compose nie jest zainstalowany, postępuj zgodnie z instrukcjami <a href="https://docs.docker.com/compose/install/">na oficjalnej stronie Docker Compose</a>, aby go zainstalować.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../../userGuide/userPanel/" class="btn btn-neutral float-left" title="Panel użytkownika"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../configuration/" class="btn btn-neutral float-right" title="Konfiguracja">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../running/" class="btn btn-neutral float-right" title="Uruchamianie">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -124,7 +149,7 @@
       <span><a href="../../userGuide/userPanel/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../configuration/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../running/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

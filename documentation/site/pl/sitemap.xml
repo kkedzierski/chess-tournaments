@@ -11,12 +11,22 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://kkedzierski.github.io/chess-tournaments/pl/authors/</loc>
+         <lastmod>2024-06-30</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://kkedzierski.github.io/chess-tournaments/pl/faq/</loc>
+         <lastmod>2024-06-30</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/api/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/configuration/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/code/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -26,7 +36,7 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/release/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/running/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>

@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/release/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/running/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Wydanie - Chess tourmanents</title>
+    <title>Uruchamianie - Chess tourmanents</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Wydanie";
-        var mkdocs_page_input_path = "technicalGuide/release.md";
-        var mkdocs_page_url = "/chess-tournaments/pl/technicalGuide/release/";
+        var mkdocs_page_name = "Uruchamianie";
+        var mkdocs_page_input_path = "technicalGuide/running.md";
+        var mkdocs_page_url = "/chess-tournaments/pl/technicalGuide/running/";
       </script>
     
     <!--[if lt IE 9]>
@@ -48,6 +48,10 @@
                 <li class="toctree-l1"><a class="reference internal" href="../../about/">O projekcie</a>
                 </li>
               </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../faq/">FAQ</a>
+                </li>
+              </ul>
               <p class="caption"><span class="caption-text">Podręcznik użytkownika</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../userGuide/administrationPanel/">Panel administratora</a>
@@ -59,14 +63,20 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../installation/">Instalacja</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../configuration/">Konfiguracja</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Uruchamianie</a>
+    <ul class="current">
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../api/">Dokumentacja API</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../code/">Dokumentacja kodu</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../tests/">Testy</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Wydanie</a>
-                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../authors/">Autorzy</a>
+                </li>
               </ul>
       </div>
     </div>
@@ -83,7 +93,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">Podręcznik techniczny</li>
-      <li class="breadcrumb-item active">Wydanie</li>
+      <li class="breadcrumb-item active">Uruchamianie</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -92,12 +102,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h3 id="uruchamianie-projektu">Uruchamianie projektu</h3>
+<p>Aby uruchomić projekt, sklonuj repozytorium i wykonaj następujące polecenia w katalogu projektu:</p>
+<ol>
+<li>Sklonuj repozytorium</li>
+</ol>
+<pre><code class="language-sh">git clone git@github.com:kkedzierski/chess-tournaments.git
+cd chess-tournaments
+</code></pre>
+<ol>
+<li>Uruchom projekt</li>
+</ol>
+<pre><code class="language-sh">bash docker/run-app.sh
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../tests/" class="btn btn-neutral float-left" title="Testy"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../installation/" class="btn btn-neutral float-left" title="Instalacja"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../api/" class="btn btn-neutral float-right" title="Dokumentacja API">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -120,8 +143,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../tests/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../installation/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
+    
+      <span><a href="../api/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
