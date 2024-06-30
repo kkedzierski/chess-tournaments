@@ -1,7 +1,7 @@
 site_name: Chess tourmanents
 docs_dir: ../docs/
 site_dir: ../site/
-
+site_url: https://kkedzierski.github.io/chess-tournaments/
 nav:
   - Home: index.md
   - About: about.md
