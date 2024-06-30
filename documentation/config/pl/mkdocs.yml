@@ -29,7 +29,7 @@ theme:
   favicon: "images/chess-master-favicon.png"
 plugins:
   - search:
-      lang: pl
+      lang: en
 
 extra:
   alternate:

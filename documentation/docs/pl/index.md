@@ -9,7 +9,7 @@ Witaj na stronie dokumentacji portalu szachowymistrz.pl!
 ### Podręcznik techniczny
 - [Instalacja](technicalGuide/installation.md)
 - [Uruchamianie projektu](technicalGuide/running.md)
-- [Testowanie](technicalGuide/testing.md)
+- [Testowanie](technicalGuide/tests.md)
 - [Dokumentacja API](technicalGuide/api.md)
 - [Dokumentacja kodu](technicalGuide/code.md)
 ### Podręcznik użytkownika
