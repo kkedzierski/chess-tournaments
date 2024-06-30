@@ -1,57 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/about/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/about/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/authors/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/authors/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/faq/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/faq/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/api/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/technicalGuide/api/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/code/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/technicalGuide/code/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/installation/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/technicalGuide/installation/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/running/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/technicalGuide/release/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/tests/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/technicalGuide/running/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/userGuide/administrationPanel/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/technicalGuide/tests/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://kkedzierski.github.io/chess-tournaments/pl/userGuide/userPanel/</loc>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/userGuide/administrationPanel/</loc>
+         <lastmod>2024-06-30</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://kkedzierski.github.io/chess-tournaments/en/userGuide/userPanel/</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
