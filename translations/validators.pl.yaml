@@ -1,0 +1,12 @@
+validation:
+    email:
+        invalid: "Niepoprawny adres e-mail"
+        alreadyExists: "Adres e-mail jest już używany"
+    password:
+        minLength: "Hasło musi mieć co najmniej {{ limit }} znaków"
+        repeat: "Hasła muszą być takie same"
+        strength: " Musi zawierać co najmniej jedną cyfrę (0-9), jedną literę oraz jeden znak specjalny (np. !@#$%^&*)."
+    agreeTerms:
+        isTrue: "Musisz zaakceptować regulamin"
+    token:
+        invalid: "Token wygasł lub jest niepoprawny"

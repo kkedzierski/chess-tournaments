@@ -1,0 +1,41 @@
+site_name: Chess tourmanents
+docs_dir: ../../docs/en
+site_dir: ../../site/en
+site_url: https://kkedzierski.github.io/chess-tournaments/en/
+nav:
+  - Home: index.md
+  - About: about.md
+  - FAQ: faq.md
+  - User quide:
+      - "Administration panel": userGuide/administrationPanel.md
+      - "User panel": userGuide/userPanel.md
+  - Technical guide:
+      - Installation: technicalGuide/installation.md
+      - Running: technicalGuide/running.md
+      - Api documentation: technicalGuide/api.md
+      - Code documentation: technicalGuide/code.md
+      - Tests: technicalGuide/tests.md
+  - Authors: authors.md
+theme:
+  language: en
+  name: readthedocs
+  palette:
+      primary: green
+      accent: blue
+  font:
+      text: "Roboto"
+      code: "Roboto Mono"
+  logo: "images/chess-master-logo.png"
+  favicon: "images/chess-master-favicon.png"
+plugins:
+  - search:
+      lang: en
+
+extra:
+  alternate:
+    - name: English
+      link: /en/
+      lang: en
+    - name: Polski
+      link: /pl/
+      lang: pl
