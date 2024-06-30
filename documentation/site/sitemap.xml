@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>None./</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="None"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/"/>
+    </url>
+    <url>
+        <loc>Noneabout/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneabout/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/about/"/>
+    </url>
+    <url>
+        <loc>Noneauthors/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneauthors/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/authors/"/>
+    </url>
+    <url>
+        <loc>Nonefaq/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonefaq/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/faq/"/>
+    </url>
+    <url>
+        <loc>NonetechnicalGuide/api/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/api/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/api/"/>
+    </url>
+    <url>
+        <loc>NonetechnicalGuide/code/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/code/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/code/"/>
+    </url>
+    <url>
+        <loc>NonetechnicalGuide/installation/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/installation/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/installation/"/>
+    </url>
+    <url>
+        <loc>NonetechnicalGuide/release/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/release/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/release/"/>
+    </url>
+    <url>
+        <loc>NonetechnicalGuide/running/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/running/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/running/"/>
+    </url>
+    <url>
+        <loc>NonetechnicalGuide/tests/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/tests/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/tests/"/>
+    </url>
+    <url>
+        <loc>NoneuserGuide/administrationPanel/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="NoneuserGuide/administrationPanel/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/userGuide/administrationPanel/"/>
+    </url>
+    <url>
+        <loc>NoneuserGuide/userPanel/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="NoneuserGuide/userPanel/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/userGuide/userPanel/"/>
+    </url>
+    <url>
+        <loc>Nonepl/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="None"/>
+    </url>
+    <url>
+        <loc>Nonepl/about/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/about/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneabout/"/>
+    </url>
+    <url>
+        <loc>Nonepl/authors/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/authors/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneauthors/"/>
+    </url>
+    <url>
+        <loc>Nonepl/faq/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/faq/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonefaq/"/>
+    </url>
+    <url>
+        <loc>Nonepl/technicalGuide/api/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/api/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/api/"/>
+    </url>
+    <url>
+        <loc>Nonepl/technicalGuide/code/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/code/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/code/"/>
+    </url>
+    <url>
+        <loc>Nonepl/technicalGuide/installation/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/installation/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/installation/"/>
+    </url>
+    <url>
+        <loc>Nonepl/technicalGuide/release/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/release/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/release/"/>
+    </url>
+    <url>
+        <loc>Nonepl/technicalGuide/running/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/running/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/running/"/>
+    </url>
+    <url>
+        <loc>Nonepl/technicalGuide/tests/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/technicalGuide/tests/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="NonetechnicalGuide/tests/"/>
+    </url>
+    <url>
+        <loc>Nonepl/userGuide/administrationPanel/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/userGuide/administrationPanel/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="NoneuserGuide/administrationPanel/"/>
+    </url>
+    <url>
+        <loc>Nonepl/userGuide/userPanel/</loc>
+        <lastmod>2024-06-30</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="Nonepl/userGuide/userPanel/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="NoneuserGuide/userPanel/"/>
+    </url>
+</urlset>

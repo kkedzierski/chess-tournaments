@@ -1,0 +1,68 @@
+site_name: Chess tourmanents
+docs_dir: ../docs/
+site_dir: ../site/
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - FAQ: faq.md
+  - User quide:
+      - "Administration panel": userGuide/administrationPanel.md
+      - "User panel": userGuide/userPanel.md
+  - Technical guide:
+      - Installation: technicalGuide/installation.md
+      - Running: technicalGuide/running.md
+      - Api documentation: technicalGuide/api.md
+      - Code documentation: technicalGuide/code.md
+      - Tests: technicalGuide/tests.md
+  - Authors: authors.md
+theme:
+  direction: ltr
+  language: pl
+  name: material
+  custom_dir: '../overrides/'
+  palette:
+      primary: green
+      accent: blue
+  font:
+      text: "Roboto"
+      code: "Roboto Mono"
+  logo: "assets/images/chess-master-logo.png"
+  favicon: "assets/images/chess-master-favicon.ico"
+plugins:
+  - search:
+      lang: en
+  - i18n:
+      docs_structure: folder
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: pl
+          name: Polski
+          build: true
+          default: true
+          nav_translations:
+            Home: Strona główna
+            About: O projekcie
+            FAQ: FAQ
+            User quide: Podręcznik użytkownika
+            Administration panel: Panel administratora
+            User panel: Panel użytkownika
+            Technical guide: Podręcznik techniczny
+            Installation: Instalacja
+            Running: Uruchamianie
+            Api documentation: Dokumentacja API
+            Code documentation: Dokumentacja kodu
+            Tests: Testy
+            Authors: Autorzy
+
+extra:
+  alternate:
+    - name: English
+      link: /en/
+      lang: en
+    - name: Polski
+      link: /pl/
+      lang: pl

@@ -1,9 +1,9 @@
-# Panel administratora
+# Administration panel
 
-## Panel główny
+## User management
 
-## Obsługa turniejów
+## Adding a new user
 
-## Dodawanie danych firmy
+## Editing a user
 
-## Edycja użytkownika
+## Deleting a user
