@@ -18,7 +18,6 @@ else
 
     echo "Deploying documentation..."
     mkdocs gh-deploy -f documentation/config/pl/mkdocs.yml
-    mkdocs gh-deploy -f documentation/config/en/mkdocs.yml
 
     branch_name=$(git symbolic-ref --short -q HEAD)
 
