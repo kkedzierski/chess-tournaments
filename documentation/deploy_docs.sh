@@ -11,7 +11,7 @@ echo "$local";
 if [ "$local" == "true" ]; then
   echo "Serving documentation locally..."
   source myenv/bin/activate
-  mkdocs serve -f documentation/config/mkdocs.yml
+  mkdocs serve -f documentation/mkdocs.yml
     if [ $? -ne 0 ]; then
       echo "Failed to serve documentation locally."
       echo "Try install python virtual env by running 'python3 -m venv myenv' and try again."
@@ -20,7 +20,7 @@ if [ "$local" == "true" ]; then
 else
     echo "Building documentation..."
     source myenv/bin/activate
-    mkdocs build -f documentation/config/mkdocs.yml
+    mkdocs build -f documentation/mkdocs.yml
     if [ $? -ne 0 ]; then
       echo "Failed to build documentation."
       echo "Try install python virtual env by running 'python3 -m venv myenv' and try again."
@@ -28,7 +28,7 @@ else
     fi
 
     echo "Deploying documentation..."
-    mkdocs gh-deploy -f documentation/config/mkdocs.yml
+    mkdocs gh-deploy -f documentation/mkdocs.yml
 
     branch_name=$(git symbolic-ref --short -q HEAD)
 
