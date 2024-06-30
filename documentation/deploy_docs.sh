@@ -24,10 +24,10 @@ else
     else
       echo "Skipping pushing documentation to repository for branch $branch_name.";
     fi
-#
-#    echo "Building documentation..."
-#    mkdocs build -f documentation/config/pl/mkdocs.yml
-#    mkdocs build -f documentation/config/en/mkdocs.yml
+
+    echo "Building documentation..."
+    mkdocs build -f documentation/config/pl/mkdocs.yml
+    mkdocs build -f documentation/config/en/mkdocs.yml
 #
 #    echo "Deploying documentation..."
 #    mkdocs gh-deploy -f documentation/config/pl/mkdocs.yml
