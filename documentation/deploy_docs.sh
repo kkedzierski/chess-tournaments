@@ -18,6 +18,10 @@ else
     echo "Current branch: $branch_name";
     if [ ${branch_name} == 'main' ]; then
         git add documentation/
+        if [ $? -ne 0 ]; then
+            echo "Błąd przy dodawaniu zmian do stage."
+            exit 1
+        fi
         git commit -m "#main Documentation update"
         git push origin main
     else
