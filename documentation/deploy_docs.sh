@@ -20,7 +20,7 @@ else
         git add documentation/
 
         git commit -m "#main Documentation update"
-        git push origin main
+        git push origin main --progress
     else
       echo "Skipping pushing documentation to repository for branch $branch_name.";
     fi
