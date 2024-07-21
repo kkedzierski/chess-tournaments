@@ -2,168 +2,182 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/about/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/about/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/about/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/authors/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/authors/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/authors/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/faq/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/faq/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/faq/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/technicalGuide/api/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/api/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/api/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/technicalGuide/code/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/code/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/code/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/technicalGuide/installation/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/installation/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/installation/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/technicalGuide/release/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/release/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/release/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/technicalGuide/running/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/running/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/running/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/technicalGuide/tests/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/tests/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/tests/"/>
     </url>
     <url>
+        <loc>https://kkedzierski.github.io/chess-tournaments/technicalGuide/thisDocumentation/</loc>
+        <lastmod>2024-07-21</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/thisDocumentation/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/thisDocumentation/"/>
+    </url>
+    <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/userGuide/administrationPanel/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/userGuide/administrationPanel/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/userGuide/administrationPanel/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/userGuide/userPanel/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/userGuide/userPanel/"/>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/userGuide/userPanel/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/about/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/about/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/about/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/authors/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/authors/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/authors/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/faq/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/faq/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/faq/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/api/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/api/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/api/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/code/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/code/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/code/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/installation/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/installation/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/installation/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/release/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/release/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/release/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/running/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/running/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/running/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/tests/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/tests/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/tests/"/>
     </url>
     <url>
+        <loc>https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/thisDocumentation/</loc>
+        <lastmod>2024-07-21</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/thisDocumentation/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/technicalGuide/thisDocumentation/"/>
+    </url>
+    <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/userGuide/administrationPanel/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/userGuide/administrationPanel/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/userGuide/administrationPanel/"/>
     </url>
     <url>
         <loc>https://kkedzierski.github.io/chess-tournaments/pl/userGuide/userPanel/</loc>
-        <lastmod>2024-06-30</lastmod>
+        <lastmod>2024-07-21</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="pl" href="https://kkedzierski.github.io/chess-tournaments/pl/userGuide/userPanel/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://kkedzierski.github.io/chess-tournaments/userGuide/userPanel/"/>
