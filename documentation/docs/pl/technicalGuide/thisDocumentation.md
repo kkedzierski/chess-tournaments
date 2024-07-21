@@ -12,20 +12,20 @@ Strona internetowa generowana jest za pomocą narzędzia mkdocs.
 - mkdocs.yml: plik konfiguracyjny dla narzędzia generującego stronę internetową
 ```
 
-### Zbudowanie strony internetowej
->Automatyczne wypuszowanie dokumentacji odbywa się wyłącznie na main branchu.
-> Po wykonaniu poniższego polecenia, strona internetowa zostanie zbudowana i wypuszczona na serwerze, jeżeli zmiany zostały wprowadzone na main branchu.
-> W przeciwnym wypadku strona internetowa zostanie zbudowana lokalnie.
-
+### Zbudowanie i wypuszczenie dokumentacji na gihub pages
 Wykonaj polecenie bash 
 ```sh
 bash documentation/deploy_docs.sh
 ```
 
+Po wykonaniu polecenia:
+> Dla brancha **main**:  dokumentacja zostanie zbudowana i wypuszczona na serwer.
 
-### Zbudowanie strony internetowej lokalnie
+> Dla innych branchów: dokumentacja zostanie tylko zbudowana.
 
-Aby zbudować stronę internetową lokalnie, wykonaj poniższe polecenia:
+
+### Zbudowanie i uruchomienie dokumentacji lokalnie
+Aby zbudować i uruchomić dokumenatcję lokalnie, wykonaj poniższe polecenie:
 ```sh
-bash documentation/deploy_docs.sh -l=true
+bash documentation/deploy_docs.sh -l true
 ```

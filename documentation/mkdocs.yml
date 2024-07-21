@@ -1,4 +1,4 @@
-site_name: Chess tourmanents
+site_name: Szachowymistrz.pl
 docs_dir: ./docs
 site_dir: ./site
 site_url: https://kkedzierski.github.io/chess-tournaments/
@@ -26,8 +26,8 @@ theme:
   font:
       text: "Roboto"
       code: "Roboto Mono"
-  logo: "./assets/images/chess-master-logo.png"
-  favicon: "./assets/images/chess-master-favicon.ico"
+#  logo: "./assets/images/chess-master-logo.png"
+#  favicon: "./assets/images/chess-master-favicon.ico"
 plugins:
   - search:
       lang: en
