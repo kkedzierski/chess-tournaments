@@ -42,7 +42,7 @@ jobs:
       - name: Run PHPUnit
         run: docker-compose exec chess-tournaments-php ./vendor/bin/phpunit --configuration phpunit.xml.dist
 
-      - name: Run grumPHP (composer, phpcsfixer, phpstan, infection)
+      - name: Run grumphp (composer, phpcsfixer, phpstan, infection)
         run: docker-compose exec chess-tournaments-php ./vendor/bin/grumphp run
 
       - name: Shutdown Docker Compose

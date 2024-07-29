@@ -32,7 +32,9 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash
 COPY . /var/www/html
 
 # Set environment variable to allow Composer to run as root
-ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_ALLOW_SUPERUSER=1 \
+    APP_ENV=prod \
+    APP_DEBUG=0
 
 RUN composer install
 
