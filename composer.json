@@ -1,4 +1,6 @@
 {
+    "name": "kkedzierski/chess-tournaments",
+    "description": "The project is a web application for managing chess tournaments.",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",

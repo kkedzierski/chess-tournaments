@@ -11,12 +11,14 @@ FROM php:8.2-fpm
 # libzip-dev is required for zip extension
 # libicu-dev is required for intl extension
 # zip is required for composer
+# git is requried for grumphp
 RUN apt-get -q update && apt-get -qy install \
     zip \
     cron \
     libpng-dev \
     libzip-dev \
     libicu-dev \
+    git \
     && docker-php-ext-install intl opcache pdo pdo_mysql \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
@@ -28,6 +30,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN curl -sS https://get.symfony.com/cli/installer | bash
 
 COPY . /var/www/html
+
+# Set environment variable to allow Composer to run as root
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+RUN composer install
+
+RUN ./vendor/bin/grumphp git:init || true
 
 # ssh keys for repository access
 RUN mkdir -p /var/www/.ssh

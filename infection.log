@@ -1,0 +1,5223 @@
+Escaped mutants:
+================
+
+1) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:45    [M] NullSafeMethodCall
+
+--- Original
++++ New
+@@ @@
+         try {
+             $user = $this->security->getUser();
+             if (null === $entity->getCreatedBy()) {
+-                $entity->setCreatedBy($user?->getUserIdentifier());
++                $entity->setCreatedBy($user->getUserIdentifier());
+             }
+             $entity->setUpdatedBy($user?->getUserIdentifier());
+         } catch (\Throwable $exception) {
+
+
+2) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:48    [M] NullSafeMethodCall
+
+--- Original
++++ New
+@@ @@
+             if (null === $entity->getCreatedBy()) {
+                 $entity->setCreatedBy($user?->getUserIdentifier());
+             }
+-            $entity->setUpdatedBy($user?->getUserIdentifier());
++            $entity->setUpdatedBy($user->getUserIdentifier());
+         } catch (\Throwable $exception) {
+             $this->logger->error('Setting user data for resource failed.', ['exception' => $exception, 'class' => TimestampableSubscriber::class]);
+         }
+
+
+3) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:48    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             if (null === $entity->getCreatedBy()) {
+                 $entity->setCreatedBy($user?->getUserIdentifier());
+             }
+-            $entity->setUpdatedBy($user?->getUserIdentifier());
++            
+         } catch (\Throwable $exception) {
+             $this->logger->error('Setting user data for resource failed.', ['exception' => $exception, 'class' => TimestampableSubscriber::class]);
+         }
+
+
+4) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:66    [M] InstanceOf_
+
+--- Original
++++ New
+@@ @@
+     public function preUpdate(LifecycleEventArgs $args): void
+     {
+         $entity = $args->getObject();
+-        if (!$entity instanceof TimestampableResourceInterface) {
++        if (!true) {
+             return;
+         }
+         $entity->setUpdatedAt($this->getDateTimeNow());
+
+
+5) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:74    [M] NullSafeMethodCall
+
+--- Original
++++ New
+@@ @@
+         $entity->setUpdatedAt($this->getDateTimeNow());
+         try {
+             $user = $this->security->getUser();
+-            $entity->setUpdatedBy($user?->getUserIdentifier());
++            $entity->setUpdatedBy($user->getUserIdentifier());
+         } catch (\Throwable $exception) {
+             $this->logger->error('Setting user data for resource failed.', ['exception' => $exception, 'class' => TimestampableSubscriber::class]);
+         }
+
+
+6) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:92    [M] InstanceOf_
+
+--- Original
++++ New
+@@ @@
+     public function preRemove(LifecycleEventArgs $args): void
+     {
+         $entity = $args->getObject();
+-        if (!$entity instanceof TimestampableResourceInterface) {
++        if (!true) {
+             return;
+         }
+         $entity->setDeletedAt($this->getDateTimeNow());
+
+
+7) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:100    [M] NullSafeMethodCall
+
+--- Original
++++ New
+@@ @@
+         $entity->setDeletedAt($this->getDateTimeNow());
+         try {
+             $user = $this->security->getUser();
+-            $entity->setDeletedBy($user?->getUserIdentifier());
++            $entity->setDeletedBy($user->getUserIdentifier());
+         } catch (\Throwable $exception) {
+             $this->logger->error('Setting user data for resource failed.', ['exception' => $exception, 'class' => TimestampableSubscriber::class]);
+         }
+
+
+Timed Out mutants:
+==================
+
+Skipped mutants:
+================
+
+Not Covered mutants:
+====================
+
+1) /var/www/html/src/Account/Application/AccountAuthenticatorService.php:18    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     public function __construct(private readonly UrlGeneratorInterface $urlGenerator)
+     {
+     }
+-    public function getLoginUrl(): string
++    protected function getLoginUrl(): string
+     {
+         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+     }
+
+
+2) /var/www/html/src/Account/Application/AccountAuthenticatorService.php:23    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+     }
+-    public function getPanelDashboardUrl(): string
++    protected function getPanelDashboardUrl(): string
+     {
+         return $this->urlGenerator->generate(self::DASHBOARD_ROUTE);
+     }
+ }
+
+
+3) /var/www/html/src/Account/Application/AccountMailerService.php:27    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+      * @param array<string, mixed> $context
+      * @throws CannotSendEmailException
+      */
+-    public function sendEmailToUser(string $email, string $translationSubjectKey, string $twigTemplatePath, array $context = [], string $logReason = 'An error occurred while sending email.'): void
++    protected function sendEmailToUser(string $email, string $translationSubjectKey, string $twigTemplatePath, array $context = [], string $logReason = 'An error occurred while sending email.'): void
+     {
+         if (empty($this->companyEmail) || empty($this->companyName)) {
+             throw new \LogicException('Company data is missing, please check CT_NAME, CT_EMAIL env configuration variables.');
+
+
+4) /var/www/html/src/Account/Application/AccountMailerService.php:34    [M] LogicalOr
+
+--- Original
++++ New
+@@ @@
+      */
+     public function sendEmailToUser(string $email, string $translationSubjectKey, string $twigTemplatePath, array $context = [], string $logReason = 'An error occurred while sending email.'): void
+     {
+-        if (empty($this->companyEmail) || empty($this->companyName)) {
++        if (empty($this->companyEmail) && empty($this->companyName)) {
+             throw new \LogicException('Company data is missing, please check CT_NAME, CT_EMAIL env configuration variables.');
+         }
+         $context['companyName'] = $this->companyName;
+
+
+5) /var/www/html/src/Account/Application/AccountMailerService.php:34    [M] LogicalOrAllSubExprNegation
+
+--- Original
++++ New
+@@ @@
+      */
+     public function sendEmailToUser(string $email, string $translationSubjectKey, string $twigTemplatePath, array $context = [], string $logReason = 'An error occurred while sending email.'): void
+     {
+-        if (empty($this->companyEmail) || empty($this->companyName)) {
++        if (!empty($this->companyEmail) || !empty($this->companyName)) {
+             throw new \LogicException('Company data is missing, please check CT_NAME, CT_EMAIL env configuration variables.');
+         }
+         $context['companyName'] = $this->companyName;
+
+
+6) /var/www/html/src/Account/Application/AccountMailerService.php:34    [M] LogicalOrNegation
+
+--- Original
++++ New
+@@ @@
+      */
+     public function sendEmailToUser(string $email, string $translationSubjectKey, string $twigTemplatePath, array $context = [], string $logReason = 'An error occurred while sending email.'): void
+     {
+-        if (empty($this->companyEmail) || empty($this->companyName)) {
++        if (!(empty($this->companyEmail) || empty($this->companyName))) {
+             throw new \LogicException('Company data is missing, please check CT_NAME, CT_EMAIL env configuration variables.');
+         }
+         $context['companyName'] = $this->companyName;
+
+
+7) /var/www/html/src/Account/Application/AccountMailerService.php:35    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+     public function sendEmailToUser(string $email, string $translationSubjectKey, string $twigTemplatePath, array $context = [], string $logReason = 'An error occurred while sending email.'): void
+     {
+         if (empty($this->companyEmail) || empty($this->companyName)) {
+-            throw new \LogicException('Company data is missing, please check CT_NAME, CT_EMAIL env configuration variables.');
++            new \LogicException('Company data is missing, please check CT_NAME, CT_EMAIL env configuration variables.');
+         }
+         $context['companyName'] = $this->companyName;
+         /** @infection-ignore-all  */
+
+
+8) /var/www/html/src/Account/Application/AccountMailerService.php:48    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         /** @infection-ignore-all  */
+         $email = (new TemplatedEmail())->from(new Address($this->companyEmail, $this->companyName))->to(new Address($email))->subject($this->translator->trans($translationSubjectKey))->htmlTemplate($twigTemplatePath)->context($context);
+         try {
+-            $this->mailer->send($email);
++            
+         } catch (\Throwable $exception) {
+             $this->logger->critical($logReason, ['exception' => $exception, 'email' => $email, 'class' => __CLASS__]);
+             throw new CannotSendEmailException();
+
+
+9) /var/www/html/src/Account/Application/AccountMailerService.php:50    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         try {
+             $this->mailer->send($email);
+         } catch (\Throwable $exception) {
+-            $this->logger->critical($logReason, ['exception' => $exception, 'email' => $email, 'class' => __CLASS__]);
++            
+             throw new CannotSendEmailException();
+         }
+     }
+ }
+
+
+10) /var/www/html/src/Account/Application/AccountMailerService.php:52    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+         try {
+             $this->mailer->send($email);
+         } catch (\Throwable $exception) {
+-            $this->logger->critical($logReason, ['exception' => $exception, 'email' => $email, 'class' => __CLASS__]);
++            $this->logger->critical($logReason, ['email' => $email, 'class' => __CLASS__]);
+             throw new CannotSendEmailException();
+         }
+     }
+ }
+
+
+11) /var/www/html/src/Account/Application/AccountMailerService.php:58    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+             $this->mailer->send($email);
+         } catch (\Throwable $exception) {
+             $this->logger->critical($logReason, ['exception' => $exception, 'email' => $email, 'class' => __CLASS__]);
+-            throw new CannotSendEmailException();
++            new CannotSendEmailException();
+         }
+     }
+ }
+
+
+12) /var/www/html/src/Account/Application/PasswordTokenService.php:25    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     /**
+      * @throws TokenGeneratingFailedException
+      */
+-    public function generateForOneDay(User $user): PasswordToken
++    protected function generateForOneDay(User $user): PasswordToken
+     {
+         try {
+             $passwordToken = PasswordToken::generateForOneDay($user);
+
+
+13) /var/www/html/src/Account/Application/PasswordTokenService.php:29    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     {
+         try {
+             $passwordToken = PasswordToken::generateForOneDay($user);
+-            $this->passwordTokenRepository->save($passwordToken);
++            
+             return $passwordToken;
+         } catch (\Throwable $exception) {
+             $this->logger->error('An error occurred while generating password token.', ['exception' => $exception, 'user' => $user, 'class' => __CLASS__]);
+
+
+14) /var/www/html/src/Account/Application/PasswordTokenService.php:33    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             $this->passwordTokenRepository->save($passwordToken);
+             return $passwordToken;
+         } catch (\Throwable $exception) {
+-            $this->logger->error('An error occurred while generating password token.', ['exception' => $exception, 'user' => $user, 'class' => __CLASS__]);
++            
+             throw new TokenGeneratingFailedException();
+         }
+     }
+
+
+15) /var/www/html/src/Account/Application/PasswordTokenService.php:35    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+             $this->passwordTokenRepository->save($passwordToken);
+             return $passwordToken;
+         } catch (\Throwable $exception) {
+-            $this->logger->error('An error occurred while generating password token.', ['exception' => $exception, 'user' => $user, 'class' => __CLASS__]);
++            $this->logger->error('An error occurred while generating password token.', ['user' => $user, 'class' => __CLASS__]);
+             throw new TokenGeneratingFailedException();
+         }
+     }
+
+
+16) /var/www/html/src/Account/Application/PasswordTokenService.php:41    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+             return $passwordToken;
+         } catch (\Throwable $exception) {
+             $this->logger->error('An error occurred while generating password token.', ['exception' => $exception, 'user' => $user, 'class' => __CLASS__]);
+-            throw new TokenGeneratingFailedException();
++            new TokenGeneratingFailedException();
+         }
+     }
+     /**
+
+
+17) /var/www/html/src/Account/Application/PasswordTokenService.php:48    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     /**
+      * @throws TokenNotFoundException
+      */
+-    public function setAsVerified(string $token): PasswordToken
++    protected function setAsVerified(string $token): PasswordToken
+     {
+         try {
+             $passwordToken = $this->passwordTokenRepository->getByToken($token, new \DateTimeImmutable('now'));
+
+
+18) /var/www/html/src/Account/Application/PasswordTokenService.php:53    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     {
+         try {
+             $passwordToken = $this->passwordTokenRepository->getByToken($token, new \DateTimeImmutable('now'));
+-            if (null === $passwordToken) {
++            if (null !== $passwordToken) {
+                 throw new TokenNotFoundException();
+             }
+             $passwordToken->setAsVerified();
+
+
+19) /var/www/html/src/Account/Application/PasswordTokenService.php:54    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+         try {
+             $passwordToken = $this->passwordTokenRepository->getByToken($token, new \DateTimeImmutable('now'));
+             if (null === $passwordToken) {
+-                throw new TokenNotFoundException();
++                new TokenNotFoundException();
+             }
+             $passwordToken->setAsVerified();
+             $user = $passwordToken->getUser();
+
+
+20) /var/www/html/src/Account/Application/PasswordTokenService.php:56    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             if (null === $passwordToken) {
+                 throw new TokenNotFoundException();
+             }
+-            $passwordToken->setAsVerified();
++            
+             $user = $passwordToken->getUser();
+             $this->passwordTokenRepository->save($passwordToken);
+             $this->userRepository->save($user);
+
+
+21) /var/www/html/src/Account/Application/PasswordTokenService.php:58    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             }
+             $passwordToken->setAsVerified();
+             $user = $passwordToken->getUser();
+-            $this->passwordTokenRepository->save($passwordToken);
++            
+             $this->userRepository->save($user);
+             return $passwordToken;
+         } catch (\Throwable $exception) {
+
+
+22) /var/www/html/src/Account/Application/PasswordTokenService.php:59    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             $passwordToken->setAsVerified();
+             $user = $passwordToken->getUser();
+             $this->passwordTokenRepository->save($passwordToken);
+-            $this->userRepository->save($user);
++            
+             return $passwordToken;
+         } catch (\Throwable $exception) {
+             $this->logger->error('An error occurred while deactivating password token.', ['exception' => $exception, 'token' => $token, 'class' => __CLASS__]);
+
+
+23) /var/www/html/src/Account/Application/PasswordTokenService.php:63    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             $this->userRepository->save($user);
+             return $passwordToken;
+         } catch (\Throwable $exception) {
+-            $this->logger->error('An error occurred while deactivating password token.', ['exception' => $exception, 'token' => $token, 'class' => __CLASS__]);
++            
+             throw new TokenNotFoundException();
+         }
+     }
+ }
+
+
+24) /var/www/html/src/Account/Application/PasswordTokenService.php:65    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+             $this->userRepository->save($user);
+             return $passwordToken;
+         } catch (\Throwable $exception) {
+-            $this->logger->error('An error occurred while deactivating password token.', ['exception' => $exception, 'token' => $token, 'class' => __CLASS__]);
++            $this->logger->error('An error occurred while deactivating password token.', ['token' => $token, 'class' => __CLASS__]);
+             throw new TokenNotFoundException();
+         }
+     }
+ }
+
+
+25) /var/www/html/src/Account/Application/PasswordTokenService.php:72    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+             return $passwordToken;
+         } catch (\Throwable $exception) {
+             $this->logger->error('An error occurred while deactivating password token.', ['exception' => $exception, 'token' => $token, 'class' => __CLASS__]);
+-            throw new TokenNotFoundException();
++            new TokenNotFoundException();
+         }
+     }
+ }
+
+
+26) /var/www/html/src/Account/Application/ResetPasswordService.php:30    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+      * @throws RandomException
+      * @throws TokenGeneratingFailedException
+      */
+-    public function sendResetPasswordEmail(string $email): void
++    protected function sendResetPasswordEmail(string $email): void
+     {
+         $user = $this->userRepository->getByEmail($email);
+         if (null !== $user) {
+
+
+27) /var/www/html/src/Account/Application/ResetPasswordService.php:34    [M] NotIdentical
+
+--- Original
++++ New
+@@ @@
+     public function sendResetPasswordEmail(string $email): void
+     {
+         $user = $this->userRepository->getByEmail($email);
+-        if (null !== $user) {
++        if (null === $user) {
+             $passwordToken = $this->passwordTokenService->generateForOneDay($user);
+             $this->accountMailerService->sendEmailToUser($email, 'dashboard.authentication.resetPassword.title', 'dashboard/authentication/resetPassword/reset-password-email-template.html.twig', ['token' => $passwordToken->getToken(), 'emailValue' => $email], 'An error occurred while sending reset password email.');
+         }
+
+
+28) /var/www/html/src/Account/Application/ResetPasswordService.php:37    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         $user = $this->userRepository->getByEmail($email);
+         if (null !== $user) {
+             $passwordToken = $this->passwordTokenService->generateForOneDay($user);
+-            $this->accountMailerService->sendEmailToUser($email, 'dashboard.authentication.resetPassword.title', 'dashboard/authentication/resetPassword/reset-password-email-template.html.twig', ['token' => $passwordToken->getToken(), 'emailValue' => $email], 'An error occurred while sending reset password email.');
++            
+         }
+     }
+     /**
+
+
+29) /var/www/html/src/Account/Application/ResetPasswordService.php:41    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+         $user = $this->userRepository->getByEmail($email);
+         if (null !== $user) {
+             $passwordToken = $this->passwordTokenService->generateForOneDay($user);
+-            $this->accountMailerService->sendEmailToUser($email, 'dashboard.authentication.resetPassword.title', 'dashboard/authentication/resetPassword/reset-password-email-template.html.twig', ['token' => $passwordToken->getToken(), 'emailValue' => $email], 'An error occurred while sending reset password email.');
++            $this->accountMailerService->sendEmailToUser($email, 'dashboard.authentication.resetPassword.title', 'dashboard/authentication/resetPassword/reset-password-email-template.html.twig', ['emailValue' => $email], 'An error occurred while sending reset password email.');
+         }
+     }
+     /**
+
+
+30) /var/www/html/src/Account/Application/ResetPasswordService.php:42    [M] ArrayItem
+
+--- Original
++++ New
+@@ @@
+         $user = $this->userRepository->getByEmail($email);
+         if (null !== $user) {
+             $passwordToken = $this->passwordTokenService->generateForOneDay($user);
+-            $this->accountMailerService->sendEmailToUser($email, 'dashboard.authentication.resetPassword.title', 'dashboard/authentication/resetPassword/reset-password-email-template.html.twig', ['token' => $passwordToken->getToken(), 'emailValue' => $email], 'An error occurred while sending reset password email.');
++            $this->accountMailerService->sendEmailToUser($email, 'dashboard.authentication.resetPassword.title', 'dashboard/authentication/resetPassword/reset-password-email-template.html.twig', ['token' > $passwordToken->getToken(), 'emailValue' => $email], 'An error occurred while sending reset password email.');
+         }
+     }
+     /**
+
+
+31) /var/www/html/src/Account/Application/ResetPasswordService.php:55    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+      * @throws UserNotFoundException
+      * @throws TokenNotFoundException
+      */
+-    public function resetPassword(string $token, string $email, string $password): void
++    protected function resetPassword(string $token, string $email, string $password): void
+     {
+         $user = $this->userRepository->getByEmail($email);
+         if (null === $user) {
+
+
+32) /var/www/html/src/Account/Application/ResetPasswordService.php:59    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     public function resetPassword(string $token, string $email, string $password): void
+     {
+         $user = $this->userRepository->getByEmail($email);
+-        if (null === $user) {
++        if (null !== $user) {
+             throw new UserNotFoundException();
+         }
+         if ($user->isTokenValid($token)) {
+
+
+33) /var/www/html/src/Account/Application/ResetPasswordService.php:60    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+     {
+         $user = $this->userRepository->getByEmail($email);
+         if (null === $user) {
+-            throw new UserNotFoundException();
++            new UserNotFoundException();
+         }
+         if ($user->isTokenValid($token)) {
+             throw new TokenNotFoundException();
+
+
+34) /var/www/html/src/Account/Application/ResetPasswordService.php:63    [M] IfNegation
+
+--- Original
++++ New
+@@ @@
+         if (null === $user) {
+             throw new UserNotFoundException();
+         }
+-        if ($user->isTokenValid($token)) {
++        if (!$user->isTokenValid($token)) {
+             throw new TokenNotFoundException();
+         }
+         try {
+
+
+35) /var/www/html/src/Account/Application/ResetPasswordService.php:64    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+             throw new UserNotFoundException();
+         }
+         if ($user->isTokenValid($token)) {
+-            throw new TokenNotFoundException();
++            new TokenNotFoundException();
+         }
+         try {
+             $this->userManager->updatePassword($user, $password);
+
+
+36) /var/www/html/src/Account/Application/ResetPasswordService.php:68    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             throw new TokenNotFoundException();
+         }
+         try {
+-            $this->userManager->updatePassword($user, $password);
++            
+         } catch (\Throwable $exception) {
+             $this->logger->error('An error occurred while resetting password.', ['exception' => $exception, 'email' => $email, 'class' => __CLASS__]);
+             throw new ResetPasswordException();
+
+
+37) /var/www/html/src/Account/Application/ResetPasswordService.php:70    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         try {
+             $this->userManager->updatePassword($user, $password);
+         } catch (\Throwable $exception) {
+-            $this->logger->error('An error occurred while resetting password.', ['exception' => $exception, 'email' => $email, 'class' => __CLASS__]);
++            
+             throw new ResetPasswordException();
+         }
+     }
+ }
+
+
+38) /var/www/html/src/Account/Application/ResetPasswordService.php:72    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+         try {
+             $this->userManager->updatePassword($user, $password);
+         } catch (\Throwable $exception) {
+-            $this->logger->error('An error occurred while resetting password.', ['exception' => $exception, 'email' => $email, 'class' => __CLASS__]);
++            $this->logger->error('An error occurred while resetting password.', ['email' => $email, 'class' => __CLASS__]);
+             throw new ResetPasswordException();
+         }
+     }
+ }
+
+
+39) /var/www/html/src/Account/Application/ResetPasswordService.php:78    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+             $this->userManager->updatePassword($user, $password);
+         } catch (\Throwable $exception) {
+             $this->logger->error('An error occurred while resetting password.', ['exception' => $exception, 'email' => $email, 'class' => __CLASS__]);
+-            throw new ResetPasswordException();
++            new ResetPasswordException();
+         }
+     }
+ }
+
+
+40) /var/www/html/src/Account/Application/UserManagerService.php:82    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+             $this->updatePassword($user, $newPassword);
+         };
+     }
+-    public function checkPasswordMatchActual(User $user, string $password): bool
++    protected function checkPasswordMatchActual(User $user, string $password): bool
+     {
+         return $this->passwordHasher->isPasswordValid($user, $password);
+     }
+
+
+41) /var/www/html/src/Account/Application/UserManagerService.php:87    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->passwordHasher->isPasswordValid($user, $password);
+     }
+-    public function updatePassword(User $user, mixed $password): ?string
++    protected function updatePassword(User $user, mixed $password): ?string
+     {
+         $passwordHashed = $this->passwordHasher->hashPassword($user, $password);
+         $this->userRepository->upgradePassword($user, $passwordHashed);
+
+
+42) /var/www/html/src/Account/Application/UserManagerService.php:90    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     public function updatePassword(User $user, mixed $password): ?string
+     {
+         $passwordHashed = $this->passwordHasher->hashPassword($user, $password);
+-        $this->userRepository->upgradePassword($user, $passwordHashed);
++        
+         return $passwordHashed;
+     }
+     /**
+
+
+43) /var/www/html/src/Account/Application/UserManagerService.php:98    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     /**
+      * @throws CreateNewUserException
+      */
+-    public function createNewUser(string $email, string $password, bool $sendConfirmationEmail = true): User
++    protected function createNewUser(string $email, string $password, bool $sendConfirmationEmail = true): User
+     {
+         try {
+             $user = $this->userFactory->create($email, $password);
+
+
+44) /var/www/html/src/Account/Application/UserManagerService.php:101    [M] TrueValue
+
+--- Original
++++ New
+@@ @@
+     /**
+      * @throws CreateNewUserException
+      */
+-    public function createNewUser(string $email, string $password, bool $sendConfirmationEmail = true): User
++    public function createNewUser(string $email, string $password, bool $sendConfirmationEmail = false): User
+     {
+         try {
+             $user = $this->userFactory->create($email, $password);
+
+
+45) /var/www/html/src/Account/Application/UserManagerService.php:105    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     {
+         try {
+             $user = $this->userFactory->create($email, $password);
+-            $this->userRepository->save($user);
++            
+             if ($sendConfirmationEmail) {
+                 $this->sendRegistrationConfirmationEmail($email);
+             }
+
+
+46) /var/www/html/src/Account/Application/UserManagerService.php:107    [M] IfNegation
+
+--- Original
++++ New
+@@ @@
+         try {
+             $user = $this->userFactory->create($email, $password);
+             $this->userRepository->save($user);
+-            if ($sendConfirmationEmail) {
++            if (!$sendConfirmationEmail) {
+                 $this->sendRegistrationConfirmationEmail($email);
+             }
+         } catch (\Throwable $e) {
+
+
+47) /var/www/html/src/Account/Application/UserManagerService.php:108    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             $user = $this->userFactory->create($email, $password);
+             $this->userRepository->save($user);
+             if ($sendConfirmationEmail) {
+-                $this->sendRegistrationConfirmationEmail($email);
++                
+             }
+         } catch (\Throwable $e) {
+             $this->logger->error('An error occurred while creating a new user.', ['exception' => $e, 'email' => $email, 'class' => __CLASS__]);
+
+
+48) /var/www/html/src/Account/Application/UserManagerService.php:111    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+                 $this->sendRegistrationConfirmationEmail($email);
+             }
+         } catch (\Throwable $e) {
+-            $this->logger->error('An error occurred while creating a new user.', ['exception' => $e, 'email' => $email, 'class' => __CLASS__]);
++            
+             throw new CreateNewUserException();
+         }
+         return $user;
+
+
+49) /var/www/html/src/Account/Application/UserManagerService.php:113    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+                 $this->sendRegistrationConfirmationEmail($email);
+             }
+         } catch (\Throwable $e) {
+-            $this->logger->error('An error occurred while creating a new user.', ['exception' => $e, 'email' => $email, 'class' => __CLASS__]);
++            $this->logger->error('An error occurred while creating a new user.', ['email' => $email, 'class' => __CLASS__]);
+             throw new CreateNewUserException();
+         }
+         return $user;
+
+
+50) /var/www/html/src/Account/Application/UserManagerService.php:120    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+             }
+         } catch (\Throwable $e) {
+             $this->logger->error('An error occurred while creating a new user.', ['exception' => $e, 'email' => $email, 'class' => __CLASS__]);
+-            throw new CreateNewUserException();
++            new CreateNewUserException();
+         }
+         return $user;
+     }
+
+
+51) /var/www/html/src/Account/Application/UserManagerService.php:132    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+      */
+     private function sendRegistrationConfirmationEmail(string $email): void
+     {
+-        $this->accountMailerService->sendEmailToUser($email, 'dashboard.authentication.registration.confirmation.title', 'dashboard/authentication/registration/confirmation-email-template.html.twig', [], 'An error occurred while sending registration confirmation email.');
++        
+     }
+ }
+
+
+52) /var/www/html/src/Account/Domain/PasswordToken.php:47    [M] Coalesce
+
+--- Original
++++ New
+@@ @@
+     public function __construct(User $user, ?Uuid $id = null, ?string $token = null, ?\DateTimeImmutable $expiredAt = null, ?\DateTimeImmutable $activatedAt = null, ?string $updatedBy = null)
+     {
+         $this->user = $user;
+-        $this->id = $id ?? Uuid::v4();
++        $this->id = Uuid::v4() ?? $id;
+         $this->token = $token;
+         $this->expiredAt = $expiredAt;
+         $this->activatedAt = $activatedAt;
+
+
+53) /var/www/html/src/Account/Domain/PasswordToken.php:54    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->activatedAt = $activatedAt;
+         $this->updatedBy = $updatedBy;
+     }
+-    public function getId(): ?Uuid
++    protected function getId(): ?Uuid
+     {
+         return $this->id;
+     }
+
+
+54) /var/www/html/src/Account/Domain/PasswordToken.php:59    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->id;
+     }
+-    public function getUser(): User
++    protected function getUser(): User
+     {
+         return $this->user;
+     }
+
+
+55) /var/www/html/src/Account/Domain/PasswordToken.php:64    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->user;
+     }
+-    public function setUser(User $user): self
++    protected function setUser(User $user): self
+     {
+         $this->user = $user;
+         return $this;
+
+
+56) /var/www/html/src/Account/Domain/PasswordToken.php:71    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->user = $user;
+         return $this;
+     }
+-    public function isActive(\DateTimeImmutable $now): bool
++    protected function isActive(\DateTimeImmutable $now): bool
+     {
+         return $this->activatedAt !== null && $this->expiredAtIsInThePast($now) === false;
+     }
+
+
+57) /var/www/html/src/Account/Domain/PasswordToken.php:74    [M] NotIdentical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isActive(\DateTimeImmutable $now): bool
+     {
+-        return $this->activatedAt !== null && $this->expiredAtIsInThePast($now) === false;
++        return $this->activatedAt === null && $this->expiredAtIsInThePast($now) === false;
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+
+
+58) /var/www/html/src/Account/Domain/PasswordToken.php:74    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isActive(\DateTimeImmutable $now): bool
+     {
+-        return $this->activatedAt !== null && $this->expiredAtIsInThePast($now) === false;
++        return $this->activatedAt !== null || $this->expiredAtIsInThePast($now) === false;
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+
+
+59) /var/www/html/src/Account/Domain/PasswordToken.php:74    [M] LogicalAndAllSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isActive(\DateTimeImmutable $now): bool
+     {
+-        return $this->activatedAt !== null && $this->expiredAtIsInThePast($now) === false;
++        return !($this->activatedAt !== null) && $this->expiredAtIsInThePast($now) === false;
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+
+
+60) /var/www/html/src/Account/Domain/PasswordToken.php:74    [M] LogicalAndNegation
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isActive(\DateTimeImmutable $now): bool
+     {
+-        return $this->activatedAt !== null && $this->expiredAtIsInThePast($now) === false;
++        return !($this->activatedAt !== null && $this->expiredAtIsInThePast($now) === false);
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+
+
+61) /var/www/html/src/Account/Domain/PasswordToken.php:75    [M] FalseValue
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isActive(\DateTimeImmutable $now): bool
+     {
+-        return $this->activatedAt !== null && $this->expiredAtIsInThePast($now) === false;
++        return $this->activatedAt !== null && $this->expiredAtIsInThePast($now) === true;
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+
+
+62) /var/www/html/src/Account/Domain/PasswordToken.php:75    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isActive(\DateTimeImmutable $now): bool
+     {
+-        return $this->activatedAt !== null && $this->expiredAtIsInThePast($now) === false;
++        return $this->activatedAt !== null && $this->expiredAtIsInThePast($now) !== false;
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+
+
+63) /var/www/html/src/Account/Domain/PasswordToken.php:78    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->activatedAt !== null && $this->expiredAtIsInThePast($now) === false;
+     }
+-    public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
++    protected function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+         return $this->expiredAt !== null && $this->expiredAt < $now;
+     }
+
+
+64) /var/www/html/src/Account/Domain/PasswordToken.php:80    [M] NotIdentical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+-        return $this->expiredAt !== null && $this->expiredAt < $now;
++        return $this->expiredAt === null && $this->expiredAt < $now;
+     }
+     /**
+      * @throws RandomException
+
+
+65) /var/www/html/src/Account/Domain/PasswordToken.php:80    [M] LessThan
+
+--- Original
++++ New
+@@ @@
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+-        return $this->expiredAt !== null && $this->expiredAt < $now;
++        return $this->expiredAt !== null && $this->expiredAt <= $now;
+     }
+     /**
+      * @throws RandomException
+
+
+66) /var/www/html/src/Account/Domain/PasswordToken.php:80    [M] LessThanNegotiation
+
+--- Original
++++ New
+@@ @@
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+-        return $this->expiredAt !== null && $this->expiredAt < $now;
++        return $this->expiredAt !== null && $this->expiredAt >= $now;
+     }
+     /**
+      * @throws RandomException
+
+
+67) /var/www/html/src/Account/Domain/PasswordToken.php:80    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+-        return $this->expiredAt !== null && $this->expiredAt < $now;
++        return $this->expiredAt !== null || $this->expiredAt < $now;
+     }
+     /**
+      * @throws RandomException
+
+
+68) /var/www/html/src/Account/Domain/PasswordToken.php:80    [M] LogicalAndAllSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+-        return $this->expiredAt !== null && $this->expiredAt < $now;
++        return !($this->expiredAt !== null) && !($this->expiredAt < $now);
+     }
+     /**
+      * @throws RandomException
+
+
+69) /var/www/html/src/Account/Domain/PasswordToken.php:80    [M] LogicalAndNegation
+
+--- Original
++++ New
+@@ @@
+     }
+     public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+     {
+-        return $this->expiredAt !== null && $this->expiredAt < $now;
++        return !($this->expiredAt !== null && $this->expiredAt < $now);
+     }
+     /**
+      * @throws RandomException
+
+
+70) /var/www/html/src/Account/Domain/PasswordToken.php:86    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     /**
+      * @throws RandomException
+      */
+-    public static function generateForMonth(User $user): self
++    protected static function generateForMonth(User $user): self
+     {
+         return PasswordToken::generateForDate($user, '+1 month');
+     }
+
+
+71) /var/www/html/src/Account/Domain/PasswordToken.php:94    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     /**
+      * @throws RandomException
+      */
+-    public static function generateForOneDay(User $user): self
++    protected static function generateForOneDay(User $user): self
+     {
+         return PasswordToken::generateForDate($user, '+1 day');
+     }
+
+
+72) /var/www/html/src/Account/Domain/PasswordToken.php:103    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+      * @throws RandomException
+      * @throws \Exception
+      */
+-    public static function generateForDate(User $user, string $date): self
++    protected static function generateForDate(User $user, string $date): self
+     {
+         $token = bin2hex(random_bytes(32));
+         $expiredAt = new \DateTimeImmutable($date);
+
+
+73) /var/www/html/src/Account/Domain/PasswordToken.php:105    [M] DecrementInteger
+
+--- Original
++++ New
+@@ @@
+      */
+     public static function generateForDate(User $user, string $date): self
+     {
+-        $token = bin2hex(random_bytes(32));
++        $token = bin2hex(random_bytes(31));
+         $expiredAt = new \DateTimeImmutable($date);
+         return new self($user, token: $token, expiredAt: $expiredAt);
+     }
+
+
+74) /var/www/html/src/Account/Domain/PasswordToken.php:105    [M] IncrementInteger
+
+--- Original
++++ New
+@@ @@
+      */
+     public static function generateForDate(User $user, string $date): self
+     {
+-        $token = bin2hex(random_bytes(32));
++        $token = bin2hex(random_bytes(33));
+         $expiredAt = new \DateTimeImmutable($date);
+         return new self($user, token: $token, expiredAt: $expiredAt);
+     }
+
+
+75) /var/www/html/src/Account/Domain/PasswordToken.php:111    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $expiredAt = new \DateTimeImmutable($date);
+         return new self($user, token: $token, expiredAt: $expiredAt);
+     }
+-    public function getToken(): ?string
++    protected function getToken(): ?string
+     {
+         return $this->token;
+     }
+
+
+76) /var/www/html/src/Account/Domain/PasswordToken.php:116    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->token;
+     }
+-    public function setAsVerified(string $activatedBy = 'system'): self
++    protected function setAsVerified(string $activatedBy = 'system'): self
+     {
+         $this->activatedAt = new \DateTimeImmutable('now');
+         $this->updatedBy = $activatedBy;
+
+
+77) /var/www/html/src/Account/Domain/PasswordToken.php:120    [M] TrueValue
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->activatedAt = new \DateTimeImmutable('now');
+         $this->updatedBy = $activatedBy;
+-        $this->user->setVerified(true);
++        $this->user->setVerified(false);
+         return $this;
+     }
+     public function getUpdatedBy(): ?string
+
+
+78) /var/www/html/src/Account/Domain/PasswordToken.php:120    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->activatedAt = new \DateTimeImmutable('now');
+         $this->updatedBy = $activatedBy;
+-        $this->user->setVerified(true);
++        
+         return $this;
+     }
+     public function getUpdatedBy(): ?string
+
+
+79) /var/www/html/src/Account/Domain/PasswordToken.php:125    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->user->setVerified(true);
+         return $this;
+     }
+-    public function getUpdatedBy(): ?string
++    protected function getUpdatedBy(): ?string
+     {
+         return $this->updatedBy;
+     }
+ }
+
+
+80) /var/www/html/src/Account/Domain/User.php:90    [M] Ternary
+
+--- Original
++++ New
+@@ @@
+     private Collection $passwordTokens;
+     public function __construct(Uuid $id = null)
+     {
+-        $this->id = $id ?: Uuid::v4();
++        $this->id = $id ? Uuid::v4() : $id;
+         $this->passwordTokens = new ArrayCollection();
+     }
+     public function __toString(): string
+
+
+81) /var/www/html/src/Account/Domain/User.php:104    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->id;
+     }
+-    public function setId(?Uuid $id): self
++    protected function setId(?Uuid $id): self
+     {
+         $this->id = $id;
+         return $this;
+
+
+82) /var/www/html/src/Account/Domain/User.php:116    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->email;
+     }
+-    public function setEmail(string $email): self
++    protected function setEmail(string $email): self
+     {
+         $this->email = $email;
+         return $this;
+
+
+83) /var/www/html/src/Account/Domain/User.php:144    [M] UnwrapArrayUnique
+
+--- Original
++++ New
+@@ @@
+         $actualRoles = $this->roles;
+         // guarantee every user at least has ROLE_USER
+         $actualRoles[] = RoleEnum::USER->value;
+-        return array_unique($actualRoles);
++        return $actualRoles;
+     }
+     /**
+      * @param string[] $roles
+
+
+84) /var/www/html/src/Account/Domain/User.php:150    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     /**
+      * @param string[] $roles
+      */
+-    public function setRoles(array $roles): self
++    protected function setRoles(array $roles): self
+     {
+         $this->roles = $roles;
+         return $this;
+
+
+85) /var/www/html/src/Account/Domain/User.php:165    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->password;
+     }
+-    public function setPassword(?string $password): self
++    protected function setPassword(?string $password): self
+     {
+         $this->password = $password;
+         return $this;
+
+
+86) /var/www/html/src/Account/Domain/User.php:172    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->password = $password;
+         return $this;
+     }
+-    public function getActualPassword(): ?string
++    protected function getActualPassword(): ?string
+     {
+         return $this->actualPassword;
+     }
+
+
+87) /var/www/html/src/Account/Domain/User.php:177    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->actualPassword;
+     }
+-    public function setActualPassword(string $actualPassword): self
++    protected function setActualPassword(string $actualPassword): self
+     {
+         $this->actualPassword = $actualPassword;
+         return $this;
+
+
+88) /var/www/html/src/Account/Domain/User.php:184    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->actualPassword = $actualPassword;
+         return $this;
+     }
+-    public function setTotpSecret(TotpSecret $totpSecret): self
++    protected function setTotpSecret(TotpSecret $totpSecret): self
+     {
+         $this->totpSecret = $totpSecret;
+         return $this;
+
+
+89) /var/www/html/src/Account/Domain/User.php:193    [M] NullSafeMethodCall
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isTotpAuthenticationEnabled(): bool
+     {
+-        return (bool) $this->totpSecret?->isEnable();
++        return (bool) $this->totpSecret->isEnable();
+     }
+     public function getTotpAuthenticationUsername(): string
+     {
+
+
+90) /var/www/html/src/Account/Domain/User.php:193    [M] CastBool
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isTotpAuthenticationEnabled(): bool
+     {
+-        return (bool) $this->totpSecret?->isEnable();
++        return $this->totpSecret?->isEnable();
+     }
+     public function getTotpAuthenticationUsername(): string
+     {
+
+
+91) /var/www/html/src/Account/Domain/User.php:203    [M] NullSafeMethodCall
+
+--- Original
++++ New
+@@ @@
+     }
+     public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
+     {
+-        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 6);
++        return new TotpConfiguration($this->totpSecret->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 6);
+     }
+     /**
+      * @see UserInterface
+
+
+92) /var/www/html/src/Account/Domain/User.php:203    [M] Coalesce
+
+--- Original
++++ New
+@@ @@
+     }
+     public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
+     {
+-        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 6);
++        return new TotpConfiguration('' ?? $this->totpSecret?->getSecret(), TotpConfiguration::ALGORITHM_SHA1, 30, 6);
+     }
+     /**
+      * @see UserInterface
+
+
+93) /var/www/html/src/Account/Domain/User.php:203    [M] DecrementInteger
+
+--- Original
++++ New
+@@ @@
+     }
+     public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
+     {
+-        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 6);
++        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 29, 6);
+     }
+     /**
+      * @see UserInterface
+
+
+94) /var/www/html/src/Account/Domain/User.php:203    [M] IncrementInteger
+
+--- Original
++++ New
+@@ @@
+     }
+     public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
+     {
+-        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 6);
++        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 31, 6);
+     }
+     /**
+      * @see UserInterface
+
+
+95) /var/www/html/src/Account/Domain/User.php:203    [M] DecrementInteger
+
+--- Original
++++ New
+@@ @@
+     }
+     public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
+     {
+-        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 6);
++        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 5);
+     }
+     /**
+      * @see UserInterface
+
+
+96) /var/www/html/src/Account/Domain/User.php:203    [M] IncrementInteger
+
+--- Original
++++ New
+@@ @@
+     }
+     public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
+     {
+-        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 6);
++        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 7);
+     }
+     /**
+      * @see UserInterface
+
+
+97) /var/www/html/src/Account/Domain/User.php:203    [M] NewObject
+
+--- Original
++++ New
+@@ @@
+     }
+     public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
+     {
+-        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 6);
++        new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 6);
++        return null;
+     }
+     /**
+      * @see UserInterface
+
+
+98) /var/www/html/src/Account/Domain/User.php:228    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+             $this->updatedAt = new \DateTimeImmutable();
+         }
+     }
+-    public function getAvatarFile(): ?File
++    protected function getAvatarFile(): ?File
+     {
+         return $this->avatarFile;
+     }
+
+
+99) /var/www/html/src/Account/Domain/User.php:233    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->avatarFile;
+     }
+-    public function setAvatar(?string $avatar): void
++    protected function setAvatar(?string $avatar): void
+     {
+         $this->avatar = $avatar;
+     }
+
+
+100) /var/www/html/src/Account/Domain/User.php:238    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->avatar = $avatar;
+     }
+-    public function getAvatar(): ?string
++    protected function getAvatar(): ?string
+     {
+         return $this->avatar;
+     }
+
+
+101) /var/www/html/src/Account/Domain/User.php:243    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->avatar;
+     }
+-    public function getAvatarUrl(): ?string
++    protected function getAvatarUrl(): ?string
+     {
+         if (!$this->avatar) {
+             return null;
+
+
+102) /var/www/html/src/Account/Domain/User.php:245    [M] LogicalNot
+
+--- Original
++++ New
+@@ @@
+     }
+     public function getAvatarUrl(): ?string
+     {
+-        if (!$this->avatar) {
++        if ($this->avatar) {
+             return null;
+         }
+         if (str_contains($this->avatar, '/')) {
+
+
+103) /var/www/html/src/Account/Domain/User.php:249    [M] IfNegation
+
+--- Original
++++ New
+@@ @@
+         if (!$this->avatar) {
+             return null;
+         }
+-        if (str_contains($this->avatar, '/')) {
++        if (!str_contains($this->avatar, '/')) {
+             return $this->avatar;
+         }
+         return sprintf('/uploads/images/avatars/%s', $this->avatar);
+
+
+104) /var/www/html/src/Account/Domain/User.php:253    [M] FunctionCall
+
+--- Original
++++ New
+@@ @@
+         if (str_contains($this->avatar, '/')) {
+             return $this->avatar;
+         }
+-        return sprintf('/uploads/images/avatars/%s', $this->avatar);
++        sprintf('/uploads/images/avatars/%s', $this->avatar);
++        return null;
+     }
+     public function setAvatarSize(?int $avatarSize): void
+     {
+
+
+105) /var/www/html/src/Account/Domain/User.php:256    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         }
+         return sprintf('/uploads/images/avatars/%s', $this->avatar);
+     }
+-    public function setAvatarSize(?int $avatarSize): void
++    protected function setAvatarSize(?int $avatarSize): void
+     {
+         $this->avatarSize = $avatarSize;
+     }
+
+
+106) /var/www/html/src/Account/Domain/User.php:261    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->avatarSize = $avatarSize;
+     }
+-    public function getAvatarSize(): ?int
++    protected function getAvatarSize(): ?int
+     {
+         return $this->avatarSize;
+     }
+
+
+107) /var/www/html/src/Account/Domain/User.php:268    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+     }
+     public function __serialize(): array
+     {
+-        return ['id' => $this->id, 'email' => $this->getEmail(), 'password' => $this->password];
++        return ['email' => $this->getEmail(), 'password' => $this->password];
+     }
+     public function isSuperAdmin(): bool
+     {
+
+
+108) /var/www/html/src/Account/Domain/User.php:269    [M] ArrayItem
+
+--- Original
++++ New
+@@ @@
+     }
+     public function __serialize(): array
+     {
+-        return ['id' => $this->id, 'email' => $this->getEmail(), 'password' => $this->password];
++        return ['id' > $this->id, 'email' => $this->getEmail(), 'password' => $this->password];
+     }
+     public function isSuperAdmin(): bool
+     {
+
+
+109) /var/www/html/src/Account/Domain/User.php:270    [M] ArrayItem
+
+--- Original
++++ New
+@@ @@
+     }
+     public function __serialize(): array
+     {
+-        return ['id' => $this->id, 'email' => $this->getEmail(), 'password' => $this->password];
++        return ['id' => $this->id, 'email' > $this->getEmail(), 'password' => $this->password];
+     }
+     public function isSuperAdmin(): bool
+     {
+
+
+110) /var/www/html/src/Account/Domain/User.php:271    [M] ArrayItem
+
+--- Original
++++ New
+@@ @@
+     }
+     public function __serialize(): array
+     {
+-        return ['id' => $this->id, 'email' => $this->getEmail(), 'password' => $this->password];
++        return ['id' => $this->id, 'email' => $this->getEmail(), 'password' > $this->password];
+     }
+     public function isSuperAdmin(): bool
+     {
+
+
+111) /var/www/html/src/Account/Domain/User.php:280    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return in_array(RoleEnum::SUPER_ADMIN->value, $this->roles, true);
+     }
+-    public function isAdmin(): bool
++    protected function isAdmin(): bool
+     {
+         return in_array(RoleEnum::ADMIN->value, $this->roles, true);
+     }
+
+
+112) /var/www/html/src/Account/Domain/User.php:285    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return in_array(RoleEnum::ADMIN->value, $this->roles, true);
+     }
+-    public function isVerified(): bool
++    protected function isVerified(): bool
+     {
+         return $this->isVerified;
+     }
+
+
+113) /var/www/html/src/Account/Domain/User.php:290    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->isVerified;
+     }
+-    public function setVerified(bool $isVerified): static
++    protected function setVerified(bool $isVerified): static
+     {
+         $this->isVerified = $isVerified;
+         return $this;
+
+
+114) /var/www/html/src/Account/Domain/User.php:297    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->isVerified = $isVerified;
+         return $this;
+     }
+-    public function setAsAdmin(): void
++    protected function setAsAdmin(): void
+     {
+         $this->roles[] = RoleEnum::ADMIN->value;
+     }
+
+
+115) /var/www/html/src/Account/Domain/User.php:302    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->roles[] = RoleEnum::ADMIN->value;
+     }
+-    public function addPasswordToken(PasswordToken $passwordToken): self
++    protected function addPasswordToken(PasswordToken $passwordToken): self
+     {
+         if (!$this->passwordTokens->contains($passwordToken)) {
+             $this->passwordTokens[] = $passwordToken;
+
+
+116) /var/www/html/src/Account/Domain/User.php:304    [M] LogicalNot
+
+--- Original
++++ New
+@@ @@
+     }
+     public function addPasswordToken(PasswordToken $passwordToken): self
+     {
+-        if (!$this->passwordTokens->contains($passwordToken)) {
++        if ($this->passwordTokens->contains($passwordToken)) {
+             $this->passwordTokens[] = $passwordToken;
+             $passwordToken->setUser($this);
+         }
+
+
+117) /var/www/html/src/Account/Domain/User.php:306    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     {
+         if (!$this->passwordTokens->contains($passwordToken)) {
+             $this->passwordTokens[] = $passwordToken;
+-            $passwordToken->setUser($this);
++            
+         }
+         return $this;
+     }
+
+
+118) /var/www/html/src/Account/Domain/User.php:315    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     /**
+      * @return Collection<int, PasswordToken>
+      */
+-    public function getPasswordTokens(): Collection
++    protected function getPasswordTokens(): Collection
+     {
+         return $this->passwordTokens;
+     }
+
+
+119) /var/www/html/src/Account/Domain/User.php:320    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->passwordTokens;
+     }
+-    public function getActiveToken(\DateTimeImmutable $now): ?PasswordToken
++    protected function getActiveToken(\DateTimeImmutable $now): ?PasswordToken
+     {
+         foreach ($this->passwordTokens as $passwordToken) {
+             if ($passwordToken->isActive($now)) {
+
+
+120) /var/www/html/src/Account/Domain/User.php:322    [M] Foreach_
+
+--- Original
++++ New
+@@ @@
+     }
+     public function getActiveToken(\DateTimeImmutable $now): ?PasswordToken
+     {
+-        foreach ($this->passwordTokens as $passwordToken) {
++        foreach ([] as $passwordToken) {
+             if ($passwordToken->isActive($now)) {
+                 return $passwordToken;
+             }
+
+
+121) /var/www/html/src/Account/Domain/User.php:323    [M] IfNegation
+
+--- Original
++++ New
+@@ @@
+     public function getActiveToken(\DateTimeImmutable $now): ?PasswordToken
+     {
+         foreach ($this->passwordTokens as $passwordToken) {
+-            if ($passwordToken->isActive($now)) {
++            if (!$passwordToken->isActive($now)) {
+                 return $passwordToken;
+             }
+         }
+
+
+122) /var/www/html/src/Account/Domain/User.php:331    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         }
+         return null;
+     }
+-    public function addPasswordTokenForOneMonth(): void
++    protected function addPasswordTokenForOneMonth(): void
+     {
+         $this->addPasswordToken(PasswordToken::generateForMonth($this));
+     }
+
+
+123) /var/www/html/src/Account/Domain/User.php:333    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     }
+     public function addPasswordTokenForOneMonth(): void
+     {
+-        $this->addPasswordToken(PasswordToken::generateForMonth($this));
++        
+     }
+     public function isActive(): bool
+     {
+
+
+124) /var/www/html/src/Account/Domain/User.php:336    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->addPasswordToken(PasswordToken::generateForMonth($this));
+     }
+-    public function isActive(): bool
++    protected function isActive(): bool
+     {
+         return $this->isVerified;
+     }
+
+
+125) /var/www/html/src/Account/Domain/User.php:341    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->isVerified;
+     }
+-    public function isTokenValid(string $token): bool
++    protected function isTokenValid(string $token): bool
+     {
+         foreach ($this->passwordTokens as $passwordToken) {
+             if ($passwordToken->getToken() === $token && $passwordToken->isActive(new \DateTimeImmutable())) {
+
+
+126) /var/www/html/src/Account/Domain/User.php:343    [M] Foreach_
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isTokenValid(string $token): bool
+     {
+-        foreach ($this->passwordTokens as $passwordToken) {
++        foreach ([] as $passwordToken) {
+             if ($passwordToken->getToken() === $token && $passwordToken->isActive(new \DateTimeImmutable())) {
+                 return true;
+             }
+
+
+127) /var/www/html/src/Account/Domain/User.php:344    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     public function isTokenValid(string $token): bool
+     {
+         foreach ($this->passwordTokens as $passwordToken) {
+-            if ($passwordToken->getToken() === $token && $passwordToken->isActive(new \DateTimeImmutable())) {
++            if ($passwordToken->getToken() !== $token && $passwordToken->isActive(new \DateTimeImmutable())) {
+                 return true;
+             }
+         }
+
+
+128) /var/www/html/src/Account/Domain/User.php:344    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+     public function isTokenValid(string $token): bool
+     {
+         foreach ($this->passwordTokens as $passwordToken) {
+-            if ($passwordToken->getToken() === $token && $passwordToken->isActive(new \DateTimeImmutable())) {
++            if ($passwordToken->getToken() === $token || $passwordToken->isActive(new \DateTimeImmutable())) {
+                 return true;
+             }
+         }
+
+
+129) /var/www/html/src/Account/Domain/User.php:344    [M] LogicalAndAllSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     public function isTokenValid(string $token): bool
+     {
+         foreach ($this->passwordTokens as $passwordToken) {
+-            if ($passwordToken->getToken() === $token && $passwordToken->isActive(new \DateTimeImmutable())) {
++            if (!($passwordToken->getToken() === $token) && !$passwordToken->isActive(new \DateTimeImmutable())) {
+                 return true;
+             }
+         }
+
+
+130) /var/www/html/src/Account/Domain/User.php:344    [M] LogicalAndNegation
+
+--- Original
++++ New
+@@ @@
+     public function isTokenValid(string $token): bool
+     {
+         foreach ($this->passwordTokens as $passwordToken) {
+-            if ($passwordToken->getToken() === $token && $passwordToken->isActive(new \DateTimeImmutable())) {
++            if (!($passwordToken->getToken() === $token && $passwordToken->isActive(new \DateTimeImmutable()))) {
+                 return true;
+             }
+         }
+
+
+131) /var/www/html/src/Account/Domain/User.php:344    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     public function isTokenValid(string $token): bool
+     {
+         foreach ($this->passwordTokens as $passwordToken) {
+-            if ($passwordToken->getToken() === $token && $passwordToken->isActive(new \DateTimeImmutable())) {
++            if ($passwordToken->getToken() === $token && !$passwordToken->isActive(new \DateTimeImmutable())) {
+                 return true;
+             }
+         }
+
+
+132) /var/www/html/src/Account/Domain/User.php:347    [M] TrueValue
+
+--- Original
++++ New
+@@ @@
+     {
+         foreach ($this->passwordTokens as $passwordToken) {
+             if ($passwordToken->getToken() === $token && $passwordToken->isActive(new \DateTimeImmutable())) {
+-                return true;
++                return false;
+             }
+         }
+         return false;
+     }
+ }
+
+
+133) /var/www/html/src/Account/Domain/User.php:351    [M] FalseValue
+
+--- Original
++++ New
+@@ @@
+                 return true;
+             }
+         }
+-        return false;
++        return true;
+     }
+ }
+
+
+134) /var/www/html/src/Account/Domain/UserFactory.php:14    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     public function __construct(private readonly UserPasswordHasherInterface $userPasswordHasher)
+     {
+     }
+-    public function create(string $email, string $password): User
++    protected function create(string $email, string $password): User
+     {
+         $user = new User();
+         $user->setEmail($email);
+
+
+135) /var/www/html/src/Account/Domain/UserFactory.php:17    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     public function create(string $email, string $password): User
+     {
+         $user = new User();
+-        $user->setEmail($email);
++        
+         $hashedPassword = $this->userPasswordHasher->hashPassword($user, $password);
+         $user->setPassword($hashedPassword);
+         $user->addPasswordTokenForOneMonth();
+
+
+136) /var/www/html/src/Account/Domain/UserFactory.php:22    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         $user = new User();
+         $user->setEmail($email);
+         $hashedPassword = $this->userPasswordHasher->hashPassword($user, $password);
+-        $user->setPassword($hashedPassword);
++        
+         $user->addPasswordTokenForOneMonth();
+         $user->setAsAdmin();
+         return $user;
+     }
+ }
+
+
+137) /var/www/html/src/Account/Domain/UserFactory.php:23    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         $user->setEmail($email);
+         $hashedPassword = $this->userPasswordHasher->hashPassword($user, $password);
+         $user->setPassword($hashedPassword);
+-        $user->addPasswordTokenForOneMonth();
++        
+         $user->setAsAdmin();
+         return $user;
+     }
+ }
+
+
+138) /var/www/html/src/Account/Domain/UserFactory.php:24    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         $hashedPassword = $this->userPasswordHasher->hashPassword($user, $password);
+         $user->setPassword($hashedPassword);
+         $user->addPasswordTokenForOneMonth();
+-        $user->setAsAdmin();
++        
+         return $user;
+     }
+ }
+
+
+139) /var/www/html/src/Account/Domain/ValueObject/TotpSecret.php:19    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->secret = $secret;
+     }
+-    public function isEnable(): bool
++    protected function isEnable(): bool
+     {
+         return null !== $this->secret;
+     }
+
+
+140) /var/www/html/src/Account/Domain/ValueObject/TotpSecret.php:21    [M] NotIdentical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isEnable(): bool
+     {
+-        return null !== $this->secret;
++        return null === $this->secret;
+     }
+     public function getSecret(): ?string
+     {
+
+
+141) /var/www/html/src/Account/Domain/ValueObject/TotpSecret.php:24    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return null !== $this->secret;
+     }
+-    public function getSecret(): ?string
++    protected function getSecret(): ?string
+     {
+         return $this->secret;
+     }
+ }
+
+
+142) /var/www/html/src/Account/Infrastructure/Rest/PasswordTokenRepository.php:22    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+ {
+     public function __construct(ManagerRegistry $registry)
+     {
+-        parent::__construct($registry, PasswordToken::class);
++        
+     }
+     public function getByToken(string $token, \DateTimeImmutable $now): ?PasswordToken
+     {
+
+
+143) /var/www/html/src/Account/Infrastructure/Rest/PasswordTokenRepository.php:41    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     }
+     public function save(PasswordToken $passwordToken): void
+     {
+-        $this->getEntityManager()->persist($passwordToken);
++        
+         $this->getEntityManager()->flush();
+     }
+ }
+
+
+144) /var/www/html/src/Account/Infrastructure/Rest/PasswordTokenRepository.php:42    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     public function save(PasswordToken $passwordToken): void
+     {
+         $this->getEntityManager()->persist($passwordToken);
+-        $this->getEntityManager()->flush();
++        
+     }
+ }
+
+
+145) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:24    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+ {
+     public function __construct(ManagerRegistry $registry)
+     {
+-        parent::__construct($registry, User::class);
++        
+     }
+     public function save(User $entity): void
+     {
+
+
+146) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:29    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     }
+     public function save(User $entity): void
+     {
+-        $this->getEntityManager()->persist($entity);
++        
+         $this->getEntityManager()->flush();
+     }
+     /**
+
+
+147) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:30    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     public function save(User $entity): void
+     {
+         $this->getEntityManager()->persist($entity);
+-        $this->getEntityManager()->flush();
++        
+     }
+     /**
+      * Used to upgrade (rehash) the user's password automatically over time.
+
+
+148) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:38    [M] InstanceOf_
+
+--- Original
++++ New
+@@ @@
+      */
+     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+     {
+-        if (!$user instanceof User) {
++        if (!true) {
+             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+         }
+         $user->setPassword($newHashedPassword);
+
+
+149) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:38    [M] InstanceOf_
+
+--- Original
++++ New
+@@ @@
+      */
+     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+     {
+-        if (!$user instanceof User) {
++        if (!false) {
+             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+         }
+         $user->setPassword($newHashedPassword);
+
+
+150) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:38    [M] LogicalNot
+
+--- Original
++++ New
+@@ @@
+      */
+     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+     {
+-        if (!$user instanceof User) {
++        if ($user instanceof User) {
+             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+         }
+         $user->setPassword($newHashedPassword);
+
+
+151) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:39    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+     {
+         if (!$user instanceof User) {
+-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
++            new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+         }
+         $user->setPassword($newHashedPassword);
+         $user->setUpdatedAt(new \DateTimeImmutable());
+
+
+152) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:42    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         if (!$user instanceof User) {
+             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+         }
+-        $user->setPassword($newHashedPassword);
++        
+         $user->setUpdatedAt(new \DateTimeImmutable());
+         $this->save($user);
+     }
+
+
+153) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:43    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+         }
+         $user->setPassword($newHashedPassword);
+-        $user->setUpdatedAt(new \DateTimeImmutable());
++        
+         $this->save($user);
+     }
+     public function getByEmail(string $email): ?User
+
+
+154) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:45    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         }
+         $user->setPassword($newHashedPassword);
+         $user->setUpdatedAt(new \DateTimeImmutable());
+-        $this->save($user);
++        
+     }
+     public function getByEmail(string $email): ?User
+     {
+
+
+155) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:50    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+     }
+     public function getByEmail(string $email): ?User
+     {
+-        return $this->findOneBy(['email' => $email]);
++        return $this->findOneBy([]);
+     }
+ }
+
+
+156) /var/www/html/src/Account/Ui/AccountController.php:41    [M] TrueValue
+
+--- Original
++++ New
+@@ @@
+     public function configureActions(Actions $actions): Actions
+     {
+         /** @phpstan-ignore-next-line  */
+-        $fa2Action = true === $this->getUser()?->isTotpAuthenticationEnabled() ? $this->createDisable2FaAction() : $this->createEnable2FaAction();
++        $fa2Action = false === $this->getUser()?->isTotpAuthenticationEnabled() ? $this->createDisable2FaAction() : $this->createEnable2FaAction();
+         return parent::configureActions($actions)->remove(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN)->add(Crud::PAGE_EDIT, $fa2Action);
+     }
+     public function configureFields(string $pageName): iterable
+
+
+157) /var/www/html/src/Account/Ui/AccountController.php:41    [M] NullSafeMethodCall
+
+--- Original
++++ New
+@@ @@
+     public function configureActions(Actions $actions): Actions
+     {
+         /** @phpstan-ignore-next-line  */
+-        $fa2Action = true === $this->getUser()?->isTotpAuthenticationEnabled() ? $this->createDisable2FaAction() : $this->createEnable2FaAction();
++        $fa2Action = true === $this->getUser()->isTotpAuthenticationEnabled() ? $this->createDisable2FaAction() : $this->createEnable2FaAction();
+         return parent::configureActions($actions)->remove(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN)->add(Crud::PAGE_EDIT, $fa2Action);
+     }
+     public function configureFields(string $pageName): iterable
+
+
+158) /var/www/html/src/Account/Ui/AccountController.php:41    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     public function configureActions(Actions $actions): Actions
+     {
+         /** @phpstan-ignore-next-line  */
+-        $fa2Action = true === $this->getUser()?->isTotpAuthenticationEnabled() ? $this->createDisable2FaAction() : $this->createEnable2FaAction();
++        $fa2Action = true !== $this->getUser()?->isTotpAuthenticationEnabled() ? $this->createDisable2FaAction() : $this->createEnable2FaAction();
+         return parent::configureActions($actions)->remove(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN)->add(Crud::PAGE_EDIT, $fa2Action);
+     }
+     public function configureFields(string $pageName): iterable
+
+
+159) /var/www/html/src/Account/Ui/AccountController.php:41    [M] Ternary
+
+--- Original
++++ New
+@@ @@
+     public function configureActions(Actions $actions): Actions
+     {
+         /** @phpstan-ignore-next-line  */
+-        $fa2Action = true === $this->getUser()?->isTotpAuthenticationEnabled() ? $this->createDisable2FaAction() : $this->createEnable2FaAction();
++        $fa2Action = true === $this->getUser()?->isTotpAuthenticationEnabled() ? $this->createEnable2FaAction() : $this->createDisable2FaAction();
+         return parent::configureActions($actions)->remove(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN)->add(Crud::PAGE_EDIT, $fa2Action);
+     }
+     public function configureFields(string $pageName): iterable
+
+
+160) /var/www/html/src/Account/Ui/AccountController.php:55    [M] TrueValue
+
+--- Original
++++ New
+@@ @@
+     {
+         $user = $this->getUser();
+         yield FormField::addFieldset('admin.account.block.baseData')->setCssClass('col-sm-6');
+-        yield EmailField::new('email')->setRequired(true)->onlyOnForms();
++        yield EmailField::new('email')->setRequired(false)->onlyOnForms();
+         yield VichImageField::new('avatarFile', 'admin.account.avatar')->setDownloadUri('public/uploads/images/avatars')->setImageUri(null)->setUploadedFileNamePattern(sprintf('%s-[slug]-[timestamp].[extension]', $user?->getId()));
+         yield FormField::addFieldset('admin.account.block.changePassword')->setCssClass('col-sm-6');
+         yield TextField::new('actualPassword')->setLabel('admin.account.actualPassword')->setFormType(PasswordType::class)->setRequired(false)->onlyOnForms();
+
+
+161) /var/www/html/src/Account/Ui/AccountController.php:60    [M] NullSafeMethodCall
+
+--- Original
++++ New
+@@ @@
+         $user = $this->getUser();
+         yield FormField::addFieldset('admin.account.block.baseData')->setCssClass('col-sm-6');
+         yield EmailField::new('email')->setRequired(true)->onlyOnForms();
+-        yield VichImageField::new('avatarFile', 'admin.account.avatar')->setDownloadUri('public/uploads/images/avatars')->setImageUri(null)->setUploadedFileNamePattern(sprintf('%s-[slug]-[timestamp].[extension]', $user?->getId()));
++        yield VichImageField::new('avatarFile', 'admin.account.avatar')->setDownloadUri('public/uploads/images/avatars')->setImageUri(null)->setUploadedFileNamePattern(sprintf('%s-[slug]-[timestamp].[extension]', $user->getId()));
+         yield FormField::addFieldset('admin.account.block.changePassword')->setCssClass('col-sm-6');
+         yield TextField::new('actualPassword')->setLabel('admin.account.actualPassword')->setFormType(PasswordType::class)->setRequired(false)->onlyOnForms();
+         yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => ['label' => 'admin.account.password'], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => false])->setRequired(false)->onlyOnForms();
+
+
+162) /var/www/html/src/Account/Ui/AccountController.php:66    [M] FalseValue
+
+--- Original
++++ New
+@@ @@
+         yield EmailField::new('email')->setRequired(true)->onlyOnForms();
+         yield VichImageField::new('avatarFile', 'admin.account.avatar')->setDownloadUri('public/uploads/images/avatars')->setImageUri(null)->setUploadedFileNamePattern(sprintf('%s-[slug]-[timestamp].[extension]', $user?->getId()));
+         yield FormField::addFieldset('admin.account.block.changePassword')->setCssClass('col-sm-6');
+-        yield TextField::new('actualPassword')->setLabel('admin.account.actualPassword')->setFormType(PasswordType::class)->setRequired(false)->onlyOnForms();
++        yield TextField::new('actualPassword')->setLabel('admin.account.actualPassword')->setFormType(PasswordType::class)->setRequired(true)->onlyOnForms();
+         yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => ['label' => 'admin.account.password'], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => false])->setRequired(false)->onlyOnForms();
+     }
+     public function configureCrud(Crud $crud): Crud
+
+
+163) /var/www/html/src/Account/Ui/AccountController.php:70    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+         yield VichImageField::new('avatarFile', 'admin.account.avatar')->setDownloadUri('public/uploads/images/avatars')->setImageUri(null)->setUploadedFileNamePattern(sprintf('%s-[slug]-[timestamp].[extension]', $user?->getId()));
+         yield FormField::addFieldset('admin.account.block.changePassword')->setCssClass('col-sm-6');
+         yield TextField::new('actualPassword')->setLabel('admin.account.actualPassword')->setFormType(PasswordType::class)->setRequired(false)->onlyOnForms();
+-        yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => ['label' => 'admin.account.password'], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => false])->setRequired(false)->onlyOnForms();
++        yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['first_options' => ['label' => 'admin.account.password'], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => false])->setRequired(false)->onlyOnForms();
+     }
+     public function configureCrud(Crud $crud): Crud
+     {
+
+
+164) /var/www/html/src/Account/Ui/AccountController.php:72    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+         yield VichImageField::new('avatarFile', 'admin.account.avatar')->setDownloadUri('public/uploads/images/avatars')->setImageUri(null)->setUploadedFileNamePattern(sprintf('%s-[slug]-[timestamp].[extension]', $user?->getId()));
+         yield FormField::addFieldset('admin.account.block.changePassword')->setCssClass('col-sm-6');
+         yield TextField::new('actualPassword')->setLabel('admin.account.actualPassword')->setFormType(PasswordType::class)->setRequired(false)->onlyOnForms();
+-        yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => ['label' => 'admin.account.password'], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => false])->setRequired(false)->onlyOnForms();
++        yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => [], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => false])->setRequired(false)->onlyOnForms();
+     }
+     public function configureCrud(Crud $crud): Crud
+     {
+
+
+165) /var/www/html/src/Account/Ui/AccountController.php:73    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+         yield VichImageField::new('avatarFile', 'admin.account.avatar')->setDownloadUri('public/uploads/images/avatars')->setImageUri(null)->setUploadedFileNamePattern(sprintf('%s-[slug]-[timestamp].[extension]', $user?->getId()));
+         yield FormField::addFieldset('admin.account.block.changePassword')->setCssClass('col-sm-6');
+         yield TextField::new('actualPassword')->setLabel('admin.account.actualPassword')->setFormType(PasswordType::class)->setRequired(false)->onlyOnForms();
+-        yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => ['label' => 'admin.account.password'], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => false])->setRequired(false)->onlyOnForms();
++        yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => ['label' => 'admin.account.password'], 'second_options' => [], 'mapped' => false])->setRequired(false)->onlyOnForms();
+     }
+     public function configureCrud(Crud $crud): Crud
+     {
+
+
+166) /var/www/html/src/Account/Ui/AccountController.php:74    [M] FalseValue
+
+--- Original
++++ New
+@@ @@
+         yield VichImageField::new('avatarFile', 'admin.account.avatar')->setDownloadUri('public/uploads/images/avatars')->setImageUri(null)->setUploadedFileNamePattern(sprintf('%s-[slug]-[timestamp].[extension]', $user?->getId()));
+         yield FormField::addFieldset('admin.account.block.changePassword')->setCssClass('col-sm-6');
+         yield TextField::new('actualPassword')->setLabel('admin.account.actualPassword')->setFormType(PasswordType::class)->setRequired(false)->onlyOnForms();
+-        yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => ['label' => 'admin.account.password'], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => false])->setRequired(false)->onlyOnForms();
++        yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => ['label' => 'admin.account.password'], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => true])->setRequired(false)->onlyOnForms();
+     }
+     public function configureCrud(Crud $crud): Crud
+     {
+
+
+167) /var/www/html/src/Account/Ui/AccountController.php:76    [M] FalseValue
+
+--- Original
++++ New
+@@ @@
+         yield VichImageField::new('avatarFile', 'admin.account.avatar')->setDownloadUri('public/uploads/images/avatars')->setImageUri(null)->setUploadedFileNamePattern(sprintf('%s-[slug]-[timestamp].[extension]', $user?->getId()));
+         yield FormField::addFieldset('admin.account.block.changePassword')->setCssClass('col-sm-6');
+         yield TextField::new('actualPassword')->setLabel('admin.account.actualPassword')->setFormType(PasswordType::class)->setRequired(false)->onlyOnForms();
+-        yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => ['label' => 'admin.account.password'], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => false])->setRequired(false)->onlyOnForms();
++        yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => ['label' => 'admin.account.password'], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => false])->setRequired(true)->onlyOnForms();
+     }
+     public function configureCrud(Crud $crud): Crud
+     {
+
+
+168) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:30    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function supports(Request $request): bool
+     {
+-        return $request->isMethod('POST') && $this->getLoginUrl($request) === $request->getPathInfo();
++        return $request->isMethod('POST') && $this->getLoginUrl($request) !== $request->getPathInfo();
+     }
+     public function authenticate(Request $request): Passport
+     {
+
+
+169) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:30    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+     }
+     public function supports(Request $request): bool
+     {
+-        return $request->isMethod('POST') && $this->getLoginUrl($request) === $request->getPathInfo();
++        return $request->isMethod('POST') || $this->getLoginUrl($request) === $request->getPathInfo();
+     }
+     public function authenticate(Request $request): Passport
+     {
+
+
+170) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:30    [M] LogicalAndAllSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     }
+     public function supports(Request $request): bool
+     {
+-        return $request->isMethod('POST') && $this->getLoginUrl($request) === $request->getPathInfo();
++        return !$request->isMethod('POST') && !($this->getLoginUrl($request) === $request->getPathInfo());
+     }
+     public function authenticate(Request $request): Passport
+     {
+
+
+171) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:30    [M] LogicalAndNegation
+
+--- Original
++++ New
+@@ @@
+     }
+     public function supports(Request $request): bool
+     {
+-        return $request->isMethod('POST') && $this->getLoginUrl($request) === $request->getPathInfo();
++        return !($request->isMethod('POST') && $this->getLoginUrl($request) === $request->getPathInfo());
+     }
+     public function authenticate(Request $request): Passport
+     {
+
+
+172) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:30    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     }
+     public function supports(Request $request): bool
+     {
+-        return $request->isMethod('POST') && $this->getLoginUrl($request) === $request->getPathInfo();
++        return !$request->isMethod('POST') && $this->getLoginUrl($request) === $request->getPathInfo();
+     }
+     public function authenticate(Request $request): Passport
+     {
+
+
+173) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:39    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         $loginFormData = $request->request->all('login_form');
+         $email = $loginFormData['email'] ?? null;
+         $password = $loginFormData['password'] ?? null;
+-        $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
++        
+         return new Passport(new UserBadge($email), new PasswordCredentials($password), [new CsrfTokenBadge('authenticate', (string) $request->request->get('_csrf_token')), new RememberMeBadge()]);
+     }
+     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+
+
+174) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:44    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+         $email = $loginFormData['email'] ?? null;
+         $password = $loginFormData['password'] ?? null;
+         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
+-        return new Passport(new UserBadge($email), new PasswordCredentials($password), [new CsrfTokenBadge('authenticate', (string) $request->request->get('_csrf_token')), new RememberMeBadge()]);
++        return new Passport(new UserBadge($email), new PasswordCredentials($password), [new RememberMeBadge()]);
+     }
+     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+     {
+
+
+175) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:45    [M] CastString
+
+--- Original
++++ New
+@@ @@
+         $email = $loginFormData['email'] ?? null;
+         $password = $loginFormData['password'] ?? null;
+         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
+-        return new Passport(new UserBadge($email), new PasswordCredentials($password), [new CsrfTokenBadge('authenticate', (string) $request->request->get('_csrf_token')), new RememberMeBadge()]);
++        return new Passport(new UserBadge($email), new PasswordCredentials($password), [new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')), new RememberMeBadge()]);
+     }
+     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+     {
+
+
+176) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:54    [M] NewObject
+
+--- Original
++++ New
+@@ @@
+     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+     {
+         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+-            return new RedirectResponse($targetPath);
++            new RedirectResponse($targetPath);
++            return null;
+         }
+         return new RedirectResponse($this->getPanelDashboardUrl());
+     }
+
+
+177) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:57    [M] NewObject
+
+--- Original
++++ New
+@@ @@
+         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+             return new RedirectResponse($targetPath);
+         }
+-        return new RedirectResponse($this->getPanelDashboardUrl());
++        new RedirectResponse($this->getPanelDashboardUrl());
++        return null;
+     }
+     protected function getLoginUrl(Request $request): string
+     {
+
+
+178) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:13    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+ class LoginController extends AbstractBaseController
+ {
+     #[Route(path: '/dashboard/login', name: 'app_login')]
+-    public function login(AuthenticationUtils $authenticationUtils): Response
++    protected function login(AuthenticationUtils $authenticationUtils): Response
+     {
+         $user = $this->getUser();
+         if ($user && false === $user->isVerified()) {
+
+
+179) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:18    [M] FalseValue
+
+--- Original
++++ New
+@@ @@
+     public function login(AuthenticationUtils $authenticationUtils): Response
+     {
+         $user = $this->getUser();
+-        if ($user && false === $user->isVerified()) {
++        if ($user && true === $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+         if ($user && $user->isAdmin() && $user->isVerified()) {
+
+
+180) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:18    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     public function login(AuthenticationUtils $authenticationUtils): Response
+     {
+         $user = $this->getUser();
+-        if ($user && false === $user->isVerified()) {
++        if ($user && false !== $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+         if ($user && $user->isAdmin() && $user->isVerified()) {
+
+
+181) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:18    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+     public function login(AuthenticationUtils $authenticationUtils): Response
+     {
+         $user = $this->getUser();
+-        if ($user && false === $user->isVerified()) {
++        if ($user || false === $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+         if ($user && $user->isAdmin() && $user->isVerified()) {
+
+
+182) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:18    [M] LogicalAndAllSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     public function login(AuthenticationUtils $authenticationUtils): Response
+     {
+         $user = $this->getUser();
+-        if ($user && false === $user->isVerified()) {
++        if (!$user && false === $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+         if ($user && $user->isAdmin() && $user->isVerified()) {
+
+
+183) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:18    [M] LogicalAndNegation
+
+--- Original
++++ New
+@@ @@
+     public function login(AuthenticationUtils $authenticationUtils): Response
+     {
+         $user = $this->getUser();
+-        if ($user && false === $user->isVerified()) {
++        if (!($user && false === $user->isVerified())) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+         if ($user && $user->isAdmin() && $user->isVerified()) {
+
+
+184) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:18    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     public function login(AuthenticationUtils $authenticationUtils): Response
+     {
+         $user = $this->getUser();
+-        if ($user && false === $user->isVerified()) {
++        if (!$user && false === $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+         if ($user && $user->isAdmin() && $user->isVerified()) {
+
+
+185) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:19    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     {
+         $user = $this->getUser();
+         if ($user && false === $user->isVerified()) {
+-            $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
++            
+         }
+         if ($user && $user->isAdmin() && $user->isVerified()) {
+             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
+
+
+186) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:22    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+         if ($user && false === $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+-        if ($user && $user->isAdmin() && $user->isVerified()) {
++        if (($user || $user->isAdmin()) && $user->isVerified()) {
+             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
+         }
+         // get the authentication error if there is one
+
+
+187) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:22    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+         if ($user && false === $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+-        if ($user && $user->isAdmin() && $user->isVerified()) {
++        if ($user && $user->isAdmin() || $user->isVerified()) {
+             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
+         }
+         // get the authentication error if there is one
+
+
+188) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:22    [M] LogicalAndAllSubExprNegation
+
+--- Original
++++ New
+@@ @@
+         if ($user && false === $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+-        if ($user && $user->isAdmin() && $user->isVerified()) {
++        if (!$user && !$user->isAdmin() && !$user->isVerified()) {
+             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
+         }
+         // get the authentication error if there is one
+
+
+189) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:22    [M] LogicalAndNegation
+
+--- Original
++++ New
+@@ @@
+         if ($user && false === $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+-        if ($user && $user->isAdmin() && $user->isVerified()) {
++        if (!($user && $user->isAdmin() && $user->isVerified())) {
+             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
+         }
+         // get the authentication error if there is one
+
+
+190) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:22    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+         if ($user && false === $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+-        if ($user && $user->isAdmin() && $user->isVerified()) {
++        if (!$user && $user->isAdmin() && $user->isVerified()) {
+             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
+         }
+         // get the authentication error if there is one
+
+
+191) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:22    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+         if ($user && false === $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+-        if ($user && $user->isAdmin() && $user->isVerified()) {
++        if ($user && !$user->isAdmin() && $user->isVerified()) {
+             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
+         }
+         // get the authentication error if there is one
+
+
+192) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:22    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+         if ($user && false === $user->isVerified()) {
+             $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+         }
+-        if ($user && $user->isAdmin() && $user->isVerified()) {
++        if ($user && $user->isAdmin() && !$user->isVerified()) {
+             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
+         }
+         // get the authentication error if there is one
+
+
+193) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:35    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+         // last username entered by the user
+         $lastUsername = $authenticationUtils->getLastUsername();
+         $form = $this->createForm(LoginFormType::class);
+-        return $this->render('dashboard/authentication/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'loginForm' => $form->createView()]);
++        return $this->render('dashboard/authentication/login.html.twig', ['error' => $error, 'loginForm' => $form->createView()]);
+     }
+     #[Route(path: '/logout', name: 'app_logout')]
+     public function logout(): never
+
+
+194) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:38    [M] ArrayItem
+
+--- Original
++++ New
+@@ @@
+         // last username entered by the user
+         $lastUsername = $authenticationUtils->getLastUsername();
+         $form = $this->createForm(LoginFormType::class);
+-        return $this->render('dashboard/authentication/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'loginForm' => $form->createView()]);
++        return $this->render('dashboard/authentication/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'loginForm' > $form->createView()]);
+     }
+     #[Route(path: '/logout', name: 'app_logout')]
+     public function logout(): never
+
+
+195) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:43    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         return $this->render('dashboard/authentication/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'loginForm' => $form->createView()]);
+     }
+     #[Route(path: '/logout', name: 'app_logout')]
+-    public function logout(): never
++    protected function logout(): never
+     {
+         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+     }
+ }
+
+
+196) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:46    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+     #[Route(path: '/logout', name: 'app_logout')]
+     public function logout(): never
+     {
+-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
++        new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+     }
+ }
+
+
+197) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:22    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+     }
+     #[Route('/dashboard/register', name: 'app_register')]
+-    public function register(Request $request, Security $security): ?Response
++    protected function register(Request $request, Security $security): ?Response
+     {
+         $form = $this->createForm(RegistrationFormType::class);
+         $form->handleRequest($request);
+
+
+198) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:28    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     public function register(Request $request, Security $security): ?Response
+     {
+         $form = $this->createForm(RegistrationFormType::class);
+-        $form->handleRequest($request);
++        
+         if ($form->isSubmitted() && $form->isValid()) {
+             try {
+                 $user = $this->userManager->createNewUser($form->get('email')->getData(), $form->get('password')->getData());
+
+
+199) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:30    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(RegistrationFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if ($form->isSubmitted() || $form->isValid()) {
+             try {
+                 $user = $this->userManager->createNewUser($form->get('email')->getData(), $form->get('password')->getData());
+             } catch (\Throwable $e) {
+
+
+200) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:30    [M] LogicalAndAllSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(RegistrationFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if (!$form->isSubmitted() && !$form->isValid()) {
+             try {
+                 $user = $this->userManager->createNewUser($form->get('email')->getData(), $form->get('password')->getData());
+             } catch (\Throwable $e) {
+
+
+201) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:30    [M] LogicalAndNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(RegistrationFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if (!($form->isSubmitted() && $form->isValid())) {
+             try {
+                 $user = $this->userManager->createNewUser($form->get('email')->getData(), $form->get('password')->getData());
+             } catch (\Throwable $e) {
+
+
+202) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:30    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(RegistrationFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if (!$form->isSubmitted() && $form->isValid()) {
+             try {
+                 $user = $this->userManager->createNewUser($form->get('email')->getData(), $form->get('password')->getData());
+             } catch (\Throwable $e) {
+
+
+203) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:30    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(RegistrationFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if ($form->isSubmitted() && !$form->isValid()) {
+             try {
+                 $user = $this->userManager->createNewUser($form->get('email')->getData(), $form->get('password')->getData());
+             } catch (\Throwable $e) {
+
+
+204) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:37    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             try {
+                 $user = $this->userManager->createNewUser($form->get('email')->getData(), $form->get('password')->getData());
+             } catch (\Throwable $e) {
+-                $this->addFlash('error', $e->getMessage());
++                
+                 return $this->redirectToRoute('app_register');
+             }
+             $this->addFlash('info', 'dashboard.authentication.register.verificationEmailSent');
+
+
+205) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:41    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+                 $this->addFlash('error', $e->getMessage());
+                 return $this->redirectToRoute('app_register');
+             }
+-            $this->addFlash('info', 'dashboard.authentication.register.verificationEmailSent');
++            
+             return $security->login($user, AccountAuthenticator::class, 'main');
+         }
+         return $this->render('dashboard/authentication/register.html.twig', ['registrationForm' => $form]);
+
+
+206) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:45    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+             $this->addFlash('info', 'dashboard.authentication.register.verificationEmailSent');
+             return $security->login($user, AccountAuthenticator::class, 'main');
+         }
+-        return $this->render('dashboard/authentication/register.html.twig', ['registrationForm' => $form]);
++        return $this->render('dashboard/authentication/register.html.twig', []);
+     }
+     #[Route('/dashboard/register/confirm/{token}', name: 'app_register_confirm')]
+     public function confirmRegistration(Request $request, Security $security): null|Response
+
+
+207) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:50    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         return $this->render('dashboard/authentication/register.html.twig', ['registrationForm' => $form]);
+     }
+     #[Route('/dashboard/register/confirm/{token}', name: 'app_register_confirm')]
+-    public function confirmRegistration(Request $request, Security $security): null|Response
++    protected function confirmRegistration(Request $request, Security $security): null|Response
+     {
+         try {
+             $token = $request->get('token');
+
+
+208) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:57    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             $token = $request->get('token');
+             $passwordToken = $this->passwordTokenService->setAsVerified($token);
+         } catch (\Throwable $e) {
+-            $this->addFlash('error', $e->getMessage());
++            
+             return $this->redirectToRoute('app_register');
+         }
+         return $security->login($passwordToken->getUser(), AccountAuthenticator::class, 'main');
+     }
+ }
+
+
+209) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:22    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+     }
+     #[Route('/dashboard/forgot-password', name: 'app_forgot_password')]
+-    public function forgotPassword(Request $request): Response
++    protected function forgotPassword(Request $request): Response
+     {
+         $form = $this->createForm(ForgotPasswordFormType::class);
+         $form->handleRequest($request);
+
+
+210) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:26    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     public function forgotPassword(Request $request): Response
+     {
+         $form = $this->createForm(ForgotPasswordFormType::class);
+-        $form->handleRequest($request);
++        
+         if ($form->isSubmitted() && $form->isValid()) {
+             try {
+                 $email = $form->get('email')->getData();
+
+
+211) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:28    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(ForgotPasswordFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if ($form->isSubmitted() || $form->isValid()) {
+             try {
+                 $email = $form->get('email')->getData();
+                 if (null === $email) {
+
+
+212) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:28    [M] LogicalAndAllSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(ForgotPasswordFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if (!$form->isSubmitted() && !$form->isValid()) {
+             try {
+                 $email = $form->get('email')->getData();
+                 if (null === $email) {
+
+
+213) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:28    [M] LogicalAndNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(ForgotPasswordFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if (!($form->isSubmitted() && $form->isValid())) {
+             try {
+                 $email = $form->get('email')->getData();
+                 if (null === $email) {
+
+
+214) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:28    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(ForgotPasswordFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if (!$form->isSubmitted() && $form->isValid()) {
+             try {
+                 $email = $form->get('email')->getData();
+                 if (null === $email) {
+
+
+215) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:28    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(ForgotPasswordFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if ($form->isSubmitted() && !$form->isValid()) {
+             try {
+                 $email = $form->get('email')->getData();
+                 if (null === $email) {
+
+
+216) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:32    [M] Identical
+
+--- Original
++++ New
+@@ @@
+         if ($form->isSubmitted() && $form->isValid()) {
+             try {
+                 $email = $form->get('email')->getData();
+-                if (null === $email) {
++                if (null !== $email) {
+                     throw new EmailRequiredException();
+                 }
+                 $this->resetPasswordService->sendResetPasswordEmail($email);
+
+
+217) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:33    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+             try {
+                 $email = $form->get('email')->getData();
+                 if (null === $email) {
+-                    throw new EmailRequiredException();
++                    new EmailRequiredException();
+                 }
+                 $this->resetPasswordService->sendResetPasswordEmail($email);
+                 $this->addFlash('success', $this->translator->trans('dashboard.authentication.resetPassword.email.sent'));
+
+
+218) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:36    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+                 if (null === $email) {
+                     throw new EmailRequiredException();
+                 }
+-                $this->resetPasswordService->sendResetPasswordEmail($email);
++                
+                 $this->addFlash('success', $this->translator->trans('dashboard.authentication.resetPassword.email.sent'));
+                 $this->redirectToRoute('app_login');
+             } catch (\Throwable $exception) {
+
+
+219) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:38    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+                     throw new EmailRequiredException();
+                 }
+                 $this->resetPasswordService->sendResetPasswordEmail($email);
+-                $this->addFlash('success', $this->translator->trans('dashboard.authentication.resetPassword.email.sent'));
++                
+                 $this->redirectToRoute('app_login');
+             } catch (\Throwable $exception) {
+                 $this->addFlash('error', $exception->getMessage());
+
+
+220) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:41    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+                 }
+                 $this->resetPasswordService->sendResetPasswordEmail($email);
+                 $this->addFlash('success', $this->translator->trans('dashboard.authentication.resetPassword.email.sent'));
+-                $this->redirectToRoute('app_login');
++                
+             } catch (\Throwable $exception) {
+                 $this->addFlash('error', $exception->getMessage());
+             }
+
+
+221) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+                 $this->addFlash('success', $this->translator->trans('dashboard.authentication.resetPassword.email.sent'));
+                 $this->redirectToRoute('app_login');
+             } catch (\Throwable $exception) {
+-                $this->addFlash('error', $exception->getMessage());
++                
+             }
+         }
+         return $this->render('dashboard/authentication/resetPassword/forgot-password.html.twig', ['forgotPasswordForm' => $form]);
+
+
+222) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:49    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+                 $this->addFlash('error', $exception->getMessage());
+             }
+         }
+-        return $this->render('dashboard/authentication/resetPassword/forgot-password.html.twig', ['forgotPasswordForm' => $form]);
++        return $this->render('dashboard/authentication/resetPassword/forgot-password.html.twig', []);
+     }
+     #[Route('/dashboard/reset-password', name: 'app_reset_password')]
+     public function resetPassword(Request $request): Response
+
+
+223) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:55    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         return $this->render('dashboard/authentication/resetPassword/forgot-password.html.twig', ['forgotPasswordForm' => $form]);
+     }
+     #[Route('/dashboard/reset-password', name: 'app_reset_password')]
+-    public function resetPassword(Request $request): Response
++    protected function resetPassword(Request $request): Response
+     {
+         $form = $this->createForm(ResetPasswordFormType::class);
+         $form->handleRequest($request);
+
+
+224) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:59    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     public function resetPassword(Request $request): Response
+     {
+         $form = $this->createForm(ResetPasswordFormType::class);
+-        $form->handleRequest($request);
++        
+         if ($form->isSubmitted() && $form->isValid()) {
+             try {
+                 $token = $request->get('token');
+
+
+225) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:61    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(ResetPasswordFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if ($form->isSubmitted() || $form->isValid()) {
+             try {
+                 $token = $request->get('token');
+                 $email = $request->get('email');
+
+
+226) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:61    [M] LogicalAndAllSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(ResetPasswordFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if (!$form->isSubmitted() && !$form->isValid()) {
+             try {
+                 $token = $request->get('token');
+                 $email = $request->get('email');
+
+
+227) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:61    [M] LogicalAndNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(ResetPasswordFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if (!($form->isSubmitted() && $form->isValid())) {
+             try {
+                 $token = $request->get('token');
+                 $email = $request->get('email');
+
+
+228) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:61    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(ResetPasswordFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if (!$form->isSubmitted() && $form->isValid()) {
+             try {
+                 $token = $request->get('token');
+                 $email = $request->get('email');
+
+
+229) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:61    [M] LogicalAndSingleSubExprNegation
+
+--- Original
++++ New
+@@ @@
+     {
+         $form = $this->createForm(ResetPasswordFormType::class);
+         $form->handleRequest($request);
+-        if ($form->isSubmitted() && $form->isValid()) {
++        if ($form->isSubmitted() && !$form->isValid()) {
+             try {
+                 $token = $request->get('token');
+                 $email = $request->get('email');
+
+
+230) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:67    [M] Identical
+
+--- Original
++++ New
+@@ @@
+                 $token = $request->get('token');
+                 $email = $request->get('email');
+                 $password = $form->get('password')->getData();
+-                if (null === $password) {
++                if (null !== $password) {
+                     throw new PasswordRequiredException();
+                 }
+                 $this->resetPasswordService->resetPassword($token, $email, $form->get('password')->getData());
+
+
+231) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:68    [M] Throw_
+
+--- Original
++++ New
+@@ @@
+                 $email = $request->get('email');
+                 $password = $form->get('password')->getData();
+                 if (null === $password) {
+-                    throw new PasswordRequiredException();
++                    new PasswordRequiredException();
+                 }
+                 $this->resetPasswordService->resetPassword($token, $email, $form->get('password')->getData());
+                 $this->addFlash('success', $this->translator->trans('dashboard.authentication.resetPassword.success'));
+
+
+232) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:71    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+                 if (null === $password) {
+                     throw new PasswordRequiredException();
+                 }
+-                $this->resetPasswordService->resetPassword($token, $email, $form->get('password')->getData());
++                
+                 $this->addFlash('success', $this->translator->trans('dashboard.authentication.resetPassword.success'));
+                 $this->redirectToRoute('app_login');
+             } catch (\Throwable $exception) {
+
+
+233) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:73    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+                     throw new PasswordRequiredException();
+                 }
+                 $this->resetPasswordService->resetPassword($token, $email, $form->get('password')->getData());
+-                $this->addFlash('success', $this->translator->trans('dashboard.authentication.resetPassword.success'));
++                
+                 $this->redirectToRoute('app_login');
+             } catch (\Throwable $exception) {
+                 $this->addFlash('error', $exception->getMessage());
+
+
+234) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:76    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+                 }
+                 $this->resetPasswordService->resetPassword($token, $email, $form->get('password')->getData());
+                 $this->addFlash('success', $this->translator->trans('dashboard.authentication.resetPassword.success'));
+-                $this->redirectToRoute('app_login');
++                
+             } catch (\Throwable $exception) {
+                 $this->addFlash('error', $exception->getMessage());
+             }
+
+
+235) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:78    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+                 $this->addFlash('success', $this->translator->trans('dashboard.authentication.resetPassword.success'));
+                 $this->redirectToRoute('app_login');
+             } catch (\Throwable $exception) {
+-                $this->addFlash('error', $exception->getMessage());
++                
+             }
+         }
+         return $this->render('dashboard/authentication/resetPassword/reset-password.html.twig', ['resetPasswordForm' => $form]);
+     }
+ }
+
+
+236) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:84    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+                 $this->addFlash('error', $exception->getMessage());
+             }
+         }
+-        return $this->render('dashboard/authentication/resetPassword/reset-password.html.twig', ['resetPasswordForm' => $form]);
++        return $this->render('dashboard/authentication/resetPassword/reset-password.html.twig', []);
+     }
+ }
+
+
+237) /var/www/html/src/Account/Ui/Authentication/Terms/TermsController.php:12    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+ class TermsController extends AbstractBaseController
+ {
+     #[Route('/dashboard/terms', name: 'app_terms')]
+-    public function showTerms(TranslatorInterface $translator): Response
++    protected function showTerms(TranslatorInterface $translator): Response
+     {
+         $locale = $translator->getLocale();
+         return $this->render($this->getTemplate($locale));
+
+
+238) /var/www/html/src/Dashboard/Ui/DashboardController.php:42    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+     public function index(): Response
+     {
+         $dashboardData = $this->getDashboardData();
+-        return $this->render('dashboard/main/index.html.twig', ['dashboardData' => $dashboardData]);
++        return $this->render('dashboard/main/index.html.twig', []);
+     }
+     public function configureAssets(): Assets
+     {
+
+
+239) /var/www/html/src/Dashboard/Ui/DashboardController.php:59    [M] FalseValue
+
+--- Original
++++ New
+@@ @@
+     }
+     public function configureDashboard(): Dashboard
+     {
+-        return Dashboard::new()->setTitle('panel.dashboard.title')->setFaviconPath('/images/favicon.ico')->disableDarkMode(false);
++        return Dashboard::new()->setTitle('panel.dashboard.title')->setFaviconPath('/images/favicon.ico')->disableDarkMode(true);
+         //            ->setLocales([
+         //                'pl' => '🇵🇱 Polski',
+         //                'en' => '🇬🇧 English',
+
+
+240) /var/www/html/src/Dashboard/Ui/DashboardController.php:156    [M] Foreach_
+
+--- Original
++++ New
+@@ @@
+     {
+         $filePath = sprintf('%s/./Assets/menu-dashboard-items.yaml', __DIR__);
+         $dashboardData = $this->yamlParser->getDataFromFile($filePath);
+-        foreach ($dashboardData as $menuItem => $data) {
++        foreach ([] as $menuItem => $data) {
+             $dashboardData[$menuItem]['url'] = $this->adminUrlGenerator->setController($data['controller'])->setAction(Action::INDEX)->generateUrl();
+         }
+         return $dashboardData;
+     }
+ }
+
+
+241) /var/www/html/src/Dashboard/Ui/DashboardController.php:163    [M] ArrayOneItem
+
+--- Original
++++ New
+@@ @@
+         foreach ($dashboardData as $menuItem => $data) {
+             $dashboardData[$menuItem]['url'] = $this->adminUrlGenerator->setController($data['controller'])->setAction(Action::INDEX)->generateUrl();
+         }
+-        return $dashboardData;
++        return count($dashboardData) > 1 ? array_slice($dashboardData, 0, 1, true) : $dashboardData;
+     }
+ }
+
+
+242) /var/www/html/src/Kernel/EventSubscriber/IdSubscriber.php:19    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     /**
+      * @param LifecycleEventArgs<EntityManagerInterface> $args
+      */
+-    public function prePersist(LifecycleEventArgs $args): void
++    protected function prePersist(LifecycleEventArgs $args): void
+     {
+         $entity = $args->getObject();
+         if (!$entity instanceof IdResourceInterface) {
+
+
+243) /var/www/html/src/Kernel/EventSubscriber/IdSubscriber.php:23    [M] InstanceOf_
+
+--- Original
++++ New
+@@ @@
+     public function prePersist(LifecycleEventArgs $args): void
+     {
+         $entity = $args->getObject();
+-        if (!$entity instanceof IdResourceInterface) {
++        if (!true) {
+             return;
+         }
+         if (null === $entity->getId()) {
+
+
+244) /var/www/html/src/Kernel/EventSubscriber/IdSubscriber.php:23    [M] InstanceOf_
+
+--- Original
++++ New
+@@ @@
+     public function prePersist(LifecycleEventArgs $args): void
+     {
+         $entity = $args->getObject();
+-        if (!$entity instanceof IdResourceInterface) {
++        if (!false) {
+             return;
+         }
+         if (null === $entity->getId()) {
+
+
+245) /var/www/html/src/Kernel/EventSubscriber/IdSubscriber.php:23    [M] LogicalNot
+
+--- Original
++++ New
+@@ @@
+     public function prePersist(LifecycleEventArgs $args): void
+     {
+         $entity = $args->getObject();
+-        if (!$entity instanceof IdResourceInterface) {
++        if ($entity instanceof IdResourceInterface) {
+             return;
+         }
+         if (null === $entity->getId()) {
+
+
+246) /var/www/html/src/Kernel/EventSubscriber/IdSubscriber.php:27    [M] Identical
+
+--- Original
++++ New
+@@ @@
+         if (!$entity instanceof IdResourceInterface) {
+             return;
+         }
+-        if (null === $entity->getId()) {
++        if (null !== $entity->getId()) {
+             $entity->setId(Uuid::v4());
+         }
+     }
+ }
+
+
+247) /var/www/html/src/Kernel/EventSubscriber/IdSubscriber.php:28    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             return;
+         }
+         if (null === $entity->getId()) {
+-            $entity->setId(Uuid::v4());
++            
+         }
+     }
+ }
+
+
+248) /var/www/html/src/Kernel/MultiplyRolesExpression.php:15    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+      */
+     public function __construct(...$roles)
+     {
+-        parent::__construct($this->generateRolesExpression(...$roles));
++        
+     }
+     /**
+      * @param RoleEnum ...$roles
+
+
+249) /var/www/html/src/Kernel/MultiplyRolesExpression.php:23    [M] UnwrapArrayMap
+
+--- Original
++++ New
+@@ @@
+      */
+     private function generateRolesExpression(...$roles): string
+     {
+-        $roles = array_map(static fn($role) => $role->value, $roles);
++        $roles = $roles;
+         return implode(' or ', array_map(fn($role) => "is_granted(\"{$role}\")", $roles));
+     }
+ }
+
+
+250) /var/www/html/src/Kernel/MultiplyRolesExpression.php:25    [M] UnwrapArrayMap
+
+--- Original
++++ New
+@@ @@
+     private function generateRolesExpression(...$roles): string
+     {
+         $roles = array_map(static fn($role) => $role->value, $roles);
+-        return implode(' or ', array_map(fn($role) => "is_granted(\"{$role}\")", $roles));
++        return implode(' or ', $roles);
+     }
+ }
+
+
+251) /var/www/html/src/Kernel/Traits/CreatedTrait.php:15    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     private ?\DateTimeImmutable $createdAt = null;
+     #[ORM\Column(type: 'string', length: 191, nullable: true)]
+     private ?string $createdBy = null;
+-    public function getCreatedAt(): ?\DateTimeImmutable
++    protected function getCreatedAt(): ?\DateTimeImmutable
+     {
+         return $this->createdAt;
+     }
+
+
+252) /var/www/html/src/Kernel/Traits/CreatedTrait.php:20    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->createdAt;
+     }
+-    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
++    protected function setCreatedAt(?\DateTimeImmutable $createdAt): self
+     {
+         $this->createdAt = $createdAt;
+         return $this;
+
+
+253) /var/www/html/src/Kernel/Traits/CreatedTrait.php:28    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->createdAt = $createdAt;
+         return $this;
+     }
+-    public function setCreatedBy(?string $createdBy): self
++    protected function setCreatedBy(?string $createdBy): self
+     {
+         $this->createdBy = $createdBy;
+         return $this;
+
+
+254) /var/www/html/src/Kernel/Traits/CreatedTrait.php:35    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->createdBy = $createdBy;
+         return $this;
+     }
+-    public function getCreatedBy(): ?string
++    protected function getCreatedBy(): ?string
+     {
+         return $this->createdBy;
+     }
+ }
+
+
+255) /var/www/html/src/Kernel/Traits/DeletedTrait.php:15    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     private ?\DateTimeImmutable $deletedAt = null;
+     #[ORM\Column(type: 'string', length: 191, nullable: true)]
+     private ?string $deletedBy = null;
+-    public function setDeletedBy(?string $deletedBy): self
++    protected function setDeletedBy(?string $deletedBy): self
+     {
+         $this->deletedBy = $deletedBy;
+         return $this;
+
+
+256) /var/www/html/src/Kernel/Traits/DeletedTrait.php:22    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->deletedBy = $deletedBy;
+         return $this;
+     }
+-    public function getDeletedBy(): ?string
++    protected function getDeletedBy(): ?string
+     {
+         return $this->deletedBy;
+     }
+
+
+257) /var/www/html/src/Kernel/Traits/DeletedTrait.php:27    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->deletedBy;
+     }
+-    public function setDeletedAt(?\DateTimeImmutable $deletedAt): self
++    protected function setDeletedAt(?\DateTimeImmutable $deletedAt): self
+     {
+         $this->deletedAt = $deletedAt;
+         return $this;
+
+
+258) /var/www/html/src/Kernel/Traits/DeletedTrait.php:34    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->deletedAt = $deletedAt;
+         return $this;
+     }
+-    public function getDeletedAt(): ?\DateTimeImmutable
++    protected function getDeletedAt(): ?\DateTimeImmutable
+     {
+         return $this->deletedAt;
+     }
+
+
+259) /var/www/html/src/Kernel/Traits/DeletedTrait.php:39    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->deletedAt;
+     }
+-    public function isDeleted(): bool
++    protected function isDeleted(): bool
+     {
+         return null !== $this->deletedAt;
+     }
+ }
+
+
+260) /var/www/html/src/Kernel/Traits/DeletedTrait.php:41    [M] NotIdentical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isDeleted(): bool
+     {
+-        return null !== $this->deletedAt;
++        return null === $this->deletedAt;
+     }
+ }
+
+
+261) /var/www/html/src/Kernel/Traits/UpdatedTrait.php:17    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     private ?\DateTimeImmutable $updatedAt = null;
+     #[ORM\Column(type: 'string', length: 191, nullable: true)]
+     private ?string $updatedBy = null;
+-    public function getUpdatedAt(): ?\DateTimeImmutable
++    protected function getUpdatedAt(): ?\DateTimeImmutable
+     {
+         return $this->updatedAt;
+     }
+
+
+262) /var/www/html/src/Kernel/Traits/UpdatedTrait.php:22    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->updatedAt;
+     }
+-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
++    protected function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+     {
+         $this->updatedAt = $updatedAt;
+         return $this;
+
+
+263) /var/www/html/src/Kernel/Traits/UpdatedTrait.php:29    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->updatedAt = $updatedAt;
+         return $this;
+     }
+-    public function setUpdatedBy(?string $updatedBy): self
++    protected function setUpdatedBy(?string $updatedBy): self
+     {
+         $this->updatedBy = $updatedBy;
+         return $this;
+
+
+264) /var/www/html/src/Kernel/Traits/UpdatedTrait.php:36    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->updatedBy = $updatedBy;
+         return $this;
+     }
+-    public function getUpdatedBy(): ?string
++    protected function getUpdatedBy(): ?string
+     {
+         return $this->updatedBy;
+     }
+ }
+
+
+265) /var/www/html/src/Kernel/Ui/Form/Field/VichImageField.php:27    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return (new self())->setProperty($propertyName)->setLabel($label)->setFormType(VichImageType::class)->setCustomOption(self::OPTION_IMAGE_URI, null)->setCustomOption(self::OPTION_DOWNLOAD_URI, null);
+     }
+-    public function setImageUri(?string $imageUri): self
++    protected function setImageUri(?string $imageUri): self
+     {
+         $this->setCustomOption(self::OPTION_IMAGE_URI, $imageUri);
+         return $this;
+
+
+266) /var/www/html/src/Kernel/Ui/Form/Field/VichImageField.php:29    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     }
+     public function setImageUri(?string $imageUri): self
+     {
+-        $this->setCustomOption(self::OPTION_IMAGE_URI, $imageUri);
++        
+         return $this;
+     }
+     public function setDownloadUri(?string $downloadUri): self
+
+
+267) /var/www/html/src/Kernel/Ui/Form/Field/VichImageField.php:34    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->setCustomOption(self::OPTION_IMAGE_URI, $imageUri);
+         return $this;
+     }
+-    public function setDownloadUri(?string $downloadUri): self
++    protected function setDownloadUri(?string $downloadUri): self
+     {
+         $this->setCustomOption(self::OPTION_DOWNLOAD_URI, $downloadUri);
+         return $this;
+
+
+268) /var/www/html/src/Kernel/Ui/Form/Field/VichImageField.php:36    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     }
+     public function setDownloadUri(?string $downloadUri): self
+     {
+-        $this->setCustomOption(self::OPTION_DOWNLOAD_URI, $downloadUri);
++        
+         return $this;
+     }
+     public function setUploadedFileNamePattern(?string $patternOrCallable): self
+
+
+269) /var/www/html/src/Kernel/Ui/Form/Field/VichImageField.php:41    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->setCustomOption(self::OPTION_DOWNLOAD_URI, $downloadUri);
+         return $this;
+     }
+-    public function setUploadedFileNamePattern(?string $patternOrCallable): self
++    protected function setUploadedFileNamePattern(?string $patternOrCallable): self
+     {
+         $this->setCustomOption(self::OPTION_UPLOADED_FILE_NAME_PATTERN, $patternOrCallable);
+         return $this;
+     }
+ }
+
+
+270) /var/www/html/src/Kernel/Ui/Form/Field/VichImageField.php:43    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     }
+     public function setUploadedFileNamePattern(?string $patternOrCallable): self
+     {
+-        $this->setCustomOption(self::OPTION_UPLOADED_FILE_NAME_PATTERN, $patternOrCallable);
++        
+         return $this;
+     }
+ }
+
+
+271) /var/www/html/src/Tournament/Domain/Tournament.php:125    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->source = $source;
+         $this->link = $link;
+     }
+-    public function getId(): Uuid
++    protected function getId(): Uuid
+     {
+         return $this->id;
+     }
+
+
+272) /var/www/html/src/Tournament/Domain/Tournament.php:130    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->id;
+     }
+-    public function getName(): TournamentName
++    protected function getName(): TournamentName
+     {
+         return $this->name;
+     }
+
+
+273) /var/www/html/src/Tournament/Domain/Tournament.php:135    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->name;
+     }
+-    public function getLocation(): TournamentLocation
++    protected function getLocation(): TournamentLocation
+     {
+         return $this->location;
+     }
+
+
+274) /var/www/html/src/Tournament/Domain/Tournament.php:140    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->location;
+     }
+-    public function getProvince(): TournamentProvince
++    protected function getProvince(): TournamentProvince
+     {
+         return $this->province;
+     }
+
+
+275) /var/www/html/src/Tournament/Domain/Tournament.php:145    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->province;
+     }
+-    public function getStatus(): TournamentStatus
++    protected function getStatus(): TournamentStatus
+     {
+         return $this->status;
+     }
+
+
+276) /var/www/html/src/Tournament/Domain/Tournament.php:150    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->status;
+     }
+-    public function getType(): TournamentType
++    protected function getType(): TournamentType
+     {
+         return $this->type;
+     }
+
+
+277) /var/www/html/src/Tournament/Domain/Tournament.php:155    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->type;
+     }
+-    public function getPace(): TournamentPace
++    protected function getPace(): TournamentPace
+     {
+         return $this->pace;
+     }
+
+
+278) /var/www/html/src/Tournament/Domain/Tournament.php:160    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->pace;
+     }
+-    public function getStartDate(): \DateTimeImmutable
++    protected function getStartDate(): \DateTimeImmutable
+     {
+         return $this->startDate;
+     }
+
+
+279) /var/www/html/src/Tournament/Domain/Tournament.php:165    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->startDate;
+     }
+-    public function getEndDate(): ?\DateTimeImmutable
++    protected function getEndDate(): ?\DateTimeImmutable
+     {
+         return $this->endDate;
+     }
+
+
+280) /var/www/html/src/Tournament/Domain/Tournament.php:170    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->endDate;
+     }
+-    public function getSource(): TournamentSource
++    protected function getSource(): TournamentSource
+     {
+         return $this->source;
+     }
+
+
+281) /var/www/html/src/Tournament/Domain/Tournament.php:175    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->source;
+     }
+-    public function getLink(): ?TournamentLink
++    protected function getLink(): ?TournamentLink
+     {
+         return $this->link;
+     }
+ }
+
+
+282) /var/www/html/src/Tournament/Domain/TournamentFactory.php:17    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+ use Symfony\Component\Uid\Uuid;
+ class TournamentFactory
+ {
+-    public function createTournament(TournamentName $name, TournamentLocation $location, TournamentProvince $province, TournamentStatus $status, TournamentType $type, TournamentPace $pace, \DateTimeImmutable $startDate, ?\DateTimeImmutable $endDate, ?TournamentSource $source, ?TournamentLink $link): Tournament
++    protected function createTournament(TournamentName $name, TournamentLocation $location, TournamentProvince $province, TournamentStatus $status, TournamentType $type, TournamentPace $pace, \DateTimeImmutable $startDate, ?\DateTimeImmutable $endDate, ?TournamentSource $source, ?TournamentLink $link): Tournament
+     {
+         return new Tournament(Uuid::v4(), $name, $location, $province, $status, $type, $pace, $startDate, $endDate, $source ?: TournamentSource::fromChessMaster(), $link);
+     }
+ }
+
+
+283) /var/www/html/src/Tournament/Domain/TournamentFactory.php:39    [M] Ternary
+
+--- Original
++++ New
+@@ @@
+ {
+     public function createTournament(TournamentName $name, TournamentLocation $location, TournamentProvince $province, TournamentStatus $status, TournamentType $type, TournamentPace $pace, \DateTimeImmutable $startDate, ?\DateTimeImmutable $endDate, ?TournamentSource $source, ?TournamentLink $link): Tournament
+     {
+-        return new Tournament(Uuid::v4(), $name, $location, $province, $status, $type, $pace, $startDate, $endDate, $source ?: TournamentSource::fromChessMaster(), $link);
++        return new Tournament(Uuid::v4(), $name, $location, $province, $status, $type, $pace, $startDate, $endDate, $source ? TournamentSource::fromChessMaster() : $source, $link);
+     }
+ }
+
+
+284) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:21    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->pace = $pace;
+     }
+-    public static function classicalAll(): self
++    protected static function classicalAll(): self
+     {
+         return new self(TournamentPaceEnum::CLASSICAL_ALL);
+     }
+
+
+285) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:26    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentPaceEnum::CLASSICAL_ALL);
+     }
+-    public static function classicalFide(): self
++    protected static function classicalFide(): self
+     {
+         return new self(TournamentPaceEnum::CLASSICAL_FIDE);
+     }
+
+
+286) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:31    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentPaceEnum::CLASSICAL_FIDE);
+     }
+-    public static function classicalPzszach(): self
++    protected static function classicalPzszach(): self
+     {
+         return new self(TournamentPaceEnum::CLASSICAL_PZSZACH);
+     }
+
+
+287) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:36    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentPaceEnum::CLASSICAL_PZSZACH);
+     }
+-    public static function blitz(): self
++    protected static function blitz(): self
+     {
+         return new self(TournamentPaceEnum::BLITZ);
+     }
+
+
+288) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:41    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentPaceEnum::BLITZ);
+     }
+-    public static function bullet(): self
++    protected static function bullet(): self
+     {
+         return new self(TournamentPaceEnum::BULLET);
+     }
+
+
+289) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:46    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentPaceEnum::BULLET);
+     }
+-    public static function all(): self
++    protected static function all(): self
+     {
+         return new self(TournamentPaceEnum::ALL);
+     }
+
+
+290) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:51    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentPaceEnum::ALL);
+     }
+-    public static function speed(): self
++    protected static function speed(): self
+     {
+         return new self(TournamentPaceEnum::SPEED);
+     }
+
+
+291) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:56    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentPaceEnum::SPEED);
+     }
+-    public function isClassicalAll(): bool
++    protected function isClassicalAll(): bool
+     {
+         return TournamentPaceEnum::CLASSICAL_ALL === $this->pace;
+     }
+
+
+292) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:58    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isClassicalAll(): bool
+     {
+-        return TournamentPaceEnum::CLASSICAL_ALL === $this->pace;
++        return TournamentPaceEnum::CLASSICAL_ALL !== $this->pace;
+     }
+     public function isClassicalFide(): bool
+     {
+
+
+293) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:61    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentPaceEnum::CLASSICAL_ALL === $this->pace;
+     }
+-    public function isClassicalFide(): bool
++    protected function isClassicalFide(): bool
+     {
+         return TournamentPaceEnum::CLASSICAL_FIDE === $this->pace;
+     }
+
+
+294) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:63    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isClassicalFide(): bool
+     {
+-        return TournamentPaceEnum::CLASSICAL_FIDE === $this->pace;
++        return TournamentPaceEnum::CLASSICAL_FIDE !== $this->pace;
+     }
+     public function isClassicalPzszach(): bool
+     {
+
+
+295) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:66    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentPaceEnum::CLASSICAL_FIDE === $this->pace;
+     }
+-    public function isClassicalPzszach(): bool
++    protected function isClassicalPzszach(): bool
+     {
+         return TournamentPaceEnum::CLASSICAL_PZSZACH === $this->pace;
+     }
+
+
+296) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:68    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isClassicalPzszach(): bool
+     {
+-        return TournamentPaceEnum::CLASSICAL_PZSZACH === $this->pace;
++        return TournamentPaceEnum::CLASSICAL_PZSZACH !== $this->pace;
+     }
+     public function isBlitz(): bool
+     {
+
+
+297) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:71    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentPaceEnum::CLASSICAL_PZSZACH === $this->pace;
+     }
+-    public function isBlitz(): bool
++    protected function isBlitz(): bool
+     {
+         return TournamentPaceEnum::BLITZ === $this->pace;
+     }
+
+
+298) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:73    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isBlitz(): bool
+     {
+-        return TournamentPaceEnum::BLITZ === $this->pace;
++        return TournamentPaceEnum::BLITZ !== $this->pace;
+     }
+     public function isBullet(): bool
+     {
+
+
+299) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:76    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentPaceEnum::BLITZ === $this->pace;
+     }
+-    public function isBullet(): bool
++    protected function isBullet(): bool
+     {
+         return TournamentPaceEnum::BULLET === $this->pace;
+     }
+
+
+300) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:78    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isBullet(): bool
+     {
+-        return TournamentPaceEnum::BULLET === $this->pace;
++        return TournamentPaceEnum::BULLET !== $this->pace;
+     }
+     public function isAll(): bool
+     {
+
+
+301) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:81    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentPaceEnum::BULLET === $this->pace;
+     }
+-    public function isAll(): bool
++    protected function isAll(): bool
+     {
+         return TournamentPaceEnum::ALL === $this->pace;
+     }
+
+
+302) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:83    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isAll(): bool
+     {
+-        return TournamentPaceEnum::ALL === $this->pace;
++        return TournamentPaceEnum::ALL !== $this->pace;
+     }
+     public function isSpeed(): bool
+     {
+
+
+303) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:86    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentPaceEnum::ALL === $this->pace;
+     }
+-    public function isSpeed(): bool
++    protected function isSpeed(): bool
+     {
+         return TournamentPaceEnum::SPEED === $this->pace;
+     }
+ }
+
+
+304) /var/www/html/src/Tournament/Domain/ValueObject/Pace/TournamentPace.php:88    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isSpeed(): bool
+     {
+-        return TournamentPaceEnum::SPEED === $this->pace;
++        return TournamentPaceEnum::SPEED !== $this->pace;
+     }
+ }
+
+
+305) /var/www/html/src/Tournament/Domain/ValueObject/Source/TournamentSource.php:21    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->source = $source;
+     }
+-    public static function fromChessArbiter(): self
++    protected static function fromChessArbiter(): self
+     {
+         return new self(TournamentSourceEnum::CHESS_ARBITER);
+     }
+
+
+306) /var/www/html/src/Tournament/Domain/ValueObject/Source/TournamentSource.php:26    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentSourceEnum::CHESS_ARBITER);
+     }
+-    public static function fromChessMaster(): self
++    protected static function fromChessMaster(): self
+     {
+         return new self(TournamentSourceEnum::CHESS_MASTER);
+     }
+
+
+307) /var/www/html/src/Tournament/Domain/ValueObject/Source/TournamentSource.php:31    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentSourceEnum::CHESS_MASTER);
+     }
+-    public function isFromChessArbiter(): bool
++    protected function isFromChessArbiter(): bool
+     {
+         return TournamentSourceEnum::CHESS_ARBITER === $this->source;
+     }
+
+
+308) /var/www/html/src/Tournament/Domain/ValueObject/Source/TournamentSource.php:33    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isFromChessArbiter(): bool
+     {
+-        return TournamentSourceEnum::CHESS_ARBITER === $this->source;
++        return TournamentSourceEnum::CHESS_ARBITER !== $this->source;
+     }
+     public function isFromChessMaster(): bool
+     {
+
+
+309) /var/www/html/src/Tournament/Domain/ValueObject/Source/TournamentSource.php:36    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentSourceEnum::CHESS_ARBITER === $this->source;
+     }
+-    public function isFromChessMaster(): bool
++    protected function isFromChessMaster(): bool
+     {
+         return TournamentSourceEnum::CHESS_MASTER === $this->source;
+     }
+ }
+
+
+310) /var/www/html/src/Tournament/Domain/ValueObject/Source/TournamentSource.php:38    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isFromChessMaster(): bool
+     {
+-        return TournamentSourceEnum::CHESS_MASTER === $this->source;
++        return TournamentSourceEnum::CHESS_MASTER !== $this->source;
+     }
+ }
+
+
+311) /var/www/html/src/Tournament/Domain/ValueObject/Status/TournamentStatus.php:21    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->status = $status;
+     }
+-    public static function active(): self
++    protected static function active(): self
+     {
+         return new self(TournamentStatusEnum::ACTIVE);
+     }
+
+
+312) /var/www/html/src/Tournament/Domain/ValueObject/Status/TournamentStatus.php:26    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentStatusEnum::ACTIVE);
+     }
+-    public static function finished(): self
++    protected static function finished(): self
+     {
+         return new self(TournamentStatusEnum::FINISHED);
+     }
+
+
+313) /var/www/html/src/Tournament/Domain/ValueObject/Status/TournamentStatus.php:31    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentStatusEnum::FINISHED);
+     }
+-    public static function pending(): self
++    protected static function pending(): self
+     {
+         return new self(TournamentStatusEnum::PENDING);
+     }
+
+
+314) /var/www/html/src/Tournament/Domain/ValueObject/Status/TournamentStatus.php:36    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentStatusEnum::PENDING);
+     }
+-    public function isActive(): bool
++    protected function isActive(): bool
+     {
+         return TournamentStatusEnum::ACTIVE === $this->status;
+     }
+
+
+315) /var/www/html/src/Tournament/Domain/ValueObject/Status/TournamentStatus.php:38    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isActive(): bool
+     {
+-        return TournamentStatusEnum::ACTIVE === $this->status;
++        return TournamentStatusEnum::ACTIVE !== $this->status;
+     }
+     public function isFinished(): bool
+     {
+
+
+316) /var/www/html/src/Tournament/Domain/ValueObject/Status/TournamentStatus.php:41    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentStatusEnum::ACTIVE === $this->status;
+     }
+-    public function isFinished(): bool
++    protected function isFinished(): bool
+     {
+         return TournamentStatusEnum::FINISHED === $this->status;
+     }
+
+
+317) /var/www/html/src/Tournament/Domain/ValueObject/Status/TournamentStatus.php:43    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isFinished(): bool
+     {
+-        return TournamentStatusEnum::FINISHED === $this->status;
++        return TournamentStatusEnum::FINISHED !== $this->status;
+     }
+     public function isPending(): bool
+     {
+
+
+318) /var/www/html/src/Tournament/Domain/ValueObject/Status/TournamentStatus.php:46    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentStatusEnum::FINISHED === $this->status;
+     }
+-    public function isPending(): bool
++    protected function isPending(): bool
+     {
+         return TournamentStatusEnum::PENDING === $this->status;
+     }
+ }
+
+
+319) /var/www/html/src/Tournament/Domain/ValueObject/Status/TournamentStatus.php:48    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isPending(): bool
+     {
+-        return TournamentStatusEnum::PENDING === $this->status;
++        return TournamentStatusEnum::PENDING !== $this->status;
+     }
+ }
+
+
+320) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:21    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->type = $type;
+     }
+-    public static function individual(): self
++    protected static function individual(): self
+     {
+         return new self(TournamentTypeEnum::INDIVIDUAL);
+     }
+
+
+321) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:26    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentTypeEnum::INDIVIDUAL);
+     }
+-    public static function team(): self
++    protected static function team(): self
+     {
+         return new self(TournamentTypeEnum::TEAM);
+     }
+
+
+322) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:31    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentTypeEnum::TEAM);
+     }
+-    public static function provincialChampionship(): self
++    protected static function provincialChampionship(): self
+     {
+         return new self(TournamentTypeEnum::PROVINCIAL_CHAMPIONSHIP);
+     }
+
+
+323) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:36    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentTypeEnum::PROVINCIAL_CHAMPIONSHIP);
+     }
+-    public static function polishChampionship(): self
++    protected static function polishChampionship(): self
+     {
+         return new self(TournamentTypeEnum::POLISH_CHAMPIONSHIP);
+     }
+
+
+324) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:41    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return new self(TournamentTypeEnum::POLISH_CHAMPIONSHIP);
+     }
+-    public function isIndividual(): bool
++    protected function isIndividual(): bool
+     {
+         return TournamentTypeEnum::INDIVIDUAL === $this->type;
+     }
+
+
+325) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:43    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isIndividual(): bool
+     {
+-        return TournamentTypeEnum::INDIVIDUAL === $this->type;
++        return TournamentTypeEnum::INDIVIDUAL !== $this->type;
+     }
+     public function isTeam(): bool
+     {
+
+
+326) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:46    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentTypeEnum::INDIVIDUAL === $this->type;
+     }
+-    public function isTeam(): bool
++    protected function isTeam(): bool
+     {
+         return TournamentTypeEnum::TEAM === $this->type;
+     }
+
+
+327) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:48    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isTeam(): bool
+     {
+-        return TournamentTypeEnum::TEAM === $this->type;
++        return TournamentTypeEnum::TEAM !== $this->type;
+     }
+     public function isProvincialChampionship(): bool
+     {
+
+
+328) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:51    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentTypeEnum::TEAM === $this->type;
+     }
+-    public function isProvincialChampionship(): bool
++    protected function isProvincialChampionship(): bool
+     {
+         return TournamentTypeEnum::PROVINCIAL_CHAMPIONSHIP === $this->type;
+     }
+
+
+329) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:53    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isProvincialChampionship(): bool
+     {
+-        return TournamentTypeEnum::PROVINCIAL_CHAMPIONSHIP === $this->type;
++        return TournamentTypeEnum::PROVINCIAL_CHAMPIONSHIP !== $this->type;
+     }
+     public function isPolishChampionship(): bool
+     {
+
+
+330) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:56    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return TournamentTypeEnum::PROVINCIAL_CHAMPIONSHIP === $this->type;
+     }
+-    public function isPolishChampionship(): bool
++    protected function isPolishChampionship(): bool
+     {
+         return TournamentTypeEnum::POLISH_CHAMPIONSHIP === $this->type;
+     }
+ }
+
+
+331) /var/www/html/src/Tournament/Domain/ValueObject/Type/TournamentType.php:58    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     }
+     public function isPolishChampionship(): bool
+     {
+-        return TournamentTypeEnum::POLISH_CHAMPIONSHIP === $this->type;
++        return TournamentTypeEnum::POLISH_CHAMPIONSHIP !== $this->type;
+     }
+ }
+
+
+332) /var/www/html/src/Tournament/Infrastructure/Rest/TournamentRepository.php:22    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+ {
+     public function __construct(ManagerRegistry $registry)
+     {
+-        parent::__construct($registry, Tournament::class);
++        
+     }
+ }
+
+
+333) /var/www/html/src/Tournament/Ui/TournamentInput.php:34    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+         $this->endDate = $endDate;
+         $this->source = $source;
+     }
+-    public function getName(): string
++    protected function getName(): string
+     {
+         return $this->name;
+     }
+
+
+334) /var/www/html/src/Tournament/Ui/TournamentInput.php:39    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->name;
+     }
+-    public function getType(): string
++    protected function getType(): string
+     {
+         return $this->type;
+     }
+
+
+335) /var/www/html/src/Tournament/Ui/TournamentInput.php:44    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->type;
+     }
+-    public function getPace(): string
++    protected function getPace(): string
+     {
+         return $this->pace;
+     }
+
+
+336) /var/www/html/src/Tournament/Ui/TournamentInput.php:49    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->pace;
+     }
+-    public function getStatus(): string
++    protected function getStatus(): string
+     {
+         return $this->status;
+     }
+
+
+337) /var/www/html/src/Tournament/Ui/TournamentInput.php:54    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->status;
+     }
+-    public function getStartDate(): string
++    protected function getStartDate(): string
+     {
+         return $this->startDate;
+     }
+
+
+338) /var/www/html/src/Tournament/Ui/TournamentInput.php:59    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->startDate;
+     }
+-    public function getEndDate(): string
++    protected function getEndDate(): string
+     {
+         return $this->endDate;
+     }
+
+
+339) /var/www/html/src/Tournament/Ui/TournamentInput.php:64    [M] PublicVisibility
+
+--- Original
++++ New
+@@ @@
+     {
+         return $this->endDate;
+     }
+-    public function getSource(): string
++    protected function getSource(): string
+     {
+         return $this->source;
+     }
+ }

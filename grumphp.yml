@@ -1,15 +1,18 @@
 grumphp:
     stop_on_failure: true
     tasks:
+        composer:
+            file: composer.json
         phpcsfixer:
             config: './.php-cs-fixer.php'
             verbose: true
         phpstan:
-            level: 8
+            level: max
             configuration: './phpstan.neon'
         phpunit:
             always_execute: true  # ... don't use PHPUnit in your project
-        securitychecker_symfony:
-            lockfile: ./composer.lock
-            format: ~
-            run_always: false
+        infection:
+            threads: 4
+            min_msi: 70
+            min_covered_msi: 80
+
