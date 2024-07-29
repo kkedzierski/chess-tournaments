@@ -1,8 +1,6 @@
 # Chess torunaments
 
-## Full documentaion avaliable in:
-- [Polish](https://kkedzierski.github.io/chess-tournaments/pl)
-- [English](https://kkedzierski.github.io/chess-tournaments/en)
+## Full documentaion avaliable [here](https://kkedzierski.github.io/chess-tournaments/pl)
 
 ## Installation quick guide
 

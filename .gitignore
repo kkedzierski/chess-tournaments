@@ -9,6 +9,7 @@
 /vendor/
 /.env
 /.env.test
+/myenv/*
 
 ###< symfony/framework-bundle ###
 
