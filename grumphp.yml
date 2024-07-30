@@ -6,6 +6,8 @@ grumphp:
         phpcsfixer:
             config: './.php-cs-fixer.php'
             verbose: true
+            allow_risky: true
+            using_cache: false
         phpstan:
             level: max
             configuration: './phpstan.neon'
