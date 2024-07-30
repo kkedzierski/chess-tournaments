@@ -40,9 +40,9 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN composer install --no-interaction --optimize-autoloader --no-scripts
 
-# ssh keys for repository access
-RUN mkdir -p /var/www/.ssh
-COPY docker/keys/* /var/www/.ssh/*
+## ssh keys for repository access
+#RUN mkdir -p /var/www/.ssh
+#COPY docker/keys/* /var/www/.ssh/*
 
 RUN ./vendor/bin/grumphp git:init || true
 
