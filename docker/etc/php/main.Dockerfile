@@ -31,6 +31,10 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash
 
 COPY . /var/www/html
 
+# Copy configuration files
+COPY .php-cs-fixer.php /var/www/html/.php-cs-fixer.php
+COPY phpstan.neon /var/www/html/phpstan.neon
+
 ## ssh keys for repository access
 #RUN mkdir -p /var/www/.ssh
 #COPY docker/keys/* /var/www/.ssh/*
