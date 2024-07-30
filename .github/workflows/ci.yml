@@ -35,9 +35,9 @@ jobs:
 #            echo "Waiting for MySQL..."
 #            sleep 5
 #          done
-
-      - name: Install PHP dependencies
-        run: docker-compose exec chess-tournaments-php composer install
+#
+#      - name: Install PHP dependencies
+#        run: docker-compose exec chess-tournaments-php composer install
 
       - name: Run PHPUnit
         run: docker-compose exec chess-tournaments-php ./vendor/bin/phpunit --configuration phpunit.xml.dist
