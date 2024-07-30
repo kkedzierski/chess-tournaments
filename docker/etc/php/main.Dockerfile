@@ -31,18 +31,9 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash
 
 COPY . /var/www/html
 
-# Set environment variables for Symfony
-ENV APP_ENV=prod
-ENV APP_DEBUG=0
-
-# Set environment variable to allow Composer to run as root
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
-RUN composer install --no-interaction --optimize-autoloader --no-scripts
-
-## ssh keys for repository access
-#RUN mkdir -p /var/www/.ssh
-#COPY docker/keys/* /var/www/.ssh/*
+# ssh keys for repository access
+RUN mkdir -p /var/www/.ssh
+COPY docker/keys/* /var/www/.ssh/*
 
 RUN ./vendor/bin/grumphp git:init || true
 
