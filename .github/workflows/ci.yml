@@ -26,6 +26,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: List files
+        run: ls -la
+
       - name: Build Docker image
         run: docker build -t chess-tournaments-php -f ./docker/etc/php/main.Dockerfile .
 
