@@ -38,7 +38,7 @@ jobs:
 #          done
 #
       - name: Install PHP dependencies
-        run: docker-compose exec -T chess-tournaments-php composer install
+        run: docker-compose exec -T chess-tournaments-php composer install --no-scripts
 
       - name: Run PHPUnit
         run: docker-compose exec -T chess-tournaments-php ./vendor/bin/phpunit --configuration phpunit.xml.dist
