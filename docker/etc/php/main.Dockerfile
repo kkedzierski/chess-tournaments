@@ -31,9 +31,6 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash
 
 COPY . /var/www/html
 
-# Copy PHP-CS-Fixer configuration
-COPY .php-cs-fixer.php /var/www/html/.php-cs-fixer.php
-
 ## ssh keys for repository access
 #RUN mkdir -p /var/www/.ssh
 #COPY docker/keys/* /var/www/.ssh/*
