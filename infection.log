@@ -16,22 +16,7 @@ Escaped mutants:
          } catch (\Throwable $exception) {
 
 
-2) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:48    [M] NullSafeMethodCall
-
---- Original
-+++ New
-@@ @@
-             if (null === $entity->getCreatedBy()) {
-                 $entity->setCreatedBy($user?->getUserIdentifier());
-             }
--            $entity->setUpdatedBy($user?->getUserIdentifier());
-+            $entity->setUpdatedBy($user->getUserIdentifier());
-         } catch (\Throwable $exception) {
-             $this->logger->error('Setting user data for resource failed.', ['exception' => $exception, 'class' => TimestampableSubscriber::class]);
-         }
-
-
-3) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:48    [M] MethodCallRemoval
+2) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:48    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -41,6 +26,21 @@ Escaped mutants:
              }
 -            $entity->setUpdatedBy($user?->getUserIdentifier());
 +            
+         } catch (\Throwable $exception) {
+             $this->logger->error('Setting user data for resource failed.', ['exception' => $exception, 'class' => TimestampableSubscriber::class]);
+         }
+
+
+3) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:48    [M] NullSafeMethodCall
+
+--- Original
++++ New
+@@ @@
+             if (null === $entity->getCreatedBy()) {
+                 $entity->setCreatedBy($user?->getUserIdentifier());
+             }
+-            $entity->setUpdatedBy($user?->getUserIdentifier());
++            $entity->setUpdatedBy($user->getUserIdentifier());
          } catch (\Throwable $exception) {
              $this->logger->error('Setting user data for resource failed.', ['exception' => $exception, 'class' => TimestampableSubscriber::class]);
          }
