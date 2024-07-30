@@ -31,9 +31,9 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash
 
 COPY . /var/www/html
 
-# ssh keys for repository access
-RUN mkdir -p /var/www/.ssh
-COPY docker/keys/* /var/www/.ssh/*
+## ssh keys for repository access
+#RUN mkdir -p /var/www/.ssh
+#COPY docker/keys/* /var/www/.ssh/*
 
 RUN ./vendor/bin/grumphp git:init || true
 
