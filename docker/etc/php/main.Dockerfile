@@ -19,6 +19,8 @@ RUN apt-get -q update && apt-get -qy install \
     libzip-dev \
     libicu-dev \
     git \
+    && pecl install pcov \
+    && docker-php-ext-enable pcov \
     && docker-php-ext-install intl opcache pdo pdo_mysql \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
