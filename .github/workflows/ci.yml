@@ -38,13 +38,13 @@ jobs:
 #          done
 #
       - name: Install PHP dependencies
-        run: docker-compose exec chess-tournaments-php composer install
+        run: docker-compose exec -T chess-tournaments-php composer install
 
       - name: Run PHPUnit
-        run: docker-compose exec chess-tournaments-php ./vendor/bin/phpunit --configuration phpunit.xml.dist
+        run: docker-compose exec -T chess-tournaments-php ./vendor/bin/phpunit --configuration phpunit.xml.dist
 
       - name: Run grumphp (composer, phpcsfixer, phpstan, infection)
-        run: docker-compose exec chess-tournaments-php ./vendor/bin/grumphp run
+        run: docker-compose exec -T chess-tournaments-php ./vendor/bin/grumphp run
 
       - name: Shutdown Docker Compose
         run: docker-compose down
