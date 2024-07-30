@@ -38,7 +38,7 @@ ENV APP_DEBUG=0
 # Set environment variable to allow Composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+RUN composer install --no-interaction --optimize-autoloader --no-scripts
 
 # ssh keys for repository access
 RUN mkdir -p /var/www/.ssh
