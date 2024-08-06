@@ -2,54 +2,23 @@
 
 namespace App\Account\Ui\Authentication\ResetPassword;
 
-use App\Account\Application\ResetPasswordService;
+use App\Account\Application\Exception\ResetPasswordException;
+use App\Account\Application\Exception\TokenNotFoundException;
+use App\Account\Application\Exception\UserNotFoundException;
+use App\Account\Application\Password\ResetPasswordService;
 use App\Account\Ui\AbstractBaseController;
-use App\Account\Ui\Exception\EmailRequiredException;
 use App\Account\Ui\Exception\PasswordRequiredException;
+use App\Kernel\Flasher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ResetPasswordController extends AbstractBaseController
 {
     public function __construct(
-        private readonly ResetPasswordService $resetPasswordService,
-        private readonly TranslatorInterface $translator,
+        private readonly ResetPasswordService  $resetPasswordService,
+        private readonly Flasher               $flasher,
     ) {
-    }
-
-    #[Route('/dashboard/forgot-password', name: 'app_forgot_password')]
-    public function forgotPassword(Request $request): Response
-    {
-        $form = $this->createForm(ForgotPasswordFormType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $email = $form->get('email')->getData();
-
-                if (null === $email) {
-                    throw new EmailRequiredException();
-                }
-
-                $this->resetPasswordService->sendResetPasswordEmail($email);
-
-                $this->addFlash('success', $this->translator->trans(
-                    'dashboard.authentication.resetPassword.email.sent'
-                ));
-                $this->redirectToRoute('app_login');
-            } catch (\Throwable $exception) {
-                $this->addFlash('error', $exception->getMessage());
-            }
-        }
-
-        return $this->render(
-            'dashboard/authentication/resetPassword/forgot-password.html.twig',
-            [
-                'forgotPasswordForm' => $form,
-            ]
-        );
     }
 
     #[Route('/dashboard/reset-password', name: 'app_reset_password')]
@@ -61,21 +30,52 @@ class ResetPasswordController extends AbstractBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $token = $request->get('token');
-                $email = $request->get('email');
+                $email = $request->get('emailValue');
                 $password = $form->get('password')->getData();
-
-                if (null === $password) {
+                if (null === $password || false === is_string($password)) {
                     throw new PasswordRequiredException();
                 }
 
-                $this->resetPasswordService->resetPassword($token, $email, $form->get('password')->getData());
+                if (null === $token || false === is_string($token)) {
+                    throw new TokenNotFoundException();
+                }
 
-                $this->addFlash('success', $this->translator->trans(
-                    'dashboard.authentication.resetPassword.success'
-                ));
-                $this->redirectToRoute('app_login');
-            } catch (\Throwable $exception) {
-                $this->addFlash('error', $exception->getMessage());
+                if (null === $email || false === is_string($email)) {
+                    throw new UserNotFoundException();
+                }
+
+                $this->resetPasswordService->resetPassword($token, $email, $password);
+                $this->flasher->success(
+                    'dashboard.authentication.resetPassword.success.description',
+                    'dashboard.authentication.resetPassword.success.title'
+                );
+
+                return $this->redirectToRoute('app_login');
+            } catch (PasswordRequiredException $exception) {
+                $this->flasher->error(
+                    $exception->getMessage(),
+                    'dashboard.authentication.resetPassword.error.passwordRequired.title'
+                );
+            } catch (ResetPasswordException $exception) {
+                $this->flasher->error(
+                    $exception->getMessage(),
+                    'dashboard.authentication.resetPassword.error.resetPassword.title'
+                );
+            } catch (TokenNotFoundException $exception) {
+                $this->flasher->error(
+                    $exception->getMessage(),
+                    'dashboard.authentication.resetPassword.error.tokenNotFound.title'
+                );
+            } catch (UserNotFoundException $exception) {
+                $this->flasher->error(
+                    $exception->getMessage(),
+                    'dashboard.authentication.resetPassword.error.userNotFound.title'
+                );
+            } catch (\Throwable) {
+                $this->flasher->error(
+                    'dashboard.authentication.resetPassword.error.description',
+                    'dashboard.authentication.resetPassword.error.title'
+                );
             }
         }
 

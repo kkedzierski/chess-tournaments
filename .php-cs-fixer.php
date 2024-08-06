@@ -14,6 +14,7 @@ return (new PhpCsFixer\Config())
         'no_unused_imports' => true,
         'use_arrow_functions' => true,
         'no_useless_else' => true,
+        'phpdoc_separation' => true,
     ])
     ->setFinder($finder)
 ;

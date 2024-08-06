@@ -20,8 +20,9 @@ class AccountAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
+
     public function __construct(
-        private readonly AccountAuthenticatorService $accountAuthenticatorService
+        private readonly AccountAuthenticatorService $accountAuthenticator,
     ) {
     }
 
@@ -50,6 +51,10 @@ class AccountAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        if (false === $this->accountAuthenticator->isVerified($request)) {
+            return new RedirectResponse($this->accountAuthenticator->getLoginUrl());
+        }
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
@@ -59,11 +64,11 @@ class AccountAuthenticator extends AbstractLoginFormAuthenticator
 
     protected function getLoginUrl(Request $request): string
     {
-        return $this->accountAuthenticatorService->getLoginUrl();
+        return $this->accountAuthenticator->getLoginUrl();
     }
 
     private function getPanelDashboardUrl(): string
     {
-        return $this->accountAuthenticatorService->getPanelDashboardUrl();
+        return $this->accountAuthenticator->getPanelDashboardUrl();
     }
 }

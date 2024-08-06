@@ -20,7 +20,6 @@ class UserFactory
             $password
         );
         $user->setPassword($hashedPassword);
-        $user->addPasswordTokenForOneMonth();
         $user->setAsAdmin();
 
         return $user;

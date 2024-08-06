@@ -2,7 +2,7 @@
 
 namespace App\Account\Ui;
 
-use App\Account\Application\UserManagerService;
+use App\Account\Application\Password\DashboardPasswordService;
 use App\Kernel\MultiplyRolesExpression;
 use App\Kernel\Ui\AbstractBaseCrudController;
 use App\Kernel\Ui\Form\Field\VichImageField;
@@ -26,7 +26,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class AccountController extends AbstractBaseCrudController
 {
     public function __construct(
-        private readonly UserManagerService $userManager,
+        private readonly DashboardPasswordService $dashboardPasswordService,
     ) {
     }
 
@@ -98,7 +98,7 @@ class AccountController extends AbstractBaseCrudController
     ): FormBuilderInterface {
         $formBuilder = parent::createEditFormBuilder($entityDto, $formOptions, $context);
 
-        return $this->userManager->providePasswordEventListener($formBuilder, $context);
+        return $this->dashboardPasswordService->provideChangePasswordEventListener($formBuilder, $context);
     }
 
     // TODO 2FA

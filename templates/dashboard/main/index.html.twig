@@ -1,6 +1,14 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block page_title %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#000000" />
+    <meta
+            name="description"
+            content="Szachowymistrz.pl portal do wyszukiwania turniejów szachowych"
+    />
     <title>{% trans %}admin.dashboard{% endtrans %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('dashboard-main') }}

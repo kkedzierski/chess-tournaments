@@ -1,6 +1,9 @@
+Email: "Adres e-mail"
+Password: "Hasło"
 dashboard:
   mainTitle: "Szachowymistrz.pl"
   authentication:
+    back: 'Powrót'
     login:
       title: "Logowanie"
       email: "Adres e-mail"
@@ -8,6 +11,12 @@ dashboard:
       submit: "Zaloguj"
       forgotPassword: "Zapomniałeś hasła?"
       verifyEmail: "Odwiedź swoją skrzynkę i kliknij w link, aby zweryfikować adres e-mail."
+      fields:
+        email: "Adres e-mail"
+        password: "Hasło"
+    email:
+      template:
+        ignoreInfo: 'Jeśli nie wykonywałeś żadnej akcji, zignoruj tę wiadomość.'
     register:
       title: "Rejestracja"
       password: "Hasło"
@@ -20,18 +29,62 @@ dashboard:
         email: "Adres e-mail"
         password: "Hasło"
         repeatPassword: "Potwierdź hasło"
+        agreeTerms: 'Zgadzam się z <a href="/dashboard/terms" id="terms-link">regulaminem</a>'
       confirmation:
         title: 'Potwierdź adres e-mail'
       email:
-        description: 'Kliknij w link, aby potwierdzić adres e-mail.'
-        submit: 'Kliknij w link, aby potwierdzić adres e-mail'
-        ignoreInfo: 'Jeśli nie prosiłeś o potwierdzenie adresu e-mail, zignoruj tę wiadomość.'
+        template:
+          description: 'Potwierdź swój adres e-mail, klikając w link poniżej. Jeśli nie prosiłeś o potwierdzenia adresu e-mail, zignoruj tę wiadomość.'
+          submit: 'Kliknij w link, aby potwierdzić adres e-mail'
+      success:
+        title: 'Udało się zarejestrować'
+        description: 'Na podany adres e-mail został wysłany link weryfikacyjny. Sprawdź swoją skrzynkę.'
+      error:
+        title: 'Nie udało się zarejestrować'
+        description: 'Nie udało się zarejestrować. Spróbuj ponownie.'
+      confirm:
+        template:
+          description: 'Kliknij w link, aby potwierdzić adres e-mail.'
+          submit: 'Kliknij w link, aby potwierdzić adres e-mail'
+        error:
+          title: 'Nie udało się potwierdzić adresu e-mail'
+          description: 'Nie udało się potwierdzić adresu e-mail. Spróbuj ponownie.'
+          tokenNotFound:
+            title: 'Token wygasł lub jest niepoprawny'
+        success:
+          title: 'Adres e-mail został potwierdzony'
+          description: 'Dziękujemy za potwierdzenie adresu e-mail.'
     resetPassword:
       title: "Zresetuj hasło"
       description: "Zresetuj hasło"
+      success:
+        title: "Hasło zostało zresetowane"
+        description: "Twoje hasło zostało zresetowane. Możesz się teraz zalogować."
+      error:
+        title: "Nie udało się zresetować hasła"
+        description: "Nie udało się zresetować hasła. Spróbuj ponownie."
       email:
         description: "Podaj adres e-mail, na który wyślemy link do zresetowania hasła"
-        sent: 'Na podany adres e-mail został wysłany link do zresetowania hasła. Sprawdź swoją skrzynkę.'
+        sent:
+          title: 'Link do zresetowania hasła został wysłany'
+          description: 'Na podany adres e-mail został wysłany link do zresetowania hasła. Sprawdź swoją skrzynkę.'
+        error:
+          title: 'Nie udało się zresetować hasła'
+          description: 'Nie udało się zresetować hasła. Spróbuj ponownie.'
+          passwordRequired:
+            title: 'Hasło jest wymagane'
+          resetPassword:
+            title: 'Nie udało się zresetować hasła'
+          tokenNotFound:
+            title: 'Token wygasł lub jest niepoprawny'
+          userNotFound:
+            title: 'Użytkownik nie został znaleziony'
+          cannotSendEmail:
+            title: 'Nie udało się wysłać e-maila'
+          tokenGenerating:
+            title: 'Nie udało się wygenerować tokenu'
+          emailRequired:
+            title: 'Adres e-mail jest wymagany'
         submit: "Wyślij"
         template:
           description: 'Wygląda na to, że poprosiłeś o zresetowanie hasła. Kliknij w link, aby zresetować hasło. Jeśli nie prosiłeś o zresetowanie hasła, zignoruj tę wiadomość.'

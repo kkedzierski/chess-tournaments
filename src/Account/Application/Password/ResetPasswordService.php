@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Account\Application;
+namespace App\Account\Application\Password;
 
+use App\Account\Application\AccountMailerService;
 use App\Account\Application\Exception\CannotSendEmailException;
 use App\Account\Application\Exception\ResetPasswordException;
 use App\Account\Application\Exception\TokenGeneratingFailedException;
@@ -9,41 +10,30 @@ use App\Account\Application\Exception\TokenNotFoundException;
 use App\Account\Application\Exception\UserNotFoundException;
 use App\Account\Domain\UserRepositoryInterface;
 use Psr\Log\LoggerInterface;
-use Random\RandomException;
 
 class ResetPasswordService
 {
     public function __construct(
         private readonly LoggerInterface         $logger,
         private readonly UserRepositoryInterface $userRepository,
-        private readonly UserManagerService      $userManager,
         private readonly AccountMailerService    $accountMailerService,
-        private readonly PasswordTokenService    $passwordTokenService,
+        private readonly TokenService            $passwordTokenService,
+        private readonly UpdatePasswordService   $passwordManager,
     ) {
     }
 
     /**
      * @throws CannotSendEmailException
-     * @throws RandomException
      * @throws TokenGeneratingFailedException
      */
-    public function sendResetPasswordEmail(string $email): void
+    public function processResetPasswordSendEmail(string $email): void
     {
         $user = $this->userRepository->getByEmail($email);
 
         if (null !== $user) {
-            $passwordToken = $this->passwordTokenService->generateForOneDay($user);
+            $passwordToken = $this->passwordTokenService->generateTokenForResetPassword($user);
 
-            $this->accountMailerService->sendEmailToUser(
-                $email,
-                'dashboard.authentication.resetPassword.title',
-                'dashboard/authentication/resetPassword/reset-password-email-template.html.twig',
-                [
-                    'token' => $passwordToken->getToken(),
-                    'emailValue' => $email,
-                ],
-                'An error occurred while sending reset password email.'
-            );
+            $this->accountMailerService->sendResetPasswordEmail($email, $passwordToken);
         }
     }
 
@@ -65,7 +55,7 @@ class ResetPasswordService
         }
 
         try {
-            $this->userManager->updatePassword($user, $password);
+            $this->passwordManager->updatePassword($user, $password);
         } catch (\Throwable $exception) {
             $this->logger->error(
                 'An error occurred while resetting password.',

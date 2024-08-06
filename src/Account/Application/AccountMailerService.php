@@ -3,6 +3,7 @@
 namespace App\Account\Application;
 
 use App\Account\Application\Exception\CannotSendEmailException;
+use App\Account\Domain\PasswordToken;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
@@ -21,12 +22,46 @@ class AccountMailerService
     }
 
     /**
-     * @param array<string, mixed> $context
      * @throws CannotSendEmailException
      */
-    public function sendEmailToUser(
+    public function sendRegistrationConfirmationEmail(string $email, PasswordToken $passwordToken): void
+    {
+        $this->sendEmailToUser(
+            $email,
+            'dashboard.authentication.register.confirmation.title',
+            'dashboard/authentication/registration/confirmation-email-template.html.twig',
+            [
+                'token' => $passwordToken->getToken(),
+            ],
+            'An error occurred while sending registration confirmation email.'
+        );
+    }
+
+    /**
+     * @throws CannotSendEmailException
+     */
+    public function sendResetPasswordEmail(string $email, PasswordToken $passwordToken): void
+    {
+        $this->sendEmailToUser(
+            $email,
+            'dashboard.authentication.resetPassword.title',
+            'dashboard/authentication/resetPassword/reset-password-email-template.html.twig',
+            [
+                    'token' => $passwordToken->getToken(),
+                    'emailValue' => $email,
+                ],
+            'An error occurred while sending reset password email.'
+        );
+    }
+
+    /**
+     * @param array<string, mixed> $context
+     *
+     * @throws CannotSendEmailException
+     */
+    private function sendEmailToUser(
         string   $email,
-        string $translationSubjectKey,
+        string $title,
         string $twigTemplatePath,
         array  $context = [],
         string $logReason = 'An error occurred while sending email.'
@@ -40,7 +75,7 @@ class AccountMailerService
         $email = (new TemplatedEmail())
             ->from(new Address($this->companyEmail, $this->companyName))
             ->to(new Address($email))
-            ->subject($this->translator->trans($translationSubjectKey))
+            ->subject($this->translator->trans($title))
             ->htmlTemplate($twigTemplatePath)
             ->context($context);
 

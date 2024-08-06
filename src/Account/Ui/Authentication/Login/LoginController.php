@@ -4,6 +4,7 @@ namespace App\Account\Ui\Authentication\Login;
 
 use App\Account\Application\AccountAuthenticatorService;
 use App\Account\Ui\AbstractBaseController;
+use App\Kernel\Flasher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -11,12 +12,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractBaseController
 {
     #[Route(path: '/dashboard/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Flasher $flasher): Response
     {
         $user = $this->getUser();
 
         if ($user && false === $user->isVerified()) {
-            $this->addFlash('warning', 'dashboard.authentication.login.verifyEmail');
+            $flasher->error('dashboard.authentication.login.verifyEmail');
         }
 
         if ($user && $user->isAdmin() && $user->isVerified()) {
@@ -31,7 +32,7 @@ class LoginController extends AbstractBaseController
         $form = $this->createForm(LoginFormType::class);
 
         return $this->render(
-            'dashboard/authentication/login.html.twig',
+            'dashboard/authentication/login/login.html.twig',
             [
                 'last_username' => $lastUsername,
                 'error' => $error,

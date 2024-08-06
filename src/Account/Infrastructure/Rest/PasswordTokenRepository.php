@@ -26,9 +26,10 @@ class PasswordTokenRepository extends ServiceEntityRepository implements Passwor
     {
         $qb = $this->createQueryBuilder('pt');
 
+        /** @phpstan-ignore-next-line */
         return $qb
             ->where($qb->expr()->eq('pt.token', ':token'))
-            ->andWhere($qb->expr()->isNotNull('pt.activatedAt'))
+            ->andWhere($qb->expr()->isNull('pt.activatedAt'))
             ->andWhere($qb->expr()->gt('pt.expiredAt', ':now'))
             ->setParameter('token', $token)
             ->setParameter('now', $now)

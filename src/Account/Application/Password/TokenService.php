@@ -1,20 +1,17 @@
 <?php
 
-namespace App\Account\Application;
+namespace App\Account\Application\Password;
 
 use App\Account\Application\Exception\TokenGeneratingFailedException;
-use App\Account\Application\Exception\TokenNotFoundException;
 use App\Account\Domain\PasswordToken;
 use App\Account\Domain\PasswordTokenRepositoryInterface;
 use App\Account\Domain\User;
-use App\Account\Domain\UserRepositoryInterface;
 use Psr\Log\LoggerInterface;
 
-class PasswordTokenService
+class TokenService
 {
     public function __construct(
         private readonly PasswordTokenRepositoryInterface $passwordTokenRepository,
-        private readonly UserRepositoryInterface $userRepository,
         private readonly LoggerInterface $logger,
     ) {
     }
@@ -22,7 +19,7 @@ class PasswordTokenService
     /**
      * @throws TokenGeneratingFailedException
      */
-    public function generateForOneDay(User $user): PasswordToken
+    public function generateTokenForResetPassword(User $user): PasswordToken
     {
         try {
             $passwordToken = PasswordToken::generateForOneDay($user);
@@ -43,33 +40,25 @@ class PasswordTokenService
     }
 
     /**
-     * @throws TokenNotFoundException
+     * @throws TokenGeneratingFailedException
      */
-    public function setAsVerified(string $token): PasswordToken
+    public function generateTokenForVerifyAccount(User $user): PasswordToken
     {
         try {
-            $passwordToken = $this->passwordTokenRepository->getByToken($token, new \DateTimeImmutable('now'));
-
-            if (null === $passwordToken) {
-                throw new TokenNotFoundException();
-            }
-            $passwordToken->setAsVerified();
-            $user = $passwordToken->getUser();
+            $passwordToken = PasswordToken::generateForMonth($user);
             $this->passwordTokenRepository->save($passwordToken);
-            $this->userRepository->save($user);
 
             return $passwordToken;
         } catch (\Throwable $exception) {
             $this->logger->error(
-                'An error occurred while deactivating password token.',
+                'An error occurred while generating password token.',
                 [
                     'exception' => $exception,
-                    'token' => $token,
+                    'user' => $user,
                     'class' => __CLASS__,
                 ]
             );
-
-            throw new TokenNotFoundException();
+            throw new TokenGeneratingFailedException();
         }
     }
 }

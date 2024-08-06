@@ -2,19 +2,19 @@
 
 namespace App\Account\Ui\Authentication\ResetPassword;
 
-use App\Account\Domain\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 /**
  * Form types are simple and do not need to be tested.
+ *
  * @codeCoverageIgnore
+ *
  * @infection-ignore-all
  */
 class ResetPasswordFormType extends AbstractType
@@ -28,7 +28,6 @@ class ResetPasswordFormType extends AbstractType
                 'invalid_message' => 'validation.password.repeat',
                 'first_options' => ['label' => 'dashboard.authentication.register.fields.password'],
                 'second_options' => ['label' => 'dashboard.authentication.register.fields.repeatPassword'],
-                'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'validation.password.notBlank',
@@ -44,12 +43,5 @@ class ResetPasswordFormType extends AbstractType
                 ],
             ])
         ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
     }
 }

@@ -86,5 +86,37 @@ services:
     networks:
       - chess-tournaments-network
 
+  chess-tournament-loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./docker/etc/grafana/loki-config.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - chess-tournaments-network
+
+  chess-tournament-promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./docker/etc/grafana/promtail-config.yaml:/etc/promtail/promtail-config.yaml
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/promtail-config.yaml
+    networks:
+      - chess-tournaments-network
+
+  chess-tournament-grafana:
+    image: grafana/grafana-enterprise
+    restart: unless-stopped
+    ports:
+      - "3500:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
+    networks:
+      - chess-tournaments-network
+
 volumes:
     mysql-data:
+    grafana-data:

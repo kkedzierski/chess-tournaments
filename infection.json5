@@ -3,12 +3,19 @@
     "source": {
         "directories": [
             "src"
-        ]
+        ],
+        "excludes": [
+            "Dashboard/", // TODO temporary not implemented
+            "Kernel/", // TODO temporary not implemented
+            "Tournament/", // TODO temporary not implemented
+        ],
     },
     "logs": {
         "text": "infection.log"
     },
     "mutators": {
         "@default": true
-    }
+    },
+    "minMsi": 100,
+    "minCoveredMsi": 100
 }

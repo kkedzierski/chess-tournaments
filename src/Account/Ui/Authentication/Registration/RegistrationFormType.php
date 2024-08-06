@@ -17,7 +17,9 @@ use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 /**
  * Form types are simple and do not need to be tested.
+ *
  * @codeCoverageIgnore
+ *
  * @infection-ignore-all
  */
 class RegistrationFormType extends AbstractType
@@ -29,11 +31,17 @@ class RegistrationFormType extends AbstractType
                 'label' => 'dashboard.authentication.register.fields.email',
             ])
             ->add('agreeTerms', CheckboxType::class, [
+                'required' => true,
+                'label' => 'dashboard.authentication.register.fields.agreeTerms',
+                'label_html' => true,
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'validation.agreeTerms.isTrue',
                     ]),
+                ],
+                'attr' => [
+                    'class' => 'form-check-input',
                 ],
             ])
             ->add('password', RepeatedType::class, [

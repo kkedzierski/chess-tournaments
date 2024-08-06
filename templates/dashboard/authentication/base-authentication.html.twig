@@ -3,7 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% trans %}dashboard.authentication.login.title{% endtrans %}{% endblock %}</title>
+        <meta name="robots" content="index, follow">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+        <meta
+                name="description"
+                content="Szachowymistrz.pl portal do wyszukiwania turniejów szachowych"
+        />
         {% block stylesheets %}
             {{ encore_entry_link_tags('dashboard-authentication') }}
         {% endblock %}

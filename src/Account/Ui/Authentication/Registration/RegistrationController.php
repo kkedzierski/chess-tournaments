@@ -2,9 +2,12 @@
 
 namespace App\Account\Ui\Authentication\Registration;
 
-use App\Account\Application\PasswordTokenService;
-use App\Account\Application\UserManagerService;
+use App\Account\Application\CreateUserService;
+use App\Account\Application\Exception\TokenNotFoundException;
 use App\Account\Ui\Authentication\AccountAuthenticator;
+use App\Account\Ui\Exception\EmailRequiredException;
+use App\Account\Ui\Exception\PasswordRequiredException;
+use App\Kernel\Flasher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,8 +17,8 @@ use Symfony\Component\Routing\Attribute\Route;
 class RegistrationController extends AbstractController
 {
     public function __construct(
-        private readonly UserManagerService               $userManager,
-        private readonly PasswordTokenService $passwordTokenService,
+        private readonly CreateUserService    $createUserService,
+        private readonly Flasher              $flasher,
     ) {
     }
 
@@ -29,35 +32,83 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $user = $this->userManager->createNewUser(
-                    $form->get('email')->getData(),
-                    $form->get('password')->getData()
+                $email = $form->get('email')->getData();
+                $password = $form->get('password')->getData();
+
+                if (null === $email || false === is_string($email)) {
+                    throw new EmailRequiredException();
+                }
+
+                if (null === $password || false === is_string($password)) {
+                    throw new PasswordRequiredException();
+                }
+
+                $user = $this->createUserService->createUser(
+                    $email,
+                    $password
                 );
-            } catch (\Throwable $e) {
-                $this->addFlash('error', $e->getMessage());
+                $this->flasher->success(
+                    'dashboard.authentication.register.success.description',
+                    'dashboard.authentication.register.success.title'
+                );
+
+                return $security->login($user, AccountAuthenticator::class, 'main');
+            } catch (EmailRequiredException $exception) {
+                $this->flasher->error(
+                    $exception->getMessage(),
+                    'dashboard.authentication.register.error.emailRequired.title'
+                );
+            } catch (PasswordRequiredException $exception) {
+                $this->flasher->error(
+                    $exception->getMessage(),
+                    'dashboard.authentication.register.error.passwordRequired.title'
+                );
+            } catch (\Throwable) {
+                $this->flasher->error(
+                    'dashboard.authentication.register.error.description',
+                    'dashboard.authentication.register.error.title'
+                );
                 return $this->redirectToRoute('app_register');
             }
-
-            $this->addFlash('info', 'dashboard.authentication.register.verificationEmailSent');
-            return $security->login($user, AccountAuthenticator::class, 'main');
         }
 
-        return $this->render('dashboard/authentication/register.html.twig', [
+        return $this->render('dashboard/authentication/registration/register.html.twig', [
             'registrationForm' => $form,
         ]);
     }
 
-    #[Route('/dashboard/register/confirm/{token}', name: 'app_register_confirm')]
+    #[Route('/dashboard/register/confirm', name: 'app_register_confirm')]
     public function confirmRegistration(Request $request, Security $security): null|Response
     {
         try {
             $token = $request->get('token');
-            $passwordToken = $this->passwordTokenService->setAsVerified($token);
-        } catch (\Throwable $e) {
-            $this->addFlash('error', $e->getMessage());
+
+            if (null === $token || false === is_string($token)) {
+                throw new TokenNotFoundException();
+            }
+
+            $user = $this->createUserService->setAsVerified($token);
+
+            $this->flasher->success(
+                'dashboard.authentication.register.confirm.success.description',
+                'dashboard.authentication.register.confirm.success.title'
+            );
+
+            return $security->login($user, AccountAuthenticator::class, 'main');
+        } catch (TokenNotFoundException $exception) {
+            $this->flasher->error(
+                $exception->getMessage(),
+                'dashboard.authentication.register.confirm.error.tokenNotFound.title'
+            );
+        } catch (\Throwable) {
+            $this->flasher->error(
+                'dashboard.authentication.register.confirm.error.description',
+                'dashboard.authentication.register.confirm.error.title'
+            );
+
             return $this->redirectToRoute('app_register');
         }
 
-        return $security->login($passwordToken->getUser(), AccountAuthenticator::class, 'main');
+        return $this->redirectToRoute('app_register');
     }
 }

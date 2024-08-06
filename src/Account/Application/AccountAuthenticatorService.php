@@ -2,6 +2,8 @@
 
 namespace App\Account\Application;
 
+use App\Account\Domain\UserRepositoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AccountAuthenticatorService
@@ -11,7 +13,8 @@ class AccountAuthenticatorService
     public const DASHBOARD_ROUTE = 'dashboard';
 
     public function __construct(
-        private readonly UrlGeneratorInterface $urlGenerator
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly UserRepositoryInterface $userRepository,
     ) {
     }
 
@@ -23,5 +26,13 @@ class AccountAuthenticatorService
     public function getPanelDashboardUrl(): string
     {
         return $this->urlGenerator->generate(self::DASHBOARD_ROUTE);
+    }
+
+    public function isVerified(Request $request): bool
+    {
+        $email = $request->request->all('login_form')['email'] ?? '';
+        $user = $this->userRepository->getByEmail($email);
+
+        return (bool) $user?->isVerified();
     }
 }

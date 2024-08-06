@@ -12,7 +12,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Form types are simple and do not need to be tested.
+ *
  * @codeCoverageIgnore
+ *
  * @infection-ignore-all
  */
 class LoginFormType extends AbstractType
@@ -20,10 +22,13 @@ class LoginFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, [
+                'label' => 'dashboard.authentication.login.fields.email',
+            ])
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'label' => 'dashboard.authentication.login.fields.password',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

@@ -1,34 +1,47 @@
-{% extends "../base-authentication.html.twig" %}
+{% extends "dashboard/authentication/base-authentication.html.twig" %}
 {% block body %}
-    <div class="form-container form-register-container">
-        Regulamin Serwisu szachowymistrz.pl
-        1. Postanowienia ogólne
-        1.1. Niniejszy regulamin określa zasady korzystania z serwisu szachowymistrz.pl.
-        1.2. Rejestracja w serwisie oznacza akceptację niniejszego regulaminu.
-
-        2. Rejestracja i konto użytkownika
-        2.1. Aby utworzyć konto, użytkownik musi podać prawdziwe dane osobowe.
-        2.2. Każdy użytkownik może posiadać tylko jedno konto.
-        2.3. Użytkownik zobowiązany jest do zachowania poufności swojego hasła.
-
-        3. Korzystanie z serwisu
-        3.1. Użytkownik zobowiązuje się do korzystania z serwisu w sposób zgodny z prawem oraz dobrymi obyczajami.
-        3.2. Zabrania się publikowania treści obraźliwych, wulgarnych, naruszających prawa innych osób oraz niezgodnych z prawem.
-        3.3. Administracja serwisu ma prawo do usuwania treści naruszających regulamin oraz do blokowania kont użytkowników łamiących regulamin.
-
-        4. Odpowiedzialność
-        4.1. Administracja serwisu nie ponosi odpowiedzialności za treści publikowane przez użytkowników.
-        4.2. Użytkownik ponosi pełną odpowiedzialność za swoje działania w serwisie.
-
-        5. Polityka prywatności
-        5.1. Dane osobowe użytkowników są przetwarzane zgodnie z obowiązującymi przepisami prawa o ochronie danych osobowych.
-        5.2. Szczegółowe informacje na temat przetwarzania danych osobowych znajdują się w Polityce Prywatności serwisu.
-
-        6. Zmiany regulaminu
-        6.1. Administracja serwisu zastrzega sobie prawo do wprowadzania zmian w regulaminie.
-        6.2. O wszelkich zmianach regulaminu użytkownicy będą informowani na stronie głównej serwisu.
-
-        7. Kontakt
-        7.1. Wszelkie pytania dotyczące regulaminu oraz działania serwisu należy kierować na adres e-mail: kontakt@szachowymistrz.pl.
+    <div class="terms-container">
+        <div class="additional-links">
+            <a href="{{ path('app_register') }}" class="button button-additional">
+                {% trans %}dashboard.authentication.back{% endtrans %}
+            </a>
+        </div>
+        <h1>Regulamin Serwisu szachowymistrz.pl</h1>
+        <div class="section">
+            <h2>1. Postanowienia ogólne</h2>
+            <p>1.1. Niniejszy regulamin określa zasady korzystania z serwisu szachowymistrz.pl.</p>
+            <p>1.2. Rejestracja w serwisie oznacza akceptację niniejszego regulaminu.</p>
+        </div>
+        <div class="section">
+            <h2>2. Rejestracja i konto użytkownika</h2>
+            <p>2.1. Aby utworzyć konto, użytkownik musi podać prawdziwe dane osobowe.</p>
+            <p>2.2. Każdy użytkownik może posiadać tylko jedno konto.</p>
+            <p>2.3. Użytkownik zobowiązany jest do zachowania poufności swojego hasła.</p>
+        </div>
+        <div class="section">
+            <h2>3. Korzystanie z serwisu</h2>
+            <p>3.1. Użytkownik zobowiązuje się do korzystania z serwisu w sposób zgodny z prawem oraz dobrymi obyczajami.</p>
+            <p>3.2. Zabrania się publikowania treści obraźliwych, wulgarnych, naruszających prawa innych osób oraz niezgodnych z prawem.</p>
+            <p>3.3. Administracja serwisu ma prawo do usuwania treści naruszających regulamin oraz do blokowania kont użytkowników łamiących regulamin.</p>
+        </div>
+        <div class="section">
+            <h2>4. Odpowiedzialność</h2>
+            <p>4.1. Administracja serwisu nie ponosi odpowiedzialności za treści publikowane przez użytkowników.</p>
+            <p>4.2. Użytkownik ponosi pełną odpowiedzialność za swoje działania w serwisie.</p>
+        </div>
+        <div class="section">
+            <h2>5. Polityka prywatności</h2>
+            <p>5.1. Dane osobowe użytkowników są przetwarzane zgodnie z obowiązującymi przepisami prawa o ochronie danych osobowych.</p>
+            <p>5.2. Szczegółowe informacje na temat przetwarzania danych osobowych znajdują się w Polityce Prywatności serwisu.</p>
+        </div>
+        <div class="section">
+            <h2>6. Zmiany regulaminu</h2>
+            <p>6.1. Administracja serwisu zastrzega sobie prawo do wprowadzania zmian w regulaminie.</p>
+            <p>6.2. O wszelkich zmianach regulaminu użytkownicy będą informowani na stronie głównej serwisu.</p>
+        </div>
+        <div class="section">
+            <h2>7. Kontakt</h2>
+            <p>7.1. Wszelkie pytania dotyczące regulaminu oraz działania serwisu należy kierować na adres e-mail: kontakt@szachowymistrz.pl.</p>
+        </div>
     </div>
 {% endblock %}

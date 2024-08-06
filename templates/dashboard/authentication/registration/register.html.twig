@@ -1,0 +1,63 @@
+{% extends "dashboard/authentication/base-authentication.html.twig" %}
+{% block body %}
+    <div class="form-container-background">
+        <img src="{{ asset('assets/dashboard-ui/authentication/assets/images/chess-board.webp') }}"
+             class="chess-board-img" alt="chessboard background image" width="150" height="150"/>
+    </div>
+    <div class="form-container form-register-container">
+        <h3>{% trans %}dashboard.authentication.register.title{% endtrans %}</h3>
+        {{ form_start(registrationForm) }}
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"/>
+
+        {% if form_errors(registrationForm) %}
+            <div class="alert-danger">{{ form_errors(registrationForm) }}</div>
+        {% endif %}
+
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.password.first) }}
+        {{ form_row(registrationForm.password.second) }}
+        <div class="form-agree-terms-container">
+            {{ form_label(registrationForm.agreeTerms) }}
+            {{ form_widget(registrationForm.agreeTerms) }}
+        </div>
+
+        <button class='button button-submit' type="submit">
+            {% trans %}dashboard.authentication.register.submit{% endtrans %}
+        </button>
+
+        <div class="additional-links">
+            <a href="{{ path('app_login') }}" class="button button-additional">
+                {% trans %}dashboard.authentication.login.submit{% endtrans %}
+            </a>
+        </div>
+        {{ form_end(registrationForm) }}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const email = document.querySelector('#registration_form_email');
+            const password = document.querySelector('#registration_form_password_first');
+            const confirmPassword = document.querySelector('#registration_form_password_second');
+            const agreeTerms = document.querySelector('#registration_form_agreeTerms');
+
+            if (localStorage.getItem('register_email')) email.value = localStorage.getItem('register_email');
+            if (localStorage.getItem('register_password')) password.value = localStorage.getItem('register_password');
+            if (localStorage.getItem('register_confirmPassword')) confirmPassword.value = localStorage.getItem('register_confirmPassword');
+            if (localStorage.getItem('register_agreeTerms')) agreeTerms.checked = JSON.parse(localStorage.getItem('register_agreeTerms'));
+
+            localStorage.removeItem('register_email');
+            localStorage.removeItem('register_password');
+            localStorage.removeItem('register_confirmPassword');
+            localStorage.removeItem('register_agreeTerms');
+
+            document.querySelector('#terms-link').addEventListener('click', function () {
+                localStorage.setItem('register_email', email.value);
+                localStorage.setItem('register_password', password.value);
+                localStorage.setItem('register_confirmPassword', confirmPassword.value);
+                localStorage.setItem('register_agreeTerms', agreeTerms.checked);
+            });
+        });
+    </script>
+{% endblock %}
