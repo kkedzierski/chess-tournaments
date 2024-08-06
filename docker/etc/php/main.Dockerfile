@@ -10,6 +10,10 @@ FROM php:8.2-fpm
 # pdo_mysql is required for mysql connections
 # libzip-dev is required for zip extension
 # libicu-dev is required for intl extension
+# libjpeg-dev is required for gd extension and image processing
+# libtiff-dev is required for gd extension and image processing
+# libwebp-dev is required for gd extension and image processing
+# libgif-dev is required for gd extension and image processing
 # zip is required for composer
 # git is requried for grumphp
 RUN apt-get -q update && apt-get -qy install \
@@ -18,6 +22,10 @@ RUN apt-get -q update && apt-get -qy install \
     libpng-dev \
     libzip-dev \
     libicu-dev \
+    libjpeg-dev \
+    libtiff-dev \
+    libwebp-dev \
+    libgif-dev \
     git \
     && pecl install pcov \
     && docker-php-ext-enable pcov \
@@ -32,6 +40,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN curl -sS https://get.symfony.com/cli/installer | bash
 
 COPY . /var/www/html
+
+COPY assets/dashboard-ui/authentication/assets/images/ /var/www/html/public/assets/dashboard-ui/authentication/assets/images/
+
 
 # Copy configuration files
 COPY .php-cs-fixer.php /var/www/html/.php-cs-fixer.php

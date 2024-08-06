@@ -2,6 +2,9 @@
 framework:
     secret: '%env(APP_SECRET)%'
     #csrf_protection: true
+    router:
+        default_uri: '%env(DEFAULT_URI)%'
+    disallow_search_engine_index: false
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true

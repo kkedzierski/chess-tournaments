@@ -3,7 +3,7 @@
 environment=dev
 rebuilt=false
 
-source ./docker/.env-run-app.dev
+source ./docker/.env-scripts.dev
 
 while getopts e:r: flag
 do

@@ -42,6 +42,10 @@ dashboard:
       error:
         title: 'Nie udało się zarejestrować'
         description: 'Nie udało się zarejestrować. Spróbuj ponownie.'
+        emailRequired:
+          title: 'Adres e-mail jest wymagany'
+        passwordRequired:
+          title: 'Hasło jest wymagane'
       confirm:
         template:
           description: 'Kliknij w link, aby potwierdzić adres e-mail.'
