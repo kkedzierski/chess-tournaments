@@ -15,3 +15,5 @@ Witaj na stronie dokumentacji portalu szachowymistrz.pl!
 - [Testowanie](technicalGuide/tests.md)
 - [Dokumentacja API](technicalGuide/api.md)
 - [Dokumentacja kodu](technicalGuide/code.md)
+- [Grafana](technicalGuide/grafana.md)
+- [Ta dokumentacja](technicalGuide/thisDocumentation.md)
