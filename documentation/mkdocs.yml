@@ -16,7 +16,7 @@ nav:
       - Code documentation: technicalGuide/code.md
       - This documentation: technicalGuide/thisDocumentation.md
       - Tests: technicalGuide/tests.md
-      - Grafana: technicalGuide/grafana.md
+      - ELK: technicalGuide/elk.md
   - Authors: authors.md
 theme:
   language: pl
@@ -56,6 +56,6 @@ plugins:
             Api documentation: Dokumentacja API
             Code documentation: Dokumentacja kodu
             This documentation: Ta dokumentacja
-            Grafana: Grafana
+            ELK: ELK - Elasticsearch, Logstash, Kibana
             Tests: Testy
             Authors: Autorzy

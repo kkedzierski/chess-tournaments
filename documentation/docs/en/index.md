@@ -15,5 +15,5 @@ Welcome to the documentation page for the szachowymistrz.pl portal!
 - [Tests](technicalGuide/tests.md)
 - [Api documentation](technicalGuide/api.md)
 - [Code documentation](technicalGuide/code.md)
-- [Grafana](technicalGuide/grafana.md)
+- [ELK](technicalGuide/elk.md)
 - [This documentation](technicalGuide/thisDocumentation.md)

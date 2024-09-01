@@ -7,7 +7,7 @@ NODE_CONTAINER_NAME = chess-tournaments-node
 exec-root: ## Shell into container
 	docker exec -it -u root $(CONTAINER_NAME) /bin/bash
 
-.PHONY: rebuilt-node c-c cc
+.PHONY: rebuilt-node r-n rn
 rebuilt-node: ## Rebuild node container
 	docker-compose run --rm ${NODE_CONTAINER_NAME} npm run build
 r-n: rebuilt-node ## Alias for rebuilt-node

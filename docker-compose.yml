@@ -86,37 +86,57 @@ services:
     networks:
       - chess-tournaments-network
 
-  chess-tournament-loki:
-    image: grafana/loki:latest
-    ports:
-      - "3100:3100"
-    volumes:
-      - ./docker/etc/grafana/loki-config.yaml:/etc/loki/local-config.yaml
-    command: -config.file=/etc/loki/local-config.yaml
-    networks:
-      - chess-tournaments-network
-
-  chess-tournament-promtail:
-    image: grafana/promtail:latest
-    volumes:
-      - ./docker/etc/grafana/promtail-config.yaml:/etc/promtail/promtail-config.yaml
-      - /var/log:/var/log
-    command: -config.file=/etc/promtail/promtail-config.yaml
-    networks:
-      - chess-tournaments-network
-
-  chess-tournament-grafana:
-    image: grafana/grafana-enterprise
-    restart: unless-stopped
-    ports:
-      - "3500:3000"
-    volumes:
-      - grafana-data:/var/lib/grafana
+  chess-tournaments-elasticsearch:
+    container_name: chess-tournaments-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.2
+    platform: linux/amd64
     environment:
-      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
+      discovery.type: "single-node"
+      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
+      ELASTIC_PASSWORD: ${ELASTICSEARCH_PASSWORD}
+      xpack.security.enabled: ${ELASTICSEARCH_SECURITY}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
     networks:
       - chess-tournaments-network
+
+  chess-tournaments-logstash:
+    container_name: chess-tournaments-logstash
+    image: docker.elastic.co/logstash/logstash:7.4.2
+    platform: linux/amd64
+    depends_on:
+      - chess-tournaments-elasticsearch
+    volumes:
+      - ./docker/etc/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:cached
+      - ./docker/etc/logstash/conf.d:/etc/logstash/conf.d:cached
+      - ./var/log:/var/www/chess-tournaments/log
+    networks:
+      - chess-tournaments-network
+
+  chess-tournaments-kibana:
+    container_name: chess-tournaments-kibana
+    platform: linux/amd64
+    depends_on:
+      - chess-tournaments-elasticsearch
+    image: docker.elastic.co/kibana/kibana:7.4.2
+    environment:
+      SERVER_NAME: localhost
+#   TODO Uncomment this line when you have a domain name
+#      SERVER_NAME: szachowymistrz.pl
+      ELASTICSEARCH_HOSTS: http://chess-tournaments-elasticsearch:9200
+      ELASTICSEARCH_USERNAME: ${ELASTICSEARCH_USERNAME}
+      ELASTICSEARCH_PASSWORD: ${ELASTICSEARCH_PASSWORD}
+    networks:
+      - chess-tournaments-network
+    ports:
+      - "36505:5601"
 
 volumes:
     mysql-data:
-    grafana-data:
+    esdata:
