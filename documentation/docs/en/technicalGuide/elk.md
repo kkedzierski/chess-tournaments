@@ -11,7 +11,7 @@ In our case, we use them to collect and visualize application logs.
 After starting the containers with the application ([see here](https://kkedzierski.github.io/chess-tournaments/pl/technicalGuide/running/))  Elasticsearch, Logstash, and Kibana will be automatically launched. 
 - Kibana is available at `http://localhost:36505`.
 - Elasticsearch is available at `http://localhost:9200`.
-#### Grafana Configuration
+#### ELK Configuration
 	1.	Go to http://localhost:36505.
 	2.	Navigate to the “Discover” section available in the left side menu.
 	3.	Enter “chess-tournaments-logs-*” in the index pattern field and click “Next step”.
