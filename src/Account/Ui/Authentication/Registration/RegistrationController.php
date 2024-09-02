@@ -23,10 +23,8 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/dashboard/register', name: 'app_register')]
-    public function register(
-        Request $request,
-        Security $security,
-    ): ?Response {
+    public function register(Request $request): ?Response
+    {
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
 
@@ -43,7 +41,7 @@ class RegistrationController extends AbstractController
                     throw new PasswordRequiredException();
                 }
 
-                $user = $this->createUserService->createUser(
+                $this->createUserService->createUser(
                     $email,
                     $password
                 );
@@ -52,7 +50,7 @@ class RegistrationController extends AbstractController
                     'dashboard.authentication.register.success.title'
                 );
 
-                return $security->login($user, AccountAuthenticator::class, 'main');
+                return $this->redirectToRoute('app_login');
             } catch (EmailRequiredException $exception) {
                 $this->flasher->error(
                     $exception->getMessage(),

@@ -15,8 +15,9 @@ class LoginController extends AbstractBaseController
     public function login(AuthenticationUtils $authenticationUtils, Flasher $flasher): Response
     {
         $user = $this->getUser();
+        $error = $authenticationUtils->getLastAuthenticationError();
 
-        if ($user && false === $user->isVerified()) {
+        if (null === $error && $user && false === $user->isVerified()) {
             $flasher->error('dashboard.authentication.login.verifyEmail');
         }
 
@@ -24,9 +25,6 @@ class LoginController extends AbstractBaseController
             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
         }
 
-        // get the authentication error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         $form = $this->createForm(LoginFormType::class);
