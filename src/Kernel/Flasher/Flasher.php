@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Kernel;
+namespace App\Kernel\Flasher;
 
-use Flasher\Prime\FlasherInterface;
+use Flasher\Prime\FlasherInterface as BaseFlasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class Flasher
+final class Flasher implements FlasherInterface
 {
     /**
      * @var string[]
@@ -13,7 +13,7 @@ final class Flasher
     private array $defaultOptions = ['position' => 'top-center'];
 
     public function __construct(
-        private readonly FlasherInterface $flasher,
+        private readonly BaseFlasherInterface $flasher,
         private readonly TranslatorInterface $translator,
     ) {
     }

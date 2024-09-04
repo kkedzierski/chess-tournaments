@@ -8,7 +8,7 @@ use App\Account\Application\Exception\UserNotFoundException;
 use App\Account\Application\Password\ResetPasswordService;
 use App\Account\Ui\AbstractBaseController;
 use App\Account\Ui\Exception\PasswordRequiredException;
-use App\Kernel\Flasher;
+use App\Kernel\Flasher\Flasher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

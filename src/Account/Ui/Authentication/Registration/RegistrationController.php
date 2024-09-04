@@ -7,7 +7,7 @@ use App\Account\Application\Exception\TokenNotFoundException;
 use App\Account\Ui\Authentication\AccountAuthenticator;
 use App\Account\Ui\Exception\EmailRequiredException;
 use App\Account\Ui\Exception\PasswordRequiredException;
-use App\Kernel\Flasher;
+use App\Kernel\Flasher\Flasher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;

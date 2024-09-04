@@ -4,7 +4,7 @@ namespace App\Account\Ui\Authentication\Login;
 
 use App\Account\Application\AccountAuthenticatorService;
 use App\Account\Ui\AbstractBaseController;
-use App\Kernel\Flasher;
+use App\Kernel\Flasher\Flasher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;

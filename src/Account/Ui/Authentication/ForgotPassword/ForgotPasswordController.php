@@ -7,7 +7,7 @@ use App\Account\Application\Exception\TokenGeneratingFailedException;
 use App\Account\Application\Password\ResetPasswordService;
 use App\Account\Ui\AbstractBaseController;
 use App\Account\Ui\Exception\EmailRequiredException;
-use App\Kernel\Flasher;
+use App\Kernel\Flasher\FlasherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,7 +16,7 @@ class ForgotPasswordController extends AbstractBaseController
 {
     public function __construct(
         private readonly ResetPasswordService $resetPasswordService,
-        private readonly Flasher               $flasher,
+        private readonly FlasherInterface     $flasher,
     ) {
     }
 
@@ -57,7 +57,7 @@ class ForgotPasswordController extends AbstractBaseController
                     $exception->getMessage(),
                     'dashboard.authentication.resetPassword.email.error.emailRequired.title'
                 );
-            } catch (\Throwable) {
+            } catch (\Throwable $exception) {
                 $this->flasher->error(
                     'dashboard.authentication.resetPassword.email.error.description',
                     'dashboard.authentication.resetPassword.email.error.title'
