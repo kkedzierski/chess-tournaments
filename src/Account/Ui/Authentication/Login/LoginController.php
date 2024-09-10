@@ -4,7 +4,7 @@ namespace App\Account\Ui\Authentication\Login;
 
 use App\Account\Application\AccountAuthenticatorService;
 use App\Account\Ui\AbstractBaseController;
-use App\Kernel\Flasher\Flasher;
+use App\Kernel\Flasher\FlasherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractBaseController
 {
     #[Route(path: '/dashboard/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils, Flasher $flasher): Response
+    public function login(AuthenticationUtils $authenticationUtils, FlasherInterface $flasher): Response
     {
         $user = $this->getUser();
         $error = $authenticationUtils->getLastAuthenticationError();

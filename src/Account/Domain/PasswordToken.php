@@ -117,7 +117,7 @@ class PasswordToken
     {
         $this->activatedAt = new \DateTimeImmutable('now');
         $this->updatedBy = $activatedBy;
-        $this->user->setVerified(true);
+        $this->user->verify();
 
         return $this;
     }

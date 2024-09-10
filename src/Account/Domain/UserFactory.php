@@ -20,7 +20,7 @@ class UserFactory
             $password
         );
         $user->setPassword($hashedPassword);
-        $user->setAsAdmin();
+        $user->makeAdmin();
 
         return $user;
     }

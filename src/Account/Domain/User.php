@@ -294,7 +294,12 @@ class User implements
         return $this;
     }
 
-    public function setAsAdmin(): void
+    public function verify(): void
+    {
+        $this->isVerified = true;
+    }
+
+    public function makeAdmin(): void
     {
         $this->roles[] = RoleEnum::ADMIN->value;
     }
