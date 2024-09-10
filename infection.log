@@ -1,7 +1,22 @@
 Escaped mutants:
 ================
 
-1) /var/www/html/src/Account/Ui/Authentication/ForgotPassword/ForgotPasswordController.php:30    [M] CatchBlockRemoval
+1) /var/www/html/src/Account/Domain/User.php:90    [M] Ternary
+
+--- Original
++++ New
+@@ @@
+     private Collection $passwordTokens;
+     public function __construct(Uuid $id = null)
+     {
+-        $this->id = $id ?: Uuid::v4();
++        $this->id = $id ? Uuid::v4() : $id;
+         $this->passwordTokens = new ArrayCollection();
+     }
+     public function __toString(): string
+
+
+2) /var/www/html/src/Account/Ui/Authentication/ForgotPassword/ForgotPasswordController.php:30    [M] CatchBlockRemoval
 
 --- Original
 +++ New
@@ -14,6 +29,66 @@ Escaped mutants:
              } catch (TokenGeneratingFailedException $exception) {
                  $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resetPassword.email.error.tokenGenerating.title');
              } catch (EmailRequiredException $exception) {
+
+
+3) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:20    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+     {
+         $user = $this->getUser();
+         $error = $authenticationUtils->getLastAuthenticationError();
+-        if (null === $error && $user && false === $user->isVerified()) {
++        if ((null === $error || $user) && false === $user->isVerified()) {
+             $flasher->error('dashboard.authentication.login.verifyEmail');
+         }
+         if ($user && $user->isAdmin() && $user->isVerified()) {
+
+
+4) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:20    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+     {
+         $user = $this->getUser();
+         $error = $authenticationUtils->getLastAuthenticationError();
+-        if (null === $error && $user && false === $user->isVerified()) {
++        if (null === $error && $user || false === $user->isVerified()) {
+             $flasher->error('dashboard.authentication.login.verifyEmail');
+         }
+         if ($user && $user->isAdmin() && $user->isVerified()) {
+
+
+5) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:24    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+         if (null === $error && $user && false === $user->isVerified()) {
+             $flasher->error('dashboard.authentication.login.verifyEmail');
+         }
+-        if ($user && $user->isAdmin() && $user->isVerified()) {
++        if (($user || $user->isAdmin()) && $user->isVerified()) {
+             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
+         }
+         $lastUsername = $authenticationUtils->getLastUsername();
+
+
+6) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:24    [M] LogicalAnd
+
+--- Original
++++ New
+@@ @@
+         if (null === $error && $user && false === $user->isVerified()) {
+             $flasher->error('dashboard.authentication.login.verifyEmail');
+         }
+-        if ($user && $user->isAdmin() && $user->isVerified()) {
++        if ($user && $user->isAdmin() || $user->isVerified()) {
+             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
+         }
+         $lastUsername = $authenticationUtils->getLastUsername();
 
 
 Timed Out mutants:
@@ -1397,7 +1472,7 @@ Not Covered mutants:
          $this->updatedBy = $activatedBy;
 
 
-92) /var/www/html/src/Account/Domain/PasswordToken.php:120    [M] TrueValue
+92) /var/www/html/src/Account/Domain/PasswordToken.php:120    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1405,34 +1480,19 @@ Not Covered mutants:
      {
          $this->activatedAt = new \DateTimeImmutable('now');
          $this->updatedBy = $activatedBy;
--        $this->user->setVerified(true);
-+        $this->user->setVerified(false);
-         return $this;
-     }
-     public function getUpdatedBy(): ?string
-
-
-93) /var/www/html/src/Account/Domain/PasswordToken.php:120    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-     {
-         $this->activatedAt = new \DateTimeImmutable('now');
-         $this->updatedBy = $activatedBy;
--        $this->user->setVerified(true);
+-        $this->user->verify();
 +        
          return $this;
      }
      public function getUpdatedBy(): ?string
 
 
-94) /var/www/html/src/Account/Domain/PasswordToken.php:125    [M] PublicVisibility
+93) /var/www/html/src/Account/Domain/PasswordToken.php:125    [M] PublicVisibility
 
 --- Original
 +++ New
 @@ @@
-         $this->user->setVerified(true);
+         $this->user->verify();
          return $this;
      }
 -    public function getUpdatedBy(): ?string
@@ -1443,22 +1503,7 @@ Not Covered mutants:
  }
 
 
-95) /var/www/html/src/Account/Domain/User.php:90    [M] Ternary
-
---- Original
-+++ New
-@@ @@
-     private Collection $passwordTokens;
-     public function __construct(Uuid $id = null)
-     {
--        $this->id = $id ?: Uuid::v4();
-+        $this->id = $id ? Uuid::v4() : $id;
-         $this->passwordTokens = new ArrayCollection();
-     }
-     public function __toString(): string
-
-
-96) /var/www/html/src/Account/Domain/User.php:104    [M] PublicVisibility
+94) /var/www/html/src/Account/Domain/User.php:104    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1473,7 +1518,7 @@ Not Covered mutants:
          return $this;
 
 
-97) /var/www/html/src/Account/Domain/User.php:116    [M] PublicVisibility
+95) /var/www/html/src/Account/Domain/User.php:116    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1488,7 +1533,7 @@ Not Covered mutants:
          return $this;
 
 
-98) /var/www/html/src/Account/Domain/User.php:144    [M] UnwrapArrayUnique
+96) /var/www/html/src/Account/Domain/User.php:144    [M] UnwrapArrayUnique
 
 --- Original
 +++ New
@@ -1503,7 +1548,7 @@ Not Covered mutants:
       * @param string[] $roles
 
 
-99) /var/www/html/src/Account/Domain/User.php:150    [M] PublicVisibility
+97) /var/www/html/src/Account/Domain/User.php:150    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1518,7 +1563,7 @@ Not Covered mutants:
          return $this;
 
 
-100) /var/www/html/src/Account/Domain/User.php:165    [M] PublicVisibility
+98) /var/www/html/src/Account/Domain/User.php:165    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1533,7 +1578,7 @@ Not Covered mutants:
          return $this;
 
 
-101) /var/www/html/src/Account/Domain/User.php:172    [M] PublicVisibility
+99) /var/www/html/src/Account/Domain/User.php:172    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1548,7 +1593,7 @@ Not Covered mutants:
      }
 
 
-102) /var/www/html/src/Account/Domain/User.php:177    [M] PublicVisibility
+100) /var/www/html/src/Account/Domain/User.php:177    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1563,7 +1608,7 @@ Not Covered mutants:
          return $this;
 
 
-103) /var/www/html/src/Account/Domain/User.php:184    [M] PublicVisibility
+101) /var/www/html/src/Account/Domain/User.php:184    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1578,7 +1623,7 @@ Not Covered mutants:
          return $this;
 
 
-104) /var/www/html/src/Account/Domain/User.php:193    [M] NullSafeMethodCall
+102) /var/www/html/src/Account/Domain/User.php:193    [M] NullSafeMethodCall
 
 --- Original
 +++ New
@@ -1593,7 +1638,7 @@ Not Covered mutants:
      {
 
 
-105) /var/www/html/src/Account/Domain/User.php:193    [M] CastBool
+103) /var/www/html/src/Account/Domain/User.php:193    [M] CastBool
 
 --- Original
 +++ New
@@ -1608,7 +1653,7 @@ Not Covered mutants:
      {
 
 
-106) /var/www/html/src/Account/Domain/User.php:203    [M] NullSafeMethodCall
+104) /var/www/html/src/Account/Domain/User.php:203    [M] NullSafeMethodCall
 
 --- Original
 +++ New
@@ -1623,7 +1668,7 @@ Not Covered mutants:
       * @see UserInterface
 
 
-107) /var/www/html/src/Account/Domain/User.php:203    [M] Coalesce
+105) /var/www/html/src/Account/Domain/User.php:203    [M] Coalesce
 
 --- Original
 +++ New
@@ -1638,7 +1683,7 @@ Not Covered mutants:
       * @see UserInterface
 
 
-108) /var/www/html/src/Account/Domain/User.php:203    [M] DecrementInteger
+106) /var/www/html/src/Account/Domain/User.php:203    [M] DecrementInteger
 
 --- Original
 +++ New
@@ -1653,7 +1698,7 @@ Not Covered mutants:
       * @see UserInterface
 
 
-109) /var/www/html/src/Account/Domain/User.php:203    [M] IncrementInteger
+107) /var/www/html/src/Account/Domain/User.php:203    [M] IncrementInteger
 
 --- Original
 +++ New
@@ -1668,7 +1713,7 @@ Not Covered mutants:
       * @see UserInterface
 
 
-110) /var/www/html/src/Account/Domain/User.php:203    [M] DecrementInteger
+108) /var/www/html/src/Account/Domain/User.php:203    [M] DecrementInteger
 
 --- Original
 +++ New
@@ -1683,7 +1728,7 @@ Not Covered mutants:
       * @see UserInterface
 
 
-111) /var/www/html/src/Account/Domain/User.php:203    [M] IncrementInteger
+109) /var/www/html/src/Account/Domain/User.php:203    [M] IncrementInteger
 
 --- Original
 +++ New
@@ -1698,7 +1743,7 @@ Not Covered mutants:
       * @see UserInterface
 
 
-112) /var/www/html/src/Account/Domain/User.php:203    [M] NewObject
+110) /var/www/html/src/Account/Domain/User.php:203    [M] NewObject
 
 --- Original
 +++ New
@@ -1714,7 +1759,7 @@ Not Covered mutants:
       * @see UserInterface
 
 
-113) /var/www/html/src/Account/Domain/User.php:228    [M] PublicVisibility
+111) /var/www/html/src/Account/Domain/User.php:228    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1729,7 +1774,7 @@ Not Covered mutants:
      }
 
 
-114) /var/www/html/src/Account/Domain/User.php:233    [M] PublicVisibility
+112) /var/www/html/src/Account/Domain/User.php:233    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1744,7 +1789,7 @@ Not Covered mutants:
      }
 
 
-115) /var/www/html/src/Account/Domain/User.php:238    [M] PublicVisibility
+113) /var/www/html/src/Account/Domain/User.php:238    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1759,7 +1804,7 @@ Not Covered mutants:
      }
 
 
-116) /var/www/html/src/Account/Domain/User.php:243    [M] PublicVisibility
+114) /var/www/html/src/Account/Domain/User.php:243    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1774,7 +1819,7 @@ Not Covered mutants:
              return null;
 
 
-117) /var/www/html/src/Account/Domain/User.php:245    [M] LogicalNot
+115) /var/www/html/src/Account/Domain/User.php:245    [M] LogicalNot
 
 --- Original
 +++ New
@@ -1789,7 +1834,7 @@ Not Covered mutants:
          if (str_contains($this->avatar, '/')) {
 
 
-118) /var/www/html/src/Account/Domain/User.php:249    [M] IfNegation
+116) /var/www/html/src/Account/Domain/User.php:249    [M] IfNegation
 
 --- Original
 +++ New
@@ -1804,7 +1849,7 @@ Not Covered mutants:
          return sprintf('/uploads/images/avatars/%s', $this->avatar);
 
 
-119) /var/www/html/src/Account/Domain/User.php:253    [M] FunctionCall
+117) /var/www/html/src/Account/Domain/User.php:253    [M] FunctionCall
 
 --- Original
 +++ New
@@ -1820,7 +1865,7 @@ Not Covered mutants:
      {
 
 
-120) /var/www/html/src/Account/Domain/User.php:256    [M] PublicVisibility
+118) /var/www/html/src/Account/Domain/User.php:256    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1835,7 +1880,7 @@ Not Covered mutants:
      }
 
 
-121) /var/www/html/src/Account/Domain/User.php:261    [M] PublicVisibility
+119) /var/www/html/src/Account/Domain/User.php:261    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1850,7 +1895,7 @@ Not Covered mutants:
      }
 
 
-122) /var/www/html/src/Account/Domain/User.php:268    [M] ArrayItemRemoval
+120) /var/www/html/src/Account/Domain/User.php:268    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -1865,7 +1910,7 @@ Not Covered mutants:
      {
 
 
-123) /var/www/html/src/Account/Domain/User.php:269    [M] ArrayItem
+121) /var/www/html/src/Account/Domain/User.php:269    [M] ArrayItem
 
 --- Original
 +++ New
@@ -1880,7 +1925,7 @@ Not Covered mutants:
      {
 
 
-124) /var/www/html/src/Account/Domain/User.php:270    [M] ArrayItem
+122) /var/www/html/src/Account/Domain/User.php:270    [M] ArrayItem
 
 --- Original
 +++ New
@@ -1895,7 +1940,7 @@ Not Covered mutants:
      {
 
 
-125) /var/www/html/src/Account/Domain/User.php:271    [M] ArrayItem
+123) /var/www/html/src/Account/Domain/User.php:271    [M] ArrayItem
 
 --- Original
 +++ New
@@ -1910,37 +1955,7 @@ Not Covered mutants:
      {
 
 
-126) /var/www/html/src/Account/Domain/User.php:280    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return in_array(RoleEnum::SUPER_ADMIN->value, $this->roles, true);
-     }
--    public function isAdmin(): bool
-+    protected function isAdmin(): bool
-     {
-         return in_array(RoleEnum::ADMIN->value, $this->roles, true);
-     }
-
-
-127) /var/www/html/src/Account/Domain/User.php:285    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return in_array(RoleEnum::ADMIN->value, $this->roles, true);
-     }
--    public function isVerified(): bool
-+    protected function isVerified(): bool
-     {
-         return $this->isVerified;
-     }
-
-
-128) /var/www/html/src/Account/Domain/User.php:290    [M] PublicVisibility
+124) /var/www/html/src/Account/Domain/User.php:290    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1955,22 +1970,7 @@ Not Covered mutants:
          return $this;
 
 
-129) /var/www/html/src/Account/Domain/User.php:297    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         $this->isVerified = $isVerified;
-         return $this;
-     }
--    public function setAsAdmin(): void
-+    protected function setAsAdmin(): void
-     {
-         $this->roles[] = RoleEnum::ADMIN->value;
-     }
-
-
-130) /var/www/html/src/Account/Domain/User.php:302    [M] PublicVisibility
+125) /var/www/html/src/Account/Domain/User.php:307    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1985,7 +1985,7 @@ Not Covered mutants:
              $this->passwordTokens[] = $passwordToken;
 
 
-131) /var/www/html/src/Account/Domain/User.php:304    [M] LogicalNot
+126) /var/www/html/src/Account/Domain/User.php:309    [M] LogicalNot
 
 --- Original
 +++ New
@@ -2000,7 +2000,7 @@ Not Covered mutants:
          }
 
 
-132) /var/www/html/src/Account/Domain/User.php:306    [M] MethodCallRemoval
+127) /var/www/html/src/Account/Domain/User.php:311    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2015,7 +2015,7 @@ Not Covered mutants:
      }
 
 
-133) /var/www/html/src/Account/Domain/User.php:315    [M] PublicVisibility
+128) /var/www/html/src/Account/Domain/User.php:320    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -2030,7 +2030,7 @@ Not Covered mutants:
      }
 
 
-134) /var/www/html/src/Account/Domain/User.php:320    [M] PublicVisibility
+129) /var/www/html/src/Account/Domain/User.php:325    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -2045,7 +2045,7 @@ Not Covered mutants:
              if ($passwordToken->isActive($now)) {
 
 
-135) /var/www/html/src/Account/Domain/User.php:322    [M] Foreach_
+130) /var/www/html/src/Account/Domain/User.php:327    [M] Foreach_
 
 --- Original
 +++ New
@@ -2060,7 +2060,7 @@ Not Covered mutants:
              }
 
 
-136) /var/www/html/src/Account/Domain/User.php:323    [M] IfNegation
+131) /var/www/html/src/Account/Domain/User.php:328    [M] IfNegation
 
 --- Original
 +++ New
@@ -2075,7 +2075,7 @@ Not Covered mutants:
          }
 
 
-137) /var/www/html/src/Account/Domain/User.php:331    [M] PublicVisibility
+132) /var/www/html/src/Account/Domain/User.php:336    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -2090,7 +2090,7 @@ Not Covered mutants:
      }
 
 
-138) /var/www/html/src/Account/Domain/User.php:333    [M] MethodCallRemoval
+133) /var/www/html/src/Account/Domain/User.php:338    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2105,7 +2105,7 @@ Not Covered mutants:
      {
 
 
-139) /var/www/html/src/Account/Domain/User.php:336    [M] PublicVisibility
+134) /var/www/html/src/Account/Domain/User.php:341    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -2120,7 +2120,7 @@ Not Covered mutants:
      }
 
 
-140) /var/www/html/src/Account/Domain/User.php:341    [M] PublicVisibility
+135) /var/www/html/src/Account/Domain/User.php:346    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -2135,7 +2135,7 @@ Not Covered mutants:
              if ($passwordToken->getToken() === $token && $passwordToken->isActive(new \DateTimeImmutable())) {
 
 
-141) /var/www/html/src/Account/Domain/User.php:343    [M] Foreach_
+136) /var/www/html/src/Account/Domain/User.php:348    [M] Foreach_
 
 --- Original
 +++ New
@@ -2150,7 +2150,7 @@ Not Covered mutants:
              }
 
 
-142) /var/www/html/src/Account/Domain/User.php:344    [M] Identical
+137) /var/www/html/src/Account/Domain/User.php:349    [M] Identical
 
 --- Original
 +++ New
@@ -2165,7 +2165,7 @@ Not Covered mutants:
          }
 
 
-143) /var/www/html/src/Account/Domain/User.php:344    [M] LogicalAnd
+138) /var/www/html/src/Account/Domain/User.php:349    [M] LogicalAnd
 
 --- Original
 +++ New
@@ -2180,7 +2180,7 @@ Not Covered mutants:
          }
 
 
-144) /var/www/html/src/Account/Domain/User.php:344    [M] LogicalAndAllSubExprNegation
+139) /var/www/html/src/Account/Domain/User.php:349    [M] LogicalAndAllSubExprNegation
 
 --- Original
 +++ New
@@ -2195,7 +2195,7 @@ Not Covered mutants:
          }
 
 
-145) /var/www/html/src/Account/Domain/User.php:344    [M] LogicalAndNegation
+140) /var/www/html/src/Account/Domain/User.php:349    [M] LogicalAndNegation
 
 --- Original
 +++ New
@@ -2210,7 +2210,7 @@ Not Covered mutants:
          }
 
 
-146) /var/www/html/src/Account/Domain/User.php:344    [M] LogicalAndSingleSubExprNegation
+141) /var/www/html/src/Account/Domain/User.php:349    [M] LogicalAndSingleSubExprNegation
 
 --- Original
 +++ New
@@ -2225,7 +2225,7 @@ Not Covered mutants:
          }
 
 
-147) /var/www/html/src/Account/Domain/User.php:347    [M] TrueValue
+142) /var/www/html/src/Account/Domain/User.php:352    [M] TrueValue
 
 --- Original
 +++ New
@@ -2242,7 +2242,7 @@ Not Covered mutants:
  }
 
 
-148) /var/www/html/src/Account/Domain/User.php:351    [M] FalseValue
+143) /var/www/html/src/Account/Domain/User.php:356    [M] FalseValue
 
 --- Original
 +++ New
@@ -2256,7 +2256,7 @@ Not Covered mutants:
  }
 
 
-149) /var/www/html/src/Account/Domain/UserFactory.php:14    [M] PublicVisibility
+144) /var/www/html/src/Account/Domain/UserFactory.php:14    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -2271,7 +2271,7 @@ Not Covered mutants:
          $user->setEmail($email);
 
 
-150) /var/www/html/src/Account/Domain/UserFactory.php:17    [M] MethodCallRemoval
+145) /var/www/html/src/Account/Domain/UserFactory.php:17    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2283,10 +2283,10 @@ Not Covered mutants:
 +        
          $hashedPassword = $this->userPasswordHasher->hashPassword($user, $password);
          $user->setPassword($hashedPassword);
-         $user->setAsAdmin();
+         $user->makeAdmin();
 
 
-151) /var/www/html/src/Account/Domain/UserFactory.php:22    [M] MethodCallRemoval
+146) /var/www/html/src/Account/Domain/UserFactory.php:22    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2296,13 +2296,13 @@ Not Covered mutants:
          $hashedPassword = $this->userPasswordHasher->hashPassword($user, $password);
 -        $user->setPassword($hashedPassword);
 +        
-         $user->setAsAdmin();
+         $user->makeAdmin();
          return $user;
      }
  }
 
 
-152) /var/www/html/src/Account/Domain/UserFactory.php:23    [M] MethodCallRemoval
+147) /var/www/html/src/Account/Domain/UserFactory.php:23    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2310,14 +2310,14 @@ Not Covered mutants:
          $user->setEmail($email);
          $hashedPassword = $this->userPasswordHasher->hashPassword($user, $password);
          $user->setPassword($hashedPassword);
--        $user->setAsAdmin();
+-        $user->makeAdmin();
 +        
          return $user;
      }
  }
 
 
-153) /var/www/html/src/Account/Domain/ValueObject/TotpSecret.php:19    [M] PublicVisibility
+148) /var/www/html/src/Account/Domain/ValueObject/TotpSecret.php:19    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -2332,7 +2332,7 @@ Not Covered mutants:
      }
 
 
-154) /var/www/html/src/Account/Domain/ValueObject/TotpSecret.php:21    [M] NotIdentical
+149) /var/www/html/src/Account/Domain/ValueObject/TotpSecret.php:21    [M] NotIdentical
 
 --- Original
 +++ New
@@ -2347,7 +2347,7 @@ Not Covered mutants:
      {
 
 
-155) /var/www/html/src/Account/Domain/ValueObject/TotpSecret.php:24    [M] PublicVisibility
+150) /var/www/html/src/Account/Domain/ValueObject/TotpSecret.php:24    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -2363,7 +2363,7 @@ Not Covered mutants:
  }
 
 
-156) /var/www/html/src/Account/Infrastructure/Rest/PasswordTokenRepository.php:22    [M] MethodCallRemoval
+151) /var/www/html/src/Account/Infrastructure/Rest/PasswordTokenRepository.php:22    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2378,7 +2378,7 @@ Not Covered mutants:
      {
 
 
-157) /var/www/html/src/Account/Infrastructure/Rest/PasswordTokenRepository.php:42    [M] MethodCallRemoval
+152) /var/www/html/src/Account/Infrastructure/Rest/PasswordTokenRepository.php:42    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2393,7 +2393,7 @@ Not Covered mutants:
  }
 
 
-158) /var/www/html/src/Account/Infrastructure/Rest/PasswordTokenRepository.php:43    [M] MethodCallRemoval
+153) /var/www/html/src/Account/Infrastructure/Rest/PasswordTokenRepository.php:43    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2407,7 +2407,7 @@ Not Covered mutants:
  }
 
 
-159) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:24    [M] MethodCallRemoval
+154) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:24    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2422,7 +2422,7 @@ Not Covered mutants:
      {
 
 
-160) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:29    [M] MethodCallRemoval
+155) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:29    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2437,7 +2437,7 @@ Not Covered mutants:
      /**
 
 
-161) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:30    [M] MethodCallRemoval
+156) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:30    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2452,7 +2452,7 @@ Not Covered mutants:
       * Used to upgrade (rehash) the user's password automatically over time.
 
 
-162) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:38    [M] InstanceOf_
+157) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:38    [M] InstanceOf_
 
 --- Original
 +++ New
@@ -2467,7 +2467,7 @@ Not Covered mutants:
          $user->setPassword($newHashedPassword);
 
 
-163) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:38    [M] InstanceOf_
+158) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:38    [M] InstanceOf_
 
 --- Original
 +++ New
@@ -2482,7 +2482,7 @@ Not Covered mutants:
          $user->setPassword($newHashedPassword);
 
 
-164) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:38    [M] LogicalNot
+159) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:38    [M] LogicalNot
 
 --- Original
 +++ New
@@ -2497,7 +2497,7 @@ Not Covered mutants:
          $user->setPassword($newHashedPassword);
 
 
-165) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:39    [M] Throw_
+160) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:39    [M] Throw_
 
 --- Original
 +++ New
@@ -2512,7 +2512,7 @@ Not Covered mutants:
          $user->setUpdatedAt(new \DateTimeImmutable());
 
 
-166) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:42    [M] MethodCallRemoval
+161) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:42    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2527,7 +2527,7 @@ Not Covered mutants:
      }
 
 
-167) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:43    [M] MethodCallRemoval
+162) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:43    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2542,7 +2542,7 @@ Not Covered mutants:
      public function getByEmail(string $email): ?User
 
 
-168) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:45    [M] MethodCallRemoval
+163) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:45    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2557,7 +2557,7 @@ Not Covered mutants:
      {
 
 
-169) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:50    [M] ArrayItemRemoval
+164) /var/www/html/src/Account/Infrastructure/Rest/UserRepository.php:50    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -2571,7 +2571,7 @@ Not Covered mutants:
  }
 
 
-170) /var/www/html/src/Account/Ui/AccountController.php:41    [M] TrueValue
+165) /var/www/html/src/Account/Ui/AccountController.php:41    [M] TrueValue
 
 --- Original
 +++ New
@@ -2586,7 +2586,7 @@ Not Covered mutants:
      public function configureFields(string $pageName): iterable
 
 
-171) /var/www/html/src/Account/Ui/AccountController.php:41    [M] NullSafeMethodCall
+166) /var/www/html/src/Account/Ui/AccountController.php:41    [M] NullSafeMethodCall
 
 --- Original
 +++ New
@@ -2601,7 +2601,7 @@ Not Covered mutants:
      public function configureFields(string $pageName): iterable
 
 
-172) /var/www/html/src/Account/Ui/AccountController.php:41    [M] Identical
+167) /var/www/html/src/Account/Ui/AccountController.php:41    [M] Identical
 
 --- Original
 +++ New
@@ -2616,7 +2616,7 @@ Not Covered mutants:
      public function configureFields(string $pageName): iterable
 
 
-173) /var/www/html/src/Account/Ui/AccountController.php:41    [M] Ternary
+168) /var/www/html/src/Account/Ui/AccountController.php:41    [M] Ternary
 
 --- Original
 +++ New
@@ -2631,7 +2631,7 @@ Not Covered mutants:
      public function configureFields(string $pageName): iterable
 
 
-174) /var/www/html/src/Account/Ui/AccountController.php:55    [M] TrueValue
+169) /var/www/html/src/Account/Ui/AccountController.php:55    [M] TrueValue
 
 --- Original
 +++ New
@@ -2646,7 +2646,7 @@ Not Covered mutants:
          yield TextField::new('actualPassword')->setLabel('admin.account.actualPassword')->setFormType(PasswordType::class)->setRequired(false)->onlyOnForms();
 
 
-175) /var/www/html/src/Account/Ui/AccountController.php:60    [M] NullSafeMethodCall
+170) /var/www/html/src/Account/Ui/AccountController.php:60    [M] NullSafeMethodCall
 
 --- Original
 +++ New
@@ -2661,7 +2661,7 @@ Not Covered mutants:
          yield TextField::new('password')->setFormType(RepeatedType::class)->setFormTypeOptions(['type' => PasswordType::class, 'first_options' => ['label' => 'admin.account.password'], 'second_options' => ['label' => 'admin.account.confirmPassword'], 'mapped' => false])->setRequired(false)->onlyOnForms();
 
 
-176) /var/www/html/src/Account/Ui/AccountController.php:66    [M] FalseValue
+171) /var/www/html/src/Account/Ui/AccountController.php:66    [M] FalseValue
 
 --- Original
 +++ New
@@ -2676,7 +2676,7 @@ Not Covered mutants:
      public function configureCrud(Crud $crud): Crud
 
 
-177) /var/www/html/src/Account/Ui/AccountController.php:70    [M] ArrayItemRemoval
+172) /var/www/html/src/Account/Ui/AccountController.php:70    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -2691,7 +2691,7 @@ Not Covered mutants:
      {
 
 
-178) /var/www/html/src/Account/Ui/AccountController.php:72    [M] ArrayItemRemoval
+173) /var/www/html/src/Account/Ui/AccountController.php:72    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -2706,7 +2706,7 @@ Not Covered mutants:
      {
 
 
-179) /var/www/html/src/Account/Ui/AccountController.php:73    [M] ArrayItemRemoval
+174) /var/www/html/src/Account/Ui/AccountController.php:73    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -2721,7 +2721,7 @@ Not Covered mutants:
      {
 
 
-180) /var/www/html/src/Account/Ui/AccountController.php:74    [M] FalseValue
+175) /var/www/html/src/Account/Ui/AccountController.php:74    [M] FalseValue
 
 --- Original
 +++ New
@@ -2736,7 +2736,7 @@ Not Covered mutants:
      {
 
 
-181) /var/www/html/src/Account/Ui/AccountController.php:76    [M] FalseValue
+176) /var/www/html/src/Account/Ui/AccountController.php:76    [M] FalseValue
 
 --- Original
 +++ New
@@ -2751,7 +2751,7 @@ Not Covered mutants:
      {
 
 
-182) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:31    [M] Identical
+177) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:31    [M] Identical
 
 --- Original
 +++ New
@@ -2766,7 +2766,7 @@ Not Covered mutants:
      {
 
 
-183) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:31    [M] LogicalAnd
+178) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:31    [M] LogicalAnd
 
 --- Original
 +++ New
@@ -2781,7 +2781,7 @@ Not Covered mutants:
      {
 
 
-184) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:31    [M] LogicalAndAllSubExprNegation
+179) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:31    [M] LogicalAndAllSubExprNegation
 
 --- Original
 +++ New
@@ -2796,7 +2796,7 @@ Not Covered mutants:
      {
 
 
-185) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:31    [M] LogicalAndNegation
+180) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:31    [M] LogicalAndNegation
 
 --- Original
 +++ New
@@ -2811,7 +2811,7 @@ Not Covered mutants:
      {
 
 
-186) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:31    [M] LogicalAndSingleSubExprNegation
+181) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:31    [M] LogicalAndSingleSubExprNegation
 
 --- Original
 +++ New
@@ -2826,7 +2826,7 @@ Not Covered mutants:
      {
 
 
-187) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:40    [M] MethodCallRemoval
+182) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:40    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2841,7 +2841,7 @@ Not Covered mutants:
      public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
 
 
-188) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:45    [M] ArrayItemRemoval
+183) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:45    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -2856,7 +2856,7 @@ Not Covered mutants:
      {
 
 
-189) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:46    [M] CastString
+184) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:46    [M] CastString
 
 --- Original
 +++ New
@@ -2871,7 +2871,7 @@ Not Covered mutants:
      {
 
 
-190) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:54    [M] FalseValue
+185) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:54    [M] FalseValue
 
 --- Original
 +++ New
@@ -2886,7 +2886,7 @@ Not Covered mutants:
          if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
 
 
-191) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:54    [M] Identical
+186) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:54    [M] Identical
 
 --- Original
 +++ New
@@ -2901,7 +2901,7 @@ Not Covered mutants:
          if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
 
 
-192) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:55    [M] NewObject
+187) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:55    [M] NewObject
 
 --- Original
 +++ New
@@ -2917,7 +2917,7 @@ Not Covered mutants:
              return new RedirectResponse($targetPath);
 
 
-193) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:59    [M] NewObject
+188) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:59    [M] NewObject
 
 --- Original
 +++ New
@@ -2933,7 +2933,7 @@ Not Covered mutants:
      }
 
 
-194) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:62    [M] NewObject
+189) /var/www/html/src/Account/Ui/Authentication/AccountAuthenticator.php:62    [M] NewObject
 
 --- Original
 +++ New
@@ -2949,7 +2949,7 @@ Not Covered mutants:
      {
 
 
-195) /var/www/html/src/Account/Ui/Authentication/ForgotPassword/ForgotPasswordController.php:46    [M] MethodCallRemoval
+190) /var/www/html/src/Account/Ui/Authentication/ForgotPassword/ForgotPasswordController.php:46    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -2964,322 +2964,7 @@ Not Covered mutants:
              } catch (EmailRequiredException $exception) {
 
 
-196) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:14    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
- class LoginController extends AbstractBaseController
- {
-     #[Route(path: '/dashboard/login', name: 'app_login')]
--    public function login(AuthenticationUtils $authenticationUtils, Flasher $flasher): Response
-+    protected function login(AuthenticationUtils $authenticationUtils, Flasher $flasher): Response
-     {
-         $user = $this->getUser();
-         $error = $authenticationUtils->getLastAuthenticationError();
-
-
-197) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:20    [M] Identical
-
---- Original
-+++ New
-@@ @@
-     {
-         $user = $this->getUser();
-         $error = $authenticationUtils->getLastAuthenticationError();
--        if (null === $error && $user && false === $user->isVerified()) {
-+        if (null !== $error && $user && false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
-         if ($user && $user->isAdmin() && $user->isVerified()) {
-
-
-198) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:20    [M] LogicalAnd
-
---- Original
-+++ New
-@@ @@
-     {
-         $user = $this->getUser();
-         $error = $authenticationUtils->getLastAuthenticationError();
--        if (null === $error && $user && false === $user->isVerified()) {
-+        if ((null === $error || $user) && false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
-         if ($user && $user->isAdmin() && $user->isVerified()) {
-
-
-199) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:20    [M] FalseValue
-
---- Original
-+++ New
-@@ @@
-     {
-         $user = $this->getUser();
-         $error = $authenticationUtils->getLastAuthenticationError();
--        if (null === $error && $user && false === $user->isVerified()) {
-+        if (null === $error && $user && true === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
-         if ($user && $user->isAdmin() && $user->isVerified()) {
-
-
-200) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:20    [M] Identical
-
---- Original
-+++ New
-@@ @@
-     {
-         $user = $this->getUser();
-         $error = $authenticationUtils->getLastAuthenticationError();
--        if (null === $error && $user && false === $user->isVerified()) {
-+        if (null === $error && $user && false !== $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
-         if ($user && $user->isAdmin() && $user->isVerified()) {
-
-
-201) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:20    [M] LogicalAnd
-
---- Original
-+++ New
-@@ @@
-     {
-         $user = $this->getUser();
-         $error = $authenticationUtils->getLastAuthenticationError();
--        if (null === $error && $user && false === $user->isVerified()) {
-+        if (null === $error && $user || false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
-         if ($user && $user->isAdmin() && $user->isVerified()) {
-
-
-202) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:20    [M] LogicalAndAllSubExprNegation
-
---- Original
-+++ New
-@@ @@
-     {
-         $user = $this->getUser();
-         $error = $authenticationUtils->getLastAuthenticationError();
--        if (null === $error && $user && false === $user->isVerified()) {
-+        if (!(null === $error) && !$user && false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
-         if ($user && $user->isAdmin() && $user->isVerified()) {
-
-
-203) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:20    [M] LogicalAndNegation
-
---- Original
-+++ New
-@@ @@
-     {
-         $user = $this->getUser();
-         $error = $authenticationUtils->getLastAuthenticationError();
--        if (null === $error && $user && false === $user->isVerified()) {
-+        if (!(null === $error && $user && false === $user->isVerified())) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
-         if ($user && $user->isAdmin() && $user->isVerified()) {
-
-
-204) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:20    [M] LogicalAndSingleSubExprNegation
-
---- Original
-+++ New
-@@ @@
-     {
-         $user = $this->getUser();
-         $error = $authenticationUtils->getLastAuthenticationError();
--        if (null === $error && $user && false === $user->isVerified()) {
-+        if (null === $error && !$user && false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
-         if ($user && $user->isAdmin() && $user->isVerified()) {
-
-
-205) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:21    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-         $user = $this->getUser();
-         $error = $authenticationUtils->getLastAuthenticationError();
-         if (null === $error && $user && false === $user->isVerified()) {
--            $flasher->error('dashboard.authentication.login.verifyEmail');
-+            
-         }
-         if ($user && $user->isAdmin() && $user->isVerified()) {
-             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
-
-
-206) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:24    [M] LogicalAnd
-
---- Original
-+++ New
-@@ @@
-         if (null === $error && $user && false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
--        if ($user && $user->isAdmin() && $user->isVerified()) {
-+        if (($user || $user->isAdmin()) && $user->isVerified()) {
-             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
-         }
-         $lastUsername = $authenticationUtils->getLastUsername();
-
-
-207) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:24    [M] LogicalAnd
-
---- Original
-+++ New
-@@ @@
-         if (null === $error && $user && false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
--        if ($user && $user->isAdmin() && $user->isVerified()) {
-+        if ($user && $user->isAdmin() || $user->isVerified()) {
-             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
-         }
-         $lastUsername = $authenticationUtils->getLastUsername();
-
-
-208) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:24    [M] LogicalAndAllSubExprNegation
-
---- Original
-+++ New
-@@ @@
-         if (null === $error && $user && false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
--        if ($user && $user->isAdmin() && $user->isVerified()) {
-+        if (!$user && !$user->isAdmin() && !$user->isVerified()) {
-             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
-         }
-         $lastUsername = $authenticationUtils->getLastUsername();
-
-
-209) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:24    [M] LogicalAndNegation
-
---- Original
-+++ New
-@@ @@
-         if (null === $error && $user && false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
--        if ($user && $user->isAdmin() && $user->isVerified()) {
-+        if (!($user && $user->isAdmin() && $user->isVerified())) {
-             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
-         }
-         $lastUsername = $authenticationUtils->getLastUsername();
-
-
-210) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:24    [M] LogicalAndSingleSubExprNegation
-
---- Original
-+++ New
-@@ @@
-         if (null === $error && $user && false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
--        if ($user && $user->isAdmin() && $user->isVerified()) {
-+        if (!$user && $user->isAdmin() && $user->isVerified()) {
-             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
-         }
-         $lastUsername = $authenticationUtils->getLastUsername();
-
-
-211) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:24    [M] LogicalAndSingleSubExprNegation
-
---- Original
-+++ New
-@@ @@
-         if (null === $error && $user && false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
--        if ($user && $user->isAdmin() && $user->isVerified()) {
-+        if ($user && !$user->isAdmin() && $user->isVerified()) {
-             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
-         }
-         $lastUsername = $authenticationUtils->getLastUsername();
-
-
-212) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:24    [M] LogicalAndSingleSubExprNegation
-
---- Original
-+++ New
-@@ @@
-         if (null === $error && $user && false === $user->isVerified()) {
-             $flasher->error('dashboard.authentication.login.verifyEmail');
-         }
--        if ($user && $user->isAdmin() && $user->isVerified()) {
-+        if ($user && $user->isAdmin() && !$user->isVerified()) {
-             return $this->redirectToRoute(AccountAuthenticatorService::DASHBOARD_ROUTE);
-         }
-         $lastUsername = $authenticationUtils->getLastUsername();
-
-
-213) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:34    [M] ArrayItemRemoval
-
---- Original
-+++ New
-@@ @@
-         }
-         $lastUsername = $authenticationUtils->getLastUsername();
-         $form = $this->createForm(LoginFormType::class);
--        return $this->render('dashboard/authentication/login/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'loginForm' => $form->createView()]);
-+        return $this->render('dashboard/authentication/login/login.html.twig', ['error' => $error, 'loginForm' => $form->createView()]);
-     }
-     #[Route(path: '/logout', name: 'app_logout')]
-     public function logout(): never
-
-
-214) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:37    [M] ArrayItem
-
---- Original
-+++ New
-@@ @@
-         }
-         $lastUsername = $authenticationUtils->getLastUsername();
-         $form = $this->createForm(LoginFormType::class);
--        return $this->render('dashboard/authentication/login/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'loginForm' => $form->createView()]);
-+        return $this->render('dashboard/authentication/login/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'loginForm' > $form->createView()]);
-     }
-     #[Route(path: '/logout', name: 'app_logout')]
-     public function logout(): never
-
-
-215) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:42    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         return $this->render('dashboard/authentication/login/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'loginForm' => $form->createView()]);
-     }
-     #[Route(path: '/logout', name: 'app_logout')]
--    public function logout(): never
-+    protected function logout(): never
-     {
-         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
-     }
- }
-
-
-216) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:45    [M] Throw_
-
---- Original
-+++ New
-@@ @@
-     #[Route(path: '/logout', name: 'app_logout')]
-     public function logout(): never
-     {
--        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
-+        new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
-     }
- }
-
-
-217) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:25    [M] PublicVisibility
+191) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:25    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -3294,7 +2979,7 @@ Not Covered mutants:
          $form->handleRequest($request);
 
 
-218) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:29    [M] MethodCallRemoval
+192) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:29    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -3309,7 +2994,7 @@ Not Covered mutants:
                  $email = $form->get('email')->getData();
 
 
-219) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:31    [M] LogicalAnd
+193) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:31    [M] LogicalAnd
 
 --- Original
 +++ New
@@ -3324,7 +3009,7 @@ Not Covered mutants:
                  $password = $form->get('password')->getData();
 
 
-220) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:31    [M] LogicalAndAllSubExprNegation
+194) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:31    [M] LogicalAndAllSubExprNegation
 
 --- Original
 +++ New
@@ -3339,7 +3024,7 @@ Not Covered mutants:
                  $password = $form->get('password')->getData();
 
 
-221) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:31    [M] LogicalAndNegation
+195) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:31    [M] LogicalAndNegation
 
 --- Original
 +++ New
@@ -3354,7 +3039,7 @@ Not Covered mutants:
                  $password = $form->get('password')->getData();
 
 
-222) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:31    [M] LogicalAndSingleSubExprNegation
+196) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:31    [M] LogicalAndSingleSubExprNegation
 
 --- Original
 +++ New
@@ -3369,7 +3054,7 @@ Not Covered mutants:
                  $password = $form->get('password')->getData();
 
 
-223) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:31    [M] LogicalAndSingleSubExprNegation
+197) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:31    [M] LogicalAndSingleSubExprNegation
 
 --- Original
 +++ New
@@ -3384,7 +3069,7 @@ Not Covered mutants:
                  $password = $form->get('password')->getData();
 
 
-224) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:32    [M] CatchBlockRemoval
+198) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:32    [M] CatchBlockRemoval
 
 --- Original
 +++ New
@@ -3399,7 +3084,7 @@ Not Covered mutants:
              } catch (\Throwable) {
 
 
-225) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:32    [M] CatchBlockRemoval
+199) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:32    [M] CatchBlockRemoval
 
 --- Original
 +++ New
@@ -3414,7 +3099,7 @@ Not Covered mutants:
                  return $this->redirectToRoute('app_register');
 
 
-226) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:32    [M] CatchBlockRemoval
+200) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:32    [M] CatchBlockRemoval
 
 --- Original
 +++ New
@@ -3430,7 +3115,7 @@ Not Covered mutants:
          return $this->render('dashboard/authentication/registration/register.html.twig', ['registrationForm' => $form]);
 
 
-227) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] Identical
+201) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] Identical
 
 --- Original
 +++ New
@@ -3445,7 +3130,7 @@ Not Covered mutants:
                  if (null === $password || false === is_string($password)) {
 
 
-228) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] FalseValue
+202) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] FalseValue
 
 --- Original
 +++ New
@@ -3460,7 +3145,7 @@ Not Covered mutants:
                  if (null === $password || false === is_string($password)) {
 
 
-229) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] Identical
+203) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] Identical
 
 --- Original
 +++ New
@@ -3475,7 +3160,7 @@ Not Covered mutants:
                  if (null === $password || false === is_string($password)) {
 
 
-230) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] LogicalOr
+204) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] LogicalOr
 
 --- Original
 +++ New
@@ -3490,7 +3175,7 @@ Not Covered mutants:
                  if (null === $password || false === is_string($password)) {
 
 
-231) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] LogicalOrAllSubExprNegation
+205) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] LogicalOrAllSubExprNegation
 
 --- Original
 +++ New
@@ -3505,7 +3190,7 @@ Not Covered mutants:
                  if (null === $password || false === is_string($password)) {
 
 
-232) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] LogicalOrNegation
+206) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:36    [M] LogicalOrNegation
 
 --- Original
 +++ New
@@ -3520,7 +3205,7 @@ Not Covered mutants:
                  if (null === $password || false === is_string($password)) {
 
 
-233) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:37    [M] Throw_
+207) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:37    [M] Throw_
 
 --- Original
 +++ New
@@ -3535,7 +3220,7 @@ Not Covered mutants:
                      throw new PasswordRequiredException();
 
 
-234) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] Identical
+208) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] Identical
 
 --- Original
 +++ New
@@ -3550,7 +3235,7 @@ Not Covered mutants:
                  $this->createUserService->createUser($email, $password);
 
 
-235) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] FalseValue
+209) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] FalseValue
 
 --- Original
 +++ New
@@ -3565,7 +3250,7 @@ Not Covered mutants:
                  $this->createUserService->createUser($email, $password);
 
 
-236) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] Identical
+210) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] Identical
 
 --- Original
 +++ New
@@ -3580,7 +3265,7 @@ Not Covered mutants:
                  $this->createUserService->createUser($email, $password);
 
 
-237) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] LogicalOr
+211) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] LogicalOr
 
 --- Original
 +++ New
@@ -3595,7 +3280,7 @@ Not Covered mutants:
                  $this->createUserService->createUser($email, $password);
 
 
-238) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] LogicalOrAllSubExprNegation
+212) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] LogicalOrAllSubExprNegation
 
 --- Original
 +++ New
@@ -3610,7 +3295,7 @@ Not Covered mutants:
                  $this->createUserService->createUser($email, $password);
 
 
-239) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] LogicalOrNegation
+213) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:40    [M] LogicalOrNegation
 
 --- Original
 +++ New
@@ -3625,7 +3310,7 @@ Not Covered mutants:
                  $this->createUserService->createUser($email, $password);
 
 
-240) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:41    [M] Throw_
+214) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:41    [M] Throw_
 
 --- Original
 +++ New
@@ -3640,7 +3325,7 @@ Not Covered mutants:
                  $this->flasher->success('dashboard.authentication.register.success.description', 'dashboard.authentication.register.success.title');
 
 
-241) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:44    [M] MethodCallRemoval
+215) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:44    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -3655,7 +3340,7 @@ Not Covered mutants:
              } catch (EmailRequiredException $exception) {
 
 
-242) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:48    [M] MethodCallRemoval
+216) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:48    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -3670,7 +3355,7 @@ Not Covered mutants:
                  $this->flasher->error($exception->getMessage(), 'dashboard.authentication.register.error.emailRequired.title');
 
 
-243) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:55    [M] MethodCallRemoval
+217) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:55    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -3685,7 +3370,7 @@ Not Covered mutants:
              } catch (\Throwable) {
 
 
-244) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:60    [M] MethodCallRemoval
+218) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:60    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -3700,7 +3385,7 @@ Not Covered mutants:
                  return $this->redirectToRoute('app_register');
 
 
-245) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:65    [M] MethodCallRemoval
+219) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:65    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -3715,7 +3400,7 @@ Not Covered mutants:
          }
 
 
-246) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:73    [M] ArrayItemRemoval
+220) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:73    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -3730,7 +3415,7 @@ Not Covered mutants:
      public function confirmRegistration(Request $request, Security $security): null|Response
 
 
-247) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:78    [M] PublicVisibility
+221) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:78    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -3745,7 +3430,7 @@ Not Covered mutants:
              $token = $request->get('token');
 
 
-248) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:81    [M] CatchBlockRemoval
+222) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:81    [M] CatchBlockRemoval
 
 --- Original
 +++ New
@@ -3760,7 +3445,7 @@ Not Covered mutants:
              return $this->redirectToRoute('app_register');
 
 
-249) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:81    [M] CatchBlockRemoval
+223) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:81    [M] CatchBlockRemoval
 
 --- Original
 +++ New
@@ -3777,7 +3462,7 @@ Not Covered mutants:
  }
 
 
-250) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] Identical
+224) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] Identical
 
 --- Original
 +++ New
@@ -3792,7 +3477,7 @@ Not Covered mutants:
              $user = $this->createUserService->setAsVerified($token);
 
 
-251) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] FalseValue
+225) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] FalseValue
 
 --- Original
 +++ New
@@ -3807,7 +3492,7 @@ Not Covered mutants:
              $user = $this->createUserService->setAsVerified($token);
 
 
-252) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] Identical
+226) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] Identical
 
 --- Original
 +++ New
@@ -3822,7 +3507,7 @@ Not Covered mutants:
              $user = $this->createUserService->setAsVerified($token);
 
 
-253) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] LogicalOr
+227) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] LogicalOr
 
 --- Original
 +++ New
@@ -3837,7 +3522,7 @@ Not Covered mutants:
              $user = $this->createUserService->setAsVerified($token);
 
 
-254) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] LogicalOrAllSubExprNegation
+228) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] LogicalOrAllSubExprNegation
 
 --- Original
 +++ New
@@ -3852,7 +3537,7 @@ Not Covered mutants:
              $user = $this->createUserService->setAsVerified($token);
 
 
-255) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] LogicalOrNegation
+229) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:84    [M] LogicalOrNegation
 
 --- Original
 +++ New
@@ -3867,7 +3552,7 @@ Not Covered mutants:
              $user = $this->createUserService->setAsVerified($token);
 
 
-256) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:85    [M] Throw_
+230) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:85    [M] Throw_
 
 --- Original
 +++ New
@@ -3882,7 +3567,7 @@ Not Covered mutants:
              $this->flasher->success('dashboard.authentication.register.confirm.success.description', 'dashboard.authentication.register.confirm.success.title');
 
 
-257) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:90    [M] MethodCallRemoval
+231) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:90    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -3897,7 +3582,7 @@ Not Covered mutants:
              $this->flasher->error($exception->getMessage(), 'dashboard.authentication.register.confirm.error.tokenNotFound.title');
 
 
-258) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:97    [M] MethodCallRemoval
+232) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:97    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -3912,7 +3597,7 @@ Not Covered mutants:
              return $this->redirectToRoute('app_register');
 
 
-259) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:102    [M] MethodCallRemoval
+233) /var/www/html/src/Account/Ui/Authentication/Registration/RegistrationController.php:102    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -3929,7 +3614,7 @@ Not Covered mutants:
  }
 
 
-260) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:24    [M] PublicVisibility
+234) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:24    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -3944,7 +3629,7 @@ Not Covered mutants:
          $form->handleRequest($request);
 
 
-261) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:28    [M] MethodCallRemoval
+235) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:28    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -3959,7 +3644,7 @@ Not Covered mutants:
                  $token = $request->get('token');
 
 
-262) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:30    [M] LogicalAnd
+236) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:30    [M] LogicalAnd
 
 --- Original
 +++ New
@@ -3974,7 +3659,7 @@ Not Covered mutants:
                  $email = $request->get('emailValue');
 
 
-263) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:30    [M] LogicalAndAllSubExprNegation
+237) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:30    [M] LogicalAndAllSubExprNegation
 
 --- Original
 +++ New
@@ -3989,7 +3674,7 @@ Not Covered mutants:
                  $email = $request->get('emailValue');
 
 
-264) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:30    [M] LogicalAndNegation
+238) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:30    [M] LogicalAndNegation
 
 --- Original
 +++ New
@@ -4004,7 +3689,7 @@ Not Covered mutants:
                  $email = $request->get('emailValue');
 
 
-265) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:30    [M] LogicalAndSingleSubExprNegation
+239) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:30    [M] LogicalAndSingleSubExprNegation
 
 --- Original
 +++ New
@@ -4019,7 +3704,7 @@ Not Covered mutants:
                  $email = $request->get('emailValue');
 
 
-266) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:30    [M] LogicalAndSingleSubExprNegation
+240) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:30    [M] LogicalAndSingleSubExprNegation
 
 --- Original
 +++ New
@@ -4034,7 +3719,7 @@ Not Covered mutants:
                  $email = $request->get('emailValue');
 
 
-267) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:31    [M] CatchBlockRemoval
+241) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:31    [M] CatchBlockRemoval
 
 --- Original
 +++ New
@@ -4049,7 +3734,7 @@ Not Covered mutants:
              } catch (TokenNotFoundException $exception) {
 
 
-268) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:31    [M] CatchBlockRemoval
+242) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:31    [M] CatchBlockRemoval
 
 --- Original
 +++ New
@@ -4064,7 +3749,7 @@ Not Covered mutants:
              } catch (UserNotFoundException $exception) {
 
 
-269) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:31    [M] CatchBlockRemoval
+243) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:31    [M] CatchBlockRemoval
 
 --- Original
 +++ New
@@ -4079,7 +3764,7 @@ Not Covered mutants:
              } catch (\Throwable) {
 
 
-270) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:31    [M] CatchBlockRemoval
+244) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:31    [M] CatchBlockRemoval
 
 --- Original
 +++ New
@@ -4094,7 +3779,7 @@ Not Covered mutants:
              }
 
 
-271) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:31    [M] CatchBlockRemoval
+245) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:31    [M] CatchBlockRemoval
 
 --- Original
 +++ New
@@ -4111,7 +3796,7 @@ Not Covered mutants:
  }
 
 
-272) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] Identical
+246) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] Identical
 
 --- Original
 +++ New
@@ -4126,7 +3811,7 @@ Not Covered mutants:
                  if (null === $token || false === is_string($token)) {
 
 
-273) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] FalseValue
+247) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] FalseValue
 
 --- Original
 +++ New
@@ -4141,7 +3826,7 @@ Not Covered mutants:
                  if (null === $token || false === is_string($token)) {
 
 
-274) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] Identical
+248) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] Identical
 
 --- Original
 +++ New
@@ -4156,7 +3841,7 @@ Not Covered mutants:
                  if (null === $token || false === is_string($token)) {
 
 
-275) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] LogicalOr
+249) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] LogicalOr
 
 --- Original
 +++ New
@@ -4171,7 +3856,7 @@ Not Covered mutants:
                  if (null === $token || false === is_string($token)) {
 
 
-276) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] LogicalOrAllSubExprNegation
+250) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] LogicalOrAllSubExprNegation
 
 --- Original
 +++ New
@@ -4186,7 +3871,7 @@ Not Covered mutants:
                  if (null === $token || false === is_string($token)) {
 
 
-277) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] LogicalOrNegation
+251) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:35    [M] LogicalOrNegation
 
 --- Original
 +++ New
@@ -4201,7 +3886,7 @@ Not Covered mutants:
                  if (null === $token || false === is_string($token)) {
 
 
-278) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:36    [M] Throw_
+252) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:36    [M] Throw_
 
 --- Original
 +++ New
@@ -4216,7 +3901,7 @@ Not Covered mutants:
                      throw new TokenNotFoundException();
 
 
-279) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] Identical
+253) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] Identical
 
 --- Original
 +++ New
@@ -4231,7 +3916,7 @@ Not Covered mutants:
                  if (null === $email || false === is_string($email)) {
 
 
-280) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] FalseValue
+254) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] FalseValue
 
 --- Original
 +++ New
@@ -4246,7 +3931,7 @@ Not Covered mutants:
                  if (null === $email || false === is_string($email)) {
 
 
-281) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] Identical
+255) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] Identical
 
 --- Original
 +++ New
@@ -4261,7 +3946,7 @@ Not Covered mutants:
                  if (null === $email || false === is_string($email)) {
 
 
-282) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] LogicalOr
+256) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] LogicalOr
 
 --- Original
 +++ New
@@ -4276,7 +3961,7 @@ Not Covered mutants:
                  if (null === $email || false === is_string($email)) {
 
 
-283) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] LogicalOrAllSubExprNegation
+257) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] LogicalOrAllSubExprNegation
 
 --- Original
 +++ New
@@ -4291,7 +3976,7 @@ Not Covered mutants:
                  if (null === $email || false === is_string($email)) {
 
 
-284) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] LogicalOrNegation
+258) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:39    [M] LogicalOrNegation
 
 --- Original
 +++ New
@@ -4306,7 +3991,7 @@ Not Covered mutants:
                  if (null === $email || false === is_string($email)) {
 
 
-285) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:40    [M] Throw_
+259) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:40    [M] Throw_
 
 --- Original
 +++ New
@@ -4321,7 +4006,7 @@ Not Covered mutants:
                      throw new UserNotFoundException();
 
 
-286) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] Identical
+260) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] Identical
 
 --- Original
 +++ New
@@ -4336,7 +4021,7 @@ Not Covered mutants:
                  $this->resetPasswordService->resetPassword($token, $email, $password);
 
 
-287) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] FalseValue
+261) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] FalseValue
 
 --- Original
 +++ New
@@ -4351,7 +4036,7 @@ Not Covered mutants:
                  $this->resetPasswordService->resetPassword($token, $email, $password);
 
 
-288) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] Identical
+262) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] Identical
 
 --- Original
 +++ New
@@ -4366,7 +4051,7 @@ Not Covered mutants:
                  $this->resetPasswordService->resetPassword($token, $email, $password);
 
 
-289) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] LogicalOr
+263) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] LogicalOr
 
 --- Original
 +++ New
@@ -4381,7 +4066,7 @@ Not Covered mutants:
                  $this->resetPasswordService->resetPassword($token, $email, $password);
 
 
-290) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] LogicalOrAllSubExprNegation
+264) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] LogicalOrAllSubExprNegation
 
 --- Original
 +++ New
@@ -4396,7 +4081,7 @@ Not Covered mutants:
                  $this->resetPasswordService->resetPassword($token, $email, $password);
 
 
-291) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] LogicalOrNegation
+265) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:43    [M] LogicalOrNegation
 
 --- Original
 +++ New
@@ -4411,7 +4096,7 @@ Not Covered mutants:
                  $this->resetPasswordService->resetPassword($token, $email, $password);
 
 
-292) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:44    [M] Throw_
+266) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:44    [M] Throw_
 
 --- Original
 +++ New
@@ -4426,7 +4111,7 @@ Not Covered mutants:
                  $this->flasher->success('dashboard.authentication.resetPassword.success.description', 'dashboard.authentication.resetPassword.success.title');
 
 
-293) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:47    [M] MethodCallRemoval
+267) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:47    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -4441,7 +4126,7 @@ Not Covered mutants:
              } catch (PasswordRequiredException $exception) {
 
 
-294) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:48    [M] MethodCallRemoval
+268) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:48    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -4456,7 +4141,7 @@ Not Covered mutants:
                  $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resetPassword.error.passwordRequired.title');
 
 
-295) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:55    [M] MethodCallRemoval
+269) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:55    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -4471,7 +4156,7 @@ Not Covered mutants:
              } catch (TokenNotFoundException $exception) {
 
 
-296) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:60    [M] MethodCallRemoval
+270) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:60    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -4486,7 +4171,7 @@ Not Covered mutants:
              } catch (UserNotFoundException $exception) {
 
 
-297) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:65    [M] MethodCallRemoval
+271) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:65    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -4501,7 +4186,7 @@ Not Covered mutants:
              } catch (\Throwable) {
 
 
-298) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:70    [M] MethodCallRemoval
+272) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:70    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -4516,7 +4201,7 @@ Not Covered mutants:
              }
 
 
-299) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:75    [M] MethodCallRemoval
+273) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:75    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -4533,7 +4218,7 @@ Not Covered mutants:
  }
 
 
-300) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:84    [M] ArrayItemRemoval
+274) /var/www/html/src/Account/Ui/Authentication/ResetPassword/ResetPasswordController.php:84    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -4547,7 +4232,7 @@ Not Covered mutants:
  }
 
 
-301) /var/www/html/src/Account/Ui/Authentication/Terms/TermsController.php:12    [M] PublicVisibility
+275) /var/www/html/src/Account/Ui/Authentication/Terms/TermsController.php:12    [M] PublicVisibility
 
 --- Original
 +++ New
