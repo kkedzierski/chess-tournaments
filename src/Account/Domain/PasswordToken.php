@@ -3,7 +3,7 @@
 namespace App\Account\Domain;
 
 use ApiPlatform\Metadata\ApiProperty;
-use App\Account\Infrastructure\Rest\PasswordTokenRepository;
+use App\Account\Infrastructure\PasswordTokenRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Random\RandomException;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
@@ -12,6 +12,8 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Entity(repositoryClass: PasswordTokenRepository::class)]
 class PasswordToken
 {
+    private const TOKEN_LENGTH = 32;
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ApiProperty(identifier: true)]
@@ -102,7 +104,7 @@ class PasswordToken
      */
     public static function generateForDate(User $user, string $date): self
     {
-        $token = bin2hex(random_bytes(32));
+        $token = bin2hex(random_bytes(self::TOKEN_LENGTH));
         $expiredAt = new \DateTimeImmutable($date);
 
         return new self($user, token: $token, expiredAt: $expiredAt);
@@ -113,7 +115,12 @@ class PasswordToken
         return $this->token;
     }
 
-    public function setAsVerified(string $activatedBy = 'system'): self
+    public function isTokenSame(string $token): bool
+    {
+        return $this->token === $token;
+    }
+
+    public function verify(string $activatedBy = 'system'): self
     {
         $this->activatedAt = new \DateTimeImmutable('now');
         $this->updatedBy = $activatedBy;

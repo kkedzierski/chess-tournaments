@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\Infrastructure\Rest;
+namespace App\Account\Infrastructure;
 
 use App\Account\Domain\User;
 use App\Account\Domain\UserRepositoryInterface;
@@ -16,6 +16,10 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @codeCoverageIgnore Simply repository
+ *
+ * @infection-ignore-all
  */
 class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface
 {

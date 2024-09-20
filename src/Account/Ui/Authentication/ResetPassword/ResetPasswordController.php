@@ -8,7 +8,7 @@ use App\Account\Application\Exception\UserNotFoundException;
 use App\Account\Application\Password\ResetPasswordService;
 use App\Account\Ui\AbstractBaseController;
 use App\Account\Ui\Exception\PasswordRequiredException;
-use App\Kernel\Flasher\Flasher;
+use App\Kernel\Flasher\FlasherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,7 +17,7 @@ class ResetPasswordController extends AbstractBaseController
 {
     public function __construct(
         private readonly ResetPasswordService  $resetPasswordService,
-        private readonly Flasher               $flasher,
+        private readonly FlasherInterface      $flasher,
     ) {
     }
 

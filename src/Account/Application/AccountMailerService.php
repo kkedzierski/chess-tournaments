@@ -60,7 +60,7 @@ class AccountMailerService
      * @throws CannotSendEmailException
      */
     private function sendEmailToUser(
-        string   $email,
+        string $email,
         string $title,
         string $twigTemplatePath,
         array  $context = [],
@@ -71,8 +71,7 @@ class AccountMailerService
         }
         $context['companyName'] = $this->companyName;
 
-        /** @infection-ignore-all  */
-        $email = (new TemplatedEmail())
+        $emailToSend = (new TemplatedEmail())
             ->from(new Address($this->companyEmail, $this->companyName))
             ->to(new Address($email))
             ->subject($this->translator->trans($title))
@@ -80,7 +79,7 @@ class AccountMailerService
             ->context($context);
 
         try {
-            $this->mailer->send($email);
+            $this->mailer->send($emailToSend);
         } catch (\Throwable $exception) {
             $this->logger->critical(
                 $logReason,

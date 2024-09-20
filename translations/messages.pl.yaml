@@ -19,7 +19,11 @@ dashboard:
         ignoreInfo: 'Jeśli nie wykonywałeś żadnej akcji, zignoruj tę wiadomość.'
     register:
       title: "Rejestracja"
-      password: "Hasło"
+      password:
+        title: "Hasło"
+        error:
+          passwordRequired:
+            title: 'Hasło jest wymagane'
       passwordConfirmation: "Potwierdź hasło"
       submit: "Zarejestruj się"
       alreadyRegistered: "Masz już konto?"
@@ -36,16 +40,15 @@ dashboard:
         template:
           description: 'Potwierdź swój adres e-mail, klikając w link poniżej. Jeśli nie prosiłeś o potwierdzenia adresu e-mail, zignoruj tę wiadomość.'
           submit: 'Kliknij w link, aby potwierdzić adres e-mail'
+        error:
+          emailRequired:
+            title: 'Adres e-mail jest wymagany'
       success:
         title: 'Udało się zarejestrować'
         description: 'Na podany adres e-mail został wysłany link weryfikacyjny. Sprawdź swoją skrzynkę.'
       error:
         title: 'Nie udało się zarejestrować'
         description: 'Nie udało się zarejestrować. Spróbuj ponownie.'
-        emailRequired:
-          title: 'Adres e-mail jest wymagany'
-        passwordRequired:
-          title: 'Hasło jest wymagane'
       confirm:
         template:
           description: 'Kliknij w link, aby potwierdzić adres e-mail.'

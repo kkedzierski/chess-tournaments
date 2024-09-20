@@ -97,6 +97,7 @@
         }
     },
     "require-dev": {
+        "dg/bypass-finals": "^1.8",
         "friendsofphp/php-cs-fixer": "^3.57",
         "infection/infection": "^0.28.1",
         "phpro/grumphp": "^2.5",

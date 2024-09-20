@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Account\Ui\Authentication\ForgotPassword;
 
+use App\Account\Application\Exception\CannotSendEmailException;
 use App\Account\Application\Exception\TokenGeneratingFailedException;
 use App\Account\Application\Password\ResetPasswordService;
 use App\Account\Ui\Authentication\ForgotPassword\ForgotPasswordController;
@@ -156,6 +157,37 @@ class ForgotPasswordControllerTest extends TestCase
             ->method('error')
             ->with('exception.tokenGeneratingFailed', 'dashboard.authentication.resetPassword.email.error.tokenGenerating.title')
             ->willReturnSelf();
+
+        $this->controller->forgotPassword($this->request);
+    }
+
+    public function testThrowExceptionWhenCannotSendEmail(): void
+    {
+        $this->testValidSubmittedForm();
+        $this->form
+            ->expects($this->once())
+            ->method('get')
+            ->with('email')
+            ->willReturnSelf();
+        $this->form
+            ->expects($this->once())
+            ->method('getData')
+            ->willReturn('email');
+        $this->resetPasswordService
+            ->expects($this->once())
+            ->method('processResetPasswordSendEmail')
+            ->with('email')
+            ->willThrowException(new CannotSendEmailException());
+        $this->flasher
+            ->expects($this->never())
+            ->method('success');
+        $this->flasher
+            ->expects($this->once())
+            ->method('error')
+            ->with(
+                'exception.cannotSendEmail',
+                'dashboard.authentication.resetPassword.email.error.cannotSendEmail.title'
+            )->willReturnSelf();
 
         $this->controller->forgotPassword($this->request);
     }

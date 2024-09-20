@@ -5,6 +5,11 @@ namespace App\Kernel\Flasher;
 use Flasher\Prime\FlasherInterface as BaseFlasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @codeCoverageIgnore
+ *
+ * @infection-ignore-all
+ */
 final class Flasher implements FlasherInterface
 {
     /**

@@ -57,7 +57,7 @@ class ForgotPasswordController extends AbstractBaseController
                     $exception->getMessage(),
                     'dashboard.authentication.resetPassword.email.error.emailRequired.title'
                 );
-            } catch (\Throwable $exception) {
+            } catch (\Throwable) {
                 $this->flasher->error(
                     'dashboard.authentication.resetPassword.email.error.description',
                     'dashboard.authentication.resetPassword.email.error.title'

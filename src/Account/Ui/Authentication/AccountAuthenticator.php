@@ -3,6 +3,8 @@
 namespace App\Account\Ui\Authentication;
 
 use App\Account\Application\AccountAuthenticatorService;
+use App\Account\Ui\Exception\EmailRequiredException;
+use App\Account\Ui\Exception\PasswordRequiredException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +22,6 @@ class AccountAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
-
     public function __construct(
         private readonly AccountAuthenticatorService $accountAuthenticator,
     ) {
@@ -31,11 +32,23 @@ class AccountAuthenticator extends AbstractLoginFormAuthenticator
         return $request->isMethod('POST') && $this->getLoginUrl($request) === $request->getPathInfo();
     }
 
+    /**
+     * @throws EmailRequiredException
+     * @throws PasswordRequiredException
+     */
     public function authenticate(Request $request): Passport
     {
         $loginFormData = $request->request->all('login_form');
         $email = $loginFormData['email'] ?? null;
         $password = $loginFormData['password'] ?? null;
+
+        if (null === $email) {
+            throw new EmailRequiredException();
+        }
+
+        if (null === $password) {
+            throw new PasswordRequiredException();
+        }
 
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
 

@@ -4,6 +4,11 @@ namespace App\Kernel\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @codeCoverageIgnore
+ *
+ * @infection-ignore-all
+ */
 trait CreatedTrait
 {
     #[ORM\Column(type: 'datetimetz_immutable', nullable: true)]

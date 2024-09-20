@@ -7,7 +7,7 @@ use App\Account\Application\Exception\TokenNotFoundException;
 use App\Account\Ui\Authentication\AccountAuthenticator;
 use App\Account\Ui\Exception\EmailRequiredException;
 use App\Account\Ui\Exception\PasswordRequiredException;
-use App\Kernel\Flasher\Flasher;
+use App\Kernel\Flasher\FlasherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ class RegistrationController extends AbstractController
 {
     public function __construct(
         private readonly CreateUserService    $createUserService,
-        private readonly Flasher              $flasher,
+        private readonly FlasherInterface              $flasher,
     ) {
     }
 
@@ -54,19 +54,18 @@ class RegistrationController extends AbstractController
             } catch (EmailRequiredException $exception) {
                 $this->flasher->error(
                     $exception->getMessage(),
-                    'dashboard.authentication.register.error.emailRequired.title'
+                    'dashboard.authentication.register.email.error.emailRequired.title'
                 );
             } catch (PasswordRequiredException $exception) {
                 $this->flasher->error(
                     $exception->getMessage(),
-                    'dashboard.authentication.register.error.passwordRequired.title'
+                    'dashboard.authentication.register.password.error.passwordRequired.title'
                 );
             } catch (\Throwable) {
                 $this->flasher->error(
                     'dashboard.authentication.register.error.description',
                     'dashboard.authentication.register.error.title'
                 );
-                return $this->redirectToRoute('app_register');
             }
         }
 
@@ -85,7 +84,7 @@ class RegistrationController extends AbstractController
                 throw new TokenNotFoundException();
             }
 
-            $user = $this->createUserService->setAsVerified($token);
+            $user = $this->createUserService->verifyByToken($token);
 
             $this->flasher->success(
                 'dashboard.authentication.register.confirm.success.description',

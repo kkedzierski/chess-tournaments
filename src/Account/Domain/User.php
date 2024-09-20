@@ -4,10 +4,10 @@ namespace App\Account\Domain;
 
 use ApiPlatform\Metadata\ApiProperty;
 use App\Account\Domain\ValueObject\TotpSecret;
+use App\Account\Infrastructure\UserRepository;
 use App\Kernel\EventSubscriber\TimestampableResourceInterface;
 use App\Kernel\Traits\TimestampableTrait;
 use App\Kernel\Ui\UserInterface;
-use App\Account\Infrastructure\Rest\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -32,6 +32,15 @@ class User implements
     TimestampableResourceInterface
 {
     use TimestampableTrait;
+
+    private const TOTP_CONFIGURATION_DIGITS = 6;
+    private const TOTP_CONFIGURATION_PERIOD = 30;
+
+    private const TOTP_CONFIGURATION = [
+        'algorithm' => TotpConfiguration::ALGORITHM_SHA1,
+        'period'    => self::TOTP_CONFIGURATION_PERIOD,
+        'digits'    => self::TOTP_CONFIGURATION_DIGITS,
+    ];
 
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
@@ -200,7 +209,7 @@ class User implements
 
     public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
     {
-        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', TotpConfiguration::ALGORITHM_SHA1, 30, 6);
+        return new TotpConfiguration($this->totpSecret?->getSecret() ?? '', ...self::TOTP_CONFIGURATION);
     }
 
     /**
@@ -333,11 +342,6 @@ class User implements
         return null;
     }
 
-    public function addPasswordTokenForOneMonth(): void
-    {
-        $this->addPasswordToken(PasswordToken::generateForMonth($this));
-    }
-
     public function isActive(): bool
     {
         return $this->isVerified;
@@ -346,7 +350,7 @@ class User implements
     public function isTokenValid(string $token): bool
     {
         foreach ($this->passwordTokens as $passwordToken) {
-            if ($passwordToken->getToken() === $token
+            if ($passwordToken->isTokenSame($token)
                 && $passwordToken->isActive(new \DateTimeImmutable())
             ) {
                 return true;

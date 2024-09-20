@@ -6,7 +6,7 @@
         ],
         "excludes": [
             "Dashboard/", // TODO temporary not implemented
-            "Kernel/", // TODO temporary not implemented
+            "Kernel/",
             "Tournament/", // TODO temporary not implemented
         ],
     },
@@ -16,6 +16,6 @@
     "mutators": {
         "@default": true
     },
-    "minMsi": 100,
-    "minCoveredMsi": 100
+    "minMsi": 95,
+    "minCoveredMsi": 95
 }

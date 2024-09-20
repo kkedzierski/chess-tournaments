@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\Infrastructure\Rest;
+namespace App\Account\Infrastructure;
 
 use App\Account\Domain\PasswordToken;
 use App\Account\Domain\PasswordTokenRepositoryInterface;
@@ -14,6 +14,10 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method PasswordToken|null findOneBy(array $criteria, array $orderBy = null)
  * @method PasswordToken[]    findAll()
  * @method PasswordToken[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @codeCoverageIgnore Simply repository
+ *
+ * @infection-ignore-all
  */
 class PasswordTokenRepository extends ServiceEntityRepository implements PasswordTokenRepositoryInterface
 {

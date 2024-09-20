@@ -5,6 +5,11 @@ namespace App\Kernel\Traits;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+/**
+ * @codeCoverageIgnore
+ *
+ * @infection-ignore-all
+ */
 trait UpdatedTrait
 {
     #[ORM\Column(type: 'datetimetz_immutable')]

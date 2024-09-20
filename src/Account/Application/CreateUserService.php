@@ -66,15 +66,15 @@ class CreateUserService
     /**
      * @throws TokenNotFoundException
      */
-    public function setAsVerified(string $token): User
+    public function verifyByToken(string $token): User
     {
-        try {
-            $passwordToken = $this->passwordTokenRepository->getByToken($token, new \DateTimeImmutable('now'));
+        $passwordToken = $this->passwordTokenRepository->getByToken($token, new \DateTimeImmutable('now'));
+        if (null === $passwordToken) {
+            throw new TokenNotFoundException();
+        }
 
-            if (null === $passwordToken) {
-                throw new TokenNotFoundException();
-            }
-            $passwordToken->setAsVerified();
+        try {
+            $passwordToken->verify();
             $user = $passwordToken->getUser();
             $this->passwordTokenRepository->save($passwordToken);
             $this->userRepository->save($user);
@@ -82,7 +82,7 @@ class CreateUserService
             return $user;
         } catch (\Throwable $exception) {
             $this->logger->error(
-                'An error occurred while deactivating password token.',
+                'An error occurred while verifying password token.',
                 [
                     'exception' => $exception,
                     'token' => $token,

@@ -5,6 +5,11 @@ namespace App\Account\Domain\ValueObject;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Embeddable;
 
+/**
+ * @codeCoverageIgnore Simply a value object
+ *
+ * @infection-ignore-all
+ */
 #[Embeddable]
 class TotpSecret
 {

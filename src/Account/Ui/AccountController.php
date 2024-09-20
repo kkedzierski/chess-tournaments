@@ -3,6 +3,7 @@
 namespace App\Account\Ui;
 
 use App\Account\Application\Password\DashboardPasswordService;
+use App\Kernel\Flasher\FlasherInterface;
 use App\Kernel\MultiplyRolesExpression;
 use App\Kernel\Ui\AbstractBaseCrudController;
 use App\Kernel\Ui\Form\Field\VichImageField;
@@ -20,6 +21,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(new MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::SUPER_ADMIN, RoleEnum::MODERATOR))]
@@ -101,8 +103,6 @@ class AccountController extends AbstractBaseCrudController
         return $this->dashboardPasswordService->provideChangePasswordEventListener($formBuilder, $context);
     }
 
-    // TODO 2FA
-
     private function createEnable2FaAction(): Action
     {
         return Action::NEW('enable2Fa')
@@ -121,21 +121,19 @@ class AccountController extends AbstractBaseCrudController
             ->linkToCrudAction('disable2Fa');
     }
 
-    //    public function enable2Fa(ToastrFactory $flasher): RedirectResponse
-    //    {
-    //        $flasher
-    //            ->positionClass('toast-top-center')
-    //            ->addSuccess('admin.2fa.turnOn.success.message', 'admin.2fa.turnOn.enable');
-    //
-    //        return $this->redirect('/authenticate/2fa/enable');
-    //    }
-    //
-    //    public function disable2Fa(ToastrFactory $flasher): RedirectResponse
-    //    {
-    //        $flasher
-    //            ->positionClass('toast-top-center')
-    //            ->addSuccess('admin.2fa.turnOff.success.message', 'admin.2fa.turnOff.disable');
-    //
-    //        return $this->redirect('/authenticate/2fa/disable');
-    //    }
+    public function enable2Fa(FlasherInterface $flasher): RedirectResponse
+    {
+        $flasher
+            ->success('admin.2fa.turnOn.success.message', 'admin.2fa.turnOn.enable');
+
+        return $this->redirect('/authenticate/2fa/enable');
+    }
+
+    public function disable2Fa(FlasherInterface $flasher): RedirectResponse
+    {
+        $flasher
+            ->success('admin.2fa.turnOff.success.message', 'admin.2fa.turnOff.disable');
+
+        return $this->redirect('/authenticate/2fa/disable');
+    }
 }

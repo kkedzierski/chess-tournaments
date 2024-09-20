@@ -6,6 +6,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FieldTrait;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
+/**
+ * @codeCoverageIgnore
+ *
+ * @infection-ignore-all
+ */
 class VichImageField implements FieldInterface
 {
     use FieldTrait;

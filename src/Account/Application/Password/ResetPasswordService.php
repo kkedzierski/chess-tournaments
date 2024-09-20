@@ -50,7 +50,7 @@ class ResetPasswordService
             throw new UserNotFoundException();
         }
 
-        if ($user->isTokenValid($token)) {
+        if (false === $user->isTokenValid($token)) {
             throw new TokenNotFoundException();
         }
 
