@@ -11,8 +11,8 @@ grumphp:
             configuration: './phpstan.neon'
         phpunit:
             always_execute: true  # ... don't use PHPUnit in your project
-#        infection:
-#            threads: 4
-#            min_msi: 70
-#            min_covered_msi: 80
+        infection:
+            threads: 4
+            min_msi: 95
+            min_covered_msi: 95
 
