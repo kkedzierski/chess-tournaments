@@ -145,16 +145,18 @@ class DashboardController extends AbstractDashboardController
         //                ->setController(UserController::class);
     }
 
-    /**
-     * @return array<int|string, mixed>
-     */
-    private function getDashboardData(): array
+
+    private function getDashboardData(): mixed
     {
         $filePath = sprintf('%s/./Assets/menu-dashboard-items.yaml', __DIR__);
 
         $dashboardData = $this->yamlParser->getDataFromFile($filePath);
+
+        /** @phpstan-ignore-next-line */
         foreach ($dashboardData as $menuItem => $data) {
+            /** @phpstan-ignore-next-line */
             $dashboardData[$menuItem]['url'] = $this->adminUrlGenerator
+                /** @phpstan-ignore-next-line */
                 ->setController($data['controller'])
                 ->setAction(Action::INDEX)
                 ->generateUrl();

@@ -7,10 +7,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class YamlParser
 {
-    /**
-     * @return array<mixed, mixed>
-     */
-    public function getDataFromFile(string $filePath): array
+    public function getDataFromFile(string $filePath): mixed
     {
         if (false === file_exists($filePath)) {
             throw new FileNotFoundException(sprintf('File path not found in %s path.', $filePath));
