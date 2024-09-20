@@ -30,7 +30,7 @@ jobs:
         run: docker build -t chess-tournaments-php -f ./docker/etc/php/main.Dockerfile .
 
       - name: Set up Docker Compose
-        run: docker-compose up -d
+        run: docker compose up -d
 
 #      TODO add behat tests
 #      - name: Wait for MySQL
