@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Application;
 
 use App\Account\Application\AccountAuthenticatorService;
@@ -14,6 +16,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class AccountAuthenticatorServiceTest extends TestCase
 {
     private MockObject&UrlGeneratorInterface $urlGenerator;
+
     private MockObject&UserRepositoryInterface $userRepository;
 
     private AccountAuthenticatorService $service;
@@ -81,5 +84,4 @@ class AccountAuthenticatorServiceTest extends TestCase
 
         $this->assertFalse($this->service->isVerified($request));
     }
-
 }

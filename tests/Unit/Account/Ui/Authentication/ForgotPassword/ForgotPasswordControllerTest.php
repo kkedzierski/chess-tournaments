@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Ui\Authentication\ForgotPassword;
 
 use App\Account\Application\Exception\CannotSendEmailException;
@@ -23,6 +25,7 @@ class ForgotPasswordControllerTest extends TestCase
     use ConsecutiveParamsTrait;
 
     private MockObject&ResetPasswordService $resetPasswordService;
+
     private MockObject&FlasherInterface $flasher;
 
     private MockObject&Request $request;

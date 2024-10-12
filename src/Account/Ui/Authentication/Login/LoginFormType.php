@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Ui\Authentication\Login;
 
 use App\Account\Domain\User;
@@ -28,9 +30,9 @@ class LoginFormType extends AbstractType
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
-                'label' => 'dashboard.authentication.login.fields.password',
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'label'       => 'dashboard.authentication.login.fields.password',
+                'mapped'      => false,
+                'attr'        => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'validation.password.notBlank',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Ui\Authentication\ForgotPassword;
 
 use App\Account\Application\Exception\CannotSendEmailException;

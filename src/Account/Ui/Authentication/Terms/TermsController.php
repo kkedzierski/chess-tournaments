@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Ui\Authentication\Terms;
 
 use App\Account\Ui\AbstractBaseController;

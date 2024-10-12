@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Domain;
 
 use App\Account\Domain\PasswordToken;
@@ -104,8 +106,8 @@ class UserTest extends TestCase
         $this->assertNotNull($entity->getTotpAuthenticationConfiguration());
 
         $serialized = [
-            'id' => $entity->getId(),
-            'email' => $entity->getEmail(),
+            'id'       => $entity->getId(),
+            'email'    => $entity->getEmail(),
             'password' => $entity->getPassword(),
         ];
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tournament\Domain;
 
 use App\Tournament\Domain\ValueObject\Pace\TournamentPace;

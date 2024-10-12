@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tournament\Domain;
 
 use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
@@ -30,19 +32,19 @@ use Symfony\Component\Uid\Uuid;
         ),
         new Get(
             security: "is_granted('PUBLIC_ACCESS', object)",
-        )
+        ),
     ]
 )]
 #[ApiFilter(
     SearchFilter::class,
     properties: [
-        'name.name' => 'ipartial',
+        'name.name'         => 'ipartial',
         'location.location' => 'ipartial',
         'province.province' => 'ipartial',
-        'status.status' => 'exact',
-        'type.type' => 'exact',
-        'pace.pace' => 'exact',
-        'source.source' => 'exact',
+        'status.status'     => 'exact',
+        'type.type'         => 'exact',
+        'pace.pace'         => 'exact',
+        'source.source'     => 'exact',
     ]
 )]
 #[ApiFilter(

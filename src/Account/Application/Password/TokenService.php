@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Application\Password;
 
 use App\Account\Application\Exception\TokenGeneratingFailedException;
@@ -31,8 +33,8 @@ class TokenService
                 'An error occurred while generating password token.',
                 [
                     'exception' => $exception,
-                    'user' => $user,
-                    'class' => __CLASS__,
+                    'user'      => $user,
+                    'class'     => __CLASS__,
                 ]
             );
             throw new TokenGeneratingFailedException();
@@ -54,8 +56,8 @@ class TokenService
                 'An error occurred while generating password token.',
                 [
                     'exception' => $exception,
-                    'user' => $user,
-                    'class' => __CLASS__,
+                    'user'      => $user,
+                    'class'     => __CLASS__,
                 ]
             );
             throw new TokenGeneratingFailedException();

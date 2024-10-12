@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Application;
 
 use App\Account\Application\AccountMailerService;
@@ -16,7 +18,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AccountMailerServiceTest extends TestCase
 {
     private MockObject&TranslatorInterface $translator;
+
     private MockObject&MailerInterface $mailer;
+
     private LoggerInterface $logger;
 
     protected function setUp(): void
@@ -77,11 +81,11 @@ class AccountMailerServiceTest extends TestCase
             ->method('send')
             ->with($this->callback(
                 static fn (TemplatedEmail $email) =>
-                    $email->getFrom()[0]->getName() === 'name'
-                    && $email->getFrom()[0]->getAddress() === 'test@example.com'
-                    && $email->getTo()[0]->getAddress() === 'test2@example.com'
-                    && $email->getSubject() === 'translated text'
-                    && $email->getHtmlTemplate() === 'dashboard/authentication/resetPassword/reset-password-email-template.html.twig'
+                    'name' === $email->getFrom()[0]->getName()
+                    && 'test@example.com' === $email->getFrom()[0]->getAddress()
+                    && 'test2@example.com' === $email->getTo()[0]->getAddress()
+                    && 'translated text' === $email->getSubject()
+                    && 'dashboard/authentication/resetPassword/reset-password-email-template.html.twig' === $email->getHtmlTemplate()
                     && $email->getContext() === ['token' => 'token', 'emailValue' => 'test2@example.com', 'companyName' => 'name']
             ))->willThrowException($exception = new \Exception());
         $this->logger
@@ -91,8 +95,8 @@ class AccountMailerServiceTest extends TestCase
                 'An error occurred while sending reset password email.',
                 [
                     'exception' => $exception,
-                    'email' => 'test2@example.com',
-                    'class' => AccountMailerService::class,
+                    'email'     => 'test2@example.com',
+                    'class'     => AccountMailerService::class,
                 ]
             );
 
@@ -117,11 +121,11 @@ class AccountMailerServiceTest extends TestCase
             ->method('send')
             ->with($this->callback(
                 static fn (TemplatedEmail $email) =>
-                    $email->getFrom()[0]->getName() === 'name'
-                    && $email->getFrom()[0]->getAddress() === 'test@example.com'
-                    && $email->getTo()[0]->getAddress() === 'test2@example.com'
-                    && $email->getSubject() === 'translated text'
-                    && $email->getHtmlTemplate() === 'dashboard/authentication/registration/confirmation-email-template.html.twig'
+                    'name' === $email->getFrom()[0]->getName()
+                    && 'test@example.com' === $email->getFrom()[0]->getAddress()
+                    && 'test2@example.com' === $email->getTo()[0]->getAddress()
+                    && 'translated text' === $email->getSubject()
+                    && 'dashboard/authentication/registration/confirmation-email-template.html.twig' === $email->getHtmlTemplate()
                     && $email->getContext() === ['token' => 'token', 'companyName' => 'name']
             ))->willThrowException($exception = new \Exception());
         $this->logger
@@ -131,8 +135,8 @@ class AccountMailerServiceTest extends TestCase
                 'An error occurred while sending registration confirmation email.',
                 [
                     'exception' => $exception,
-                    'email' => 'test2@example.com',
-                    'class' => AccountMailerService::class,
+                    'email'     => 'test2@example.com',
+                    'class'     => AccountMailerService::class,
                 ]
             );
 

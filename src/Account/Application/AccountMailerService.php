@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Application;
 
 use App\Account\Application\Exception\CannotSendEmailException;
@@ -47,7 +49,7 @@ class AccountMailerService
             'dashboard.authentication.resetPassword.title',
             'dashboard/authentication/resetPassword/reset-password-email-template.html.twig',
             [
-                    'token' => $passwordToken->getToken(),
+                    'token'      => $passwordToken->getToken(),
                     'emailValue' => $email,
                 ],
             'An error occurred while sending reset password email.'
@@ -85,8 +87,8 @@ class AccountMailerService
                 $logReason,
                 [
                     'exception' => $exception,
-                    'email' => $email,
-                    'class' => __CLASS__,
+                    'email'     => $email,
+                    'class'     => __CLASS__,
                 ]
             );
             throw new CannotSendEmailException();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Application\Password;
 
 use App\Account\Application\Password\UpdatePasswordService;
@@ -12,6 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UpdatePasswordServiceTest extends TestCase
 {
     private MockObject&UserRepositoryInterface $userRepository;
+
     private MockObject&UserPasswordHasherInterface $passwordHasher;
 
     private UpdatePasswordService $service;

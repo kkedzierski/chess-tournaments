@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Kernel;
 
 use App\Account\Domain\RoleEnum;
@@ -12,7 +14,7 @@ class MultiplyRolesExpressionTest extends TestCase
     {
         $roles = [
             RoleEnum::ADMIN,
-            RoleEnum::USER
+            RoleEnum::USER,
         ];
 
         $expression = new MultiplyRolesExpression(...$roles);

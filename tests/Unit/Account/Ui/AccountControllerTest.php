@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Ui;
 
 use App\Account\Application\Password\DashboardPasswordService;
@@ -25,9 +27,13 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 class AccountControllerTest extends TestCase
 {
     private MockObject&DashboardPasswordService $dashboardPasswordService;
+
     private MockObject&Actions $actions;
+
     private MockObject&EntityManagerInterface $entityManager;
+
     private MockObject&Crud $crud;
+
     private MockObject&ContainerInterface $container;
 
     private MockObject&FlasherInterface $flasher;

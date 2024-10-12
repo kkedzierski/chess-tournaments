@@ -1,14 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tournament\Ui;
 
 class TournamentInput
 {
     private string $name;
+
     private string $type;
+
     private string $pace;
+
     private string $status;
+
     private string $startDate;
+
     private string $endDate;
 
     private string $source;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tournament\Domain\ValueObject\Type;
 
 use Doctrine\DBAL\Types\Types;

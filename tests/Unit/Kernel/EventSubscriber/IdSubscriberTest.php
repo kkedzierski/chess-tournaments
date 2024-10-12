@@ -35,7 +35,6 @@ class IdSubscriberTest extends TestCase
     public function testSetIdWhenIdResourceWithoudId(): void
     {
         $entity = new class () implements IdResourceInterface {
-
             private ?Uuid $id = null;
 
             public function getId(): ?Uuid

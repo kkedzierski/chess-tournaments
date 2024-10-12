@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Ui\Authentication;
 
 use App\Account\Application\AccountAuthenticatorService;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Kernel\EventSubscriber;
 
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
@@ -51,7 +53,7 @@ final readonly class TimestampableSubscriber
                 'Setting user data for resource failed.',
                 [
                     'exception' => $exception,
-                    'class' => TimestampableSubscriber::class,
+                    'class'     => TimestampableSubscriber::class,
                 ]
             );
         }
@@ -77,7 +79,7 @@ final readonly class TimestampableSubscriber
                 'Setting user data for resource failed.',
                 [
                     'exception' => $exception,
-                    'class' => TimestampableSubscriber::class,
+                    'class'     => TimestampableSubscriber::class,
                 ]
             );
         }
@@ -103,7 +105,7 @@ final readonly class TimestampableSubscriber
                 'Setting user data for resource failed.',
                 [
                     'exception' => $exception,
-                    'class' => TimestampableSubscriber::class,
+                    'class'     => TimestampableSubscriber::class,
                 ]
             );
         }

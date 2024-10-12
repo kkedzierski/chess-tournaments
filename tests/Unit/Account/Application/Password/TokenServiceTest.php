@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Application\Password;
 
 use App\Account\Application\Exception\TokenGeneratingFailedException;
@@ -13,6 +15,7 @@ use Psr\Log\LoggerInterface;
 class TokenServiceTest extends TestCase
 {
     private MockObject&PasswordTokenRepositoryInterface $passwordTokenRepository;
+
     private MockObject&LoggerInterface $logger;
 
     private TokenService $tokenService;
@@ -39,8 +42,8 @@ class TokenServiceTest extends TestCase
                 'An error occurred while generating password token.',
                 [
                     'exception' => $exception,
-                    'user' => $user,
-                    'class' => TokenService::class,
+                    'user'      => $user,
+                    'class'     => TokenService::class,
                 ]
             );
 
@@ -63,8 +66,8 @@ class TokenServiceTest extends TestCase
                 'An error occurred while generating password token.',
                 [
                     'exception' => $exception,
-                    'user' => $user,
-                    'class' => TokenService::class,
+                    'user'      => $user,
+                    'class'     => TokenService::class,
                 ]
             );
 

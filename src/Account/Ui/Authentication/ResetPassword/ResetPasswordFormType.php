@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Ui\Authentication\ResetPassword;
 
 use Symfony\Component\Form\AbstractType;
@@ -23,23 +25,23 @@ class ResetPasswordFormType extends AbstractType
     {
         $builder
             ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'required' => true,
+                'type'            => PasswordType::class,
+                'required'        => true,
                 'invalid_message' => 'validation.password.repeat',
-                'first_options' => ['label' => 'dashboard.authentication.register.fields.password'],
-                'second_options' => ['label' => 'dashboard.authentication.register.fields.repeatPassword'],
-                'constraints' => [
+                'first_options'   => ['label' => 'dashboard.authentication.register.fields.password'],
+                'second_options'  => ['label' => 'dashboard.authentication.register.fields.repeatPassword'],
+                'constraints'     => [
                     new NotBlank([
                         'message' => 'validation.password.notBlank',
                     ]),
                     new Length([
-                        'min' => 10,
+                        'min'        => 10,
                         'minMessage' => 'validation.password.minLength',
-                        'max' => 191,
+                        'max'        => 191,
                     ]),
                     new PasswordStrength([
                         'minScore' => PasswordStrength::STRENGTH_MEDIUM,
-                    ])
+                    ]),
                 ],
             ])
         ;
