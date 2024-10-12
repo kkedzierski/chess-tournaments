@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Kernel;
+declare(strict_types=1);
+
+namespace App\Kernel\Security;
 
 use App\Account\Domain\RoleEnum;
 use Symfony\Component\ExpressionLanguage\Expression;

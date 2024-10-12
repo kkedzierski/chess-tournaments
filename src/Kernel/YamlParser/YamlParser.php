@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Kernel\Infrastructure;
+declare(strict_types=1);
+
+namespace App\Kernel\YamlParser;
 
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Yaml\Yaml;

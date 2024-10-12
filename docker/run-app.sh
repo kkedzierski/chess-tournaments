@@ -23,6 +23,12 @@ if [ -f ./docker/.env ]; then
     ENV="./docker/.env"
 fi
 
+BASE_DIRECTORY=$(pwd)
+PUBLIC_DIRECTORY="$BASE_DIRECTORY/public"
+
+mkdir -p "$PUBLIC_DIRECTORY/uploads/images/avatars" -v
+mkdir -p "$PUBLIC_DIRECTORY/uploads/images/company" -v
+
 echo "Building and starting containers..."
 docker-compose down
 docker-compose --env-file $ENV up -d --build
@@ -39,3 +45,5 @@ docker exec -it "${CONTAINER_NAME}" bin/console doctrine:schema:validate
 
 echo "Creating test database schema..."
 docker exec -it "${CONTAINER_NAME}" bin/console doctrine:schema:update -etest --force
+docker exec -it "${CONTAINER_NAME}" bin/console doctrine:schema:update -etest --force
+docker exec -it "${CONTAINER_NAME}" bin/console doctrine:schema:validate -etest

@@ -4,7 +4,7 @@ namespace App\Tests\Unit\Account\Ui;
 
 use App\Account\Application\Password\DashboardPasswordService;
 use App\Account\Domain\User;
-use App\Account\Ui\AccountController;
+use App\Account\Ui\AccountCrudController;
 use App\Kernel\Flasher\FlasherInterface;
 use DG\BypassFinals;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,7 +32,7 @@ class AccountControllerTest extends TestCase
 
     private MockObject&FlasherInterface $flasher;
 
-    private AccountController $controller;
+    private AccountCrudController $controller;
 
     protected function setUp(): void
     {
@@ -44,7 +44,7 @@ class AccountControllerTest extends TestCase
         $this->container = $this->createMock(ContainerInterface::class);
         $this->flasher = $this->createMock(FlasherInterface::class);
 
-        $this->controller = new AccountController(
+        $this->controller = new AccountCrudController(
             $this->dashboardPasswordService,
         );
         $this->controller->setContainer($this->container);

@@ -17,7 +17,7 @@ class PasswordTokenTest extends TestCase
         $this->assertNull($entity->getToken());
         $this->assertSame($user, $entity->getUser());
         $this->assertNull($entity->getUpdatedBy());
-        $this->assertFalse($entity->isActive(new \DateTimeImmutable()));
+        $this->assertFalse($entity->isActive(new \DateTimeImmutable('+1 day')));
     }
 
     public function testSetters(): void
@@ -35,23 +35,23 @@ class PasswordTokenTest extends TestCase
         $this->assertSame($user, $entity->getUser());
         $this->assertSame($token, $entity->getToken());
         $this->assertSame($updatedBy, $entity->getUpdatedBy());
-        $this->assertTrue($entity->isActive(new \DateTimeImmutable()));
+        $this->assertTrue($entity->isActive(new \DateTimeImmutable('now')));
         $this->assertTrue($entity->isTokenSame($token));
 
         $passwordTokenTwoDays = $entity::generateForDate($user, '+2 day');
-        $this->assertTrue($passwordTokenTwoDays->expiredAtIsInThePast(new \DateTimeImmutable('+3 day')));
+        $this->assertTrue($passwordTokenTwoDays->expiredAtIsInTheFuture(new \DateTimeImmutable('+1 day')));
 
         $passwordTokenOneDay = $entity::generateForOneDay($user);
-        $this->assertTrue($passwordTokenOneDay->expiredAtIsInThePast(new \DateTimeImmutable('+2 day')));
+        $this->assertTrue($passwordTokenOneDay->expiredAtIsInTheFuture(new \DateTimeImmutable('-1 day')));
 
         $passwordTokenOneMonth = $entity::generateForMonth($user);
-        $this->assertTrue($passwordTokenOneMonth->expiredAtIsInThePast(new \DateTimeImmutable('+1 month +1 day')));
+        $this->assertTrue($passwordTokenOneMonth->expiredAtIsInTheFuture(new \DateTimeImmutable('+20 day')));
 
         $entity->verify('someone');
         $this->assertTrue($user->isActive());
         $this->assertSame('someone', $entity->getUpdatedBy());
 
         $passwordTokenExpiredNow = $entity::generateForDate($user, 'now');
-        $this->assertTrue($passwordTokenExpiredNow->expiredAtIsInThePast(new \DateTimeImmutable()));
+        $this->assertTrue($passwordTokenExpiredNow->expiredAtIsInTheFuture(new \DateTimeImmutable('-1 day')));
     }
 }

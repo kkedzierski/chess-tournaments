@@ -16,6 +16,8 @@ FROM php:8.2-fpm
 # libgif-dev is required for gd extension and image processing
 # zip is required for composer
 # git is requried for grumphp
+# libxml2-dev is required for soap extension
+# soap is for gusApi
 RUN apt-get -q update && apt-get -qy install \
     zip \
     cron \
@@ -27,9 +29,10 @@ RUN apt-get -q update && apt-get -qy install \
     libwebp-dev \
     libgif-dev \
     git \
+    libxml2-dev \
     && pecl install pcov \
     && docker-php-ext-enable pcov \
-    && docker-php-ext-install intl opcache pdo pdo_mysql \
+    && docker-php-ext-install intl opcache pdo pdo_mysql soap \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 

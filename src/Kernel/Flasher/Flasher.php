@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Kernel\Flasher;
 
 use Flasher\Prime\FlasherInterface as BaseFlasherInterface;
@@ -25,26 +27,28 @@ final class Flasher implements FlasherInterface
 
     /**
      * @param string[] $options
+     * @param string[] $translateParams
      */
-    public function success(string $message, ?string $title = null, array $options = []): void
+    public function success(string $message, ?string $title = null, array $options = [], array $translateParams = []): void
     {
         $this->flasher
             ->options(empty($options) ? $this->defaultOptions : $options)
             ->addSuccess(
-                $this->translator->trans($message),
+                $this->translator->trans($message, $translateParams),
                 title: $this->translator->trans($title ?? 'Success')
             );
     }
 
     /**
      * @param string[] $options
+     * @param string[] $translateParams
      */
-    public function error(string $message, ?string $title = null, array $options = []): void
+    public function error(string $message, ?string $title = null, array $options = [], array $translateParams = []): void
     {
         $this->flasher
             ->options(empty($options) ? $this->defaultOptions : $options)
             ->addError(
-                $this->translator->trans($message),
+                $this->translator->trans($message, $translateParams),
                 title: $this->translator->trans($title ?? 'Error')
             );
     }

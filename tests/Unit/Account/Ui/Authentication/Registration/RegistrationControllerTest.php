@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Ui\Authentication\Registration;
 
 use App\Account\Application\CreateUserService;
@@ -24,6 +26,7 @@ class RegistrationControllerTest extends TestCase
     use ConsecutiveParamsTrait;
 
     private MockObject&CreateUserService $createUserService;
+
     private MockObject&FlasherInterface $flasher;
 
     private MockObject&Request $request;

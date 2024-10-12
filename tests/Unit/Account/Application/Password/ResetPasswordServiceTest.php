@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Application\Password;
 
 use App\Account\Application\AccountMailerService;
@@ -106,7 +108,14 @@ class ResetPasswordServiceTest extends TestCase
     {
         $email = 'email';
         $user = new User();
-        $user->addPasswordToken(new PasswordToken($user, token: 'token', expiredAt: new \DateTimeImmutable('+1 day'), activatedAt: new \DateTimeImmutable()));
+        $user->addPasswordToken(
+            new PasswordToken(
+                $user,
+                token: 'token',
+                expiredAt: new \DateTimeImmutable('+1 day'),
+                activatedAt: new \DateTimeImmutable()
+            )
+        );
 
         $this->userRepository
             ->expects($this->once())
@@ -123,8 +132,8 @@ class ResetPasswordServiceTest extends TestCase
             ->method('error')
             ->with('An error occurred while resetting password.', [
                 'exception' => $exception,
-                'email' => $email,
-                'class' => ResetPasswordService::class,
+                'email'     => $email,
+                'class'     => ResetPasswordService::class,
             ]);
 
         $this->expectException(ResetPasswordException::class);

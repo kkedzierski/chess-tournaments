@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Kernel\Ui\Form\Field;
+declare(strict_types=1);
+
+namespace App\Kernel\Form\Field;
 
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FieldTrait;
@@ -14,8 +16,11 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 class VichImageField implements FieldInterface
 {
     use FieldTrait;
+
     public const OPTION_DOWNLOAD_URI = 'download_uri';
+
     public const OPTION_IMAGE_URI = 'image_uri';
+
     public const OPTION_UPLOADED_FILE_NAME_PATTERN = 'uploadedFileNamePattern';
 
     public static function new(string $propertyName, ?string $label = null): self
@@ -49,5 +54,4 @@ class VichImageField implements FieldInterface
 
         return $this;
     }
-
 }

@@ -2,7 +2,7 @@
 
 namespace App\Tests\Unit\Kernel\Infrastructure;
 
-use App\Kernel\Infrastructure\YamlParser;
+use App\Kernel\YamlParser\YamlParser;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 

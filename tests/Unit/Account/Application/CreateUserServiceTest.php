@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Application;
 
 use App\Account\Application\AccountMailerService;
@@ -20,11 +22,17 @@ use Psr\Log\LoggerInterface;
 class CreateUserServiceTest extends TestCase
 {
     private MockObject&UserRepositoryInterface $userRepository;
+
     private MockObject&UserFactory $userFactory;
+
     private MockObject&AccountMailerService $accountMailerService;
+
     private MockObject&TokenService $tokenService;
+
     private MockObject&PasswordTokenRepositoryInterface $passwordTokenRepository;
+
     private MockObject&LoggerInterface $logger;
+
     private MockObject&EntityManagerInterface $entityManager;
 
     private CreateUserService $service;
@@ -82,8 +90,8 @@ class CreateUserServiceTest extends TestCase
                 'An error occurred while creating a new user.',
                 [
                     'exception' => $exception,
-                    'email' => 'email',
-                    'class' => CreateUserService::class,
+                    'email'     => 'email',
+                    'class'     => CreateUserService::class,
                 ]
             );
 
@@ -181,8 +189,8 @@ class CreateUserServiceTest extends TestCase
                 'An error occurred while verifying password token.',
                 [
                     'exception' => $exception,
-                    'token' => 'token',
-                    'class' => CreateUserService::class,
+                    'token'     => 'token',
+                    'class'     => CreateUserService::class,
                 ]
             );
 
@@ -195,7 +203,7 @@ class CreateUserServiceTest extends TestCase
     public function testReturnUserWhenVerifyingSuccess(): void
     {
         $now = new \DateTimeImmutable('now');
-        $passwordToken = new PasswordToken($user = new User(), token: 'token');
+        $passwordToken = new PasswordToken($user = new User(), token: 'token', expiredAt: new \DateTimeImmutable('+1 day'));
         $passwordToken->verify();
         $this->passwordTokenRepository
             ->expects($this->once())
@@ -209,8 +217,8 @@ class CreateUserServiceTest extends TestCase
             ->expects($this->once())
             ->method('save')
             ->with($this->callback(
-                static fn (PasswordToken $token) => $token->isActive($now)
-                && $token->getUpdatedBy() === 'system'
+                static fn (PasswordToken $token) => true === $token->isActive($now)
+                && 'system' === $token->getUpdatedBy()
             ));
         $this->userRepository
             ->expects($this->once())

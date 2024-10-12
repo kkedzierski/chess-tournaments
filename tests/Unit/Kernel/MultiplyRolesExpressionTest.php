@@ -3,7 +3,7 @@
 namespace App\Tests\Unit\Kernel;
 
 use App\Account\Domain\RoleEnum;
-use App\Kernel\MultiplyRolesExpression;
+use App\Kernel\Security\MultiplyRolesExpression;
 use Monolog\Test\TestCase;
 
 class MultiplyRolesExpressionTest extends TestCase

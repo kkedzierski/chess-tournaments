@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tournament\Domain\ValueObject;
 
 use Doctrine\DBAL\Types\Types;
@@ -11,11 +13,15 @@ class TournamentName
 {
     #[ORM\Column(type: Types::STRING, length: 255, nullable: false)]
     #[Assert\NotNull]
-    /** @phpstan-ignore-next-line  */
     private string $name;
 
     public function __construct(string $name)
     {
         $this->name = $name;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

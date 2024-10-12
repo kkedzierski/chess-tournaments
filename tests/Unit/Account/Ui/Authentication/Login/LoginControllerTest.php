@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Account\Ui\Authentication\Login;
 
 use App\Account\Domain\User;
@@ -40,6 +42,8 @@ class LoginControllerTest extends TestCase
 
     private MockObject&Environment $twig;
 
+    private MockObject&RouterInterface $router;
+
     private LoginController $loginController;
 
     protected function setUp(): void
@@ -52,6 +56,7 @@ class LoginControllerTest extends TestCase
         $this->form = $this->createMock(FormInterface::class);
         $this->twig = $this->createMock(Environment::class);
         $this->tokenStorage = $this->createMock(TokenStorage::class);
+        $this->router = $this->createMock(RouterInterface::class);
 
         $this->loginController = new LoginController();
         $this->loginController->setContainer($this->container);
@@ -67,14 +72,15 @@ class LoginControllerTest extends TestCase
             ->with(...$this->consecutiveParams(['security.token_storage'], ['twig']))
             ->willReturn(true);
         $this->container
-            ->expects($this->exactly(3))
+            ->expects($this->exactly(4))
             ->method('get')
             ->with(...$this->consecutiveParams(
                 ['security.token_storage'],
+                ['router'],
                 ['form.factory'],
-                ['twig']
+                ['twig'],
             ))
-            ->willReturnOnConsecutiveCalls($this->tokenStorage, $this->formFactory, $this->twig);
+            ->willReturnOnConsecutiveCalls($this->tokenStorage, $this->router, $this->formFactory, $this->twig);
         $this->tokenStorage
             ->expects($this->once())
             ->method('getToken')
@@ -87,10 +93,14 @@ class LoginControllerTest extends TestCase
             ->expects($this->once())
             ->method('getLastAuthenticationError')
             ->willReturn(null);
+        $this->router
+            ->expects($this->once())
+            ->method('generate')
+            ->willReturn('/register/resend-confirmation-email');
         $this->flasher
             ->expects($this->once())
             ->method('error')
-            ->with('dashboard.authentication.login.verifyEmail');
+            ->with('dashboard.authentication.login.verifyEmail', null, [], ['%resend_url%' => '/register/resend-confirmation-email']);
         $this->authenticationUtils
             ->expects($this->once())
             ->method('getLastUsername')
@@ -111,8 +121,8 @@ class LoginControllerTest extends TestCase
                 'dashboard/authentication/login/login.html.twig',
                 [
                     'last_username' => 'username',
-                    'error' => null,
-                    'loginForm' => $formView,
+                    'error'         => null,
+                    'loginForm'     => $formView,
                 ]
             )->willReturn('content');
 
@@ -123,7 +133,6 @@ class LoginControllerTest extends TestCase
 
     public function testRedirectToDashboardRouteWhenUserIsAdminAndIsVerified(): void
     {
-        $router = $this->createMock(RouterInterface::class);
         $user = new User();
         $user->makeAdmin();
         $user->verify();
@@ -140,7 +149,7 @@ class LoginControllerTest extends TestCase
                 ['security.token_storage'],
                 ['router'],
             ))
-            ->willReturnOnConsecutiveCalls($this->tokenStorage, $router);
+            ->willReturnOnConsecutiveCalls($this->tokenStorage, $this->router);
         $this->tokenStorage
             ->expects($this->once())
             ->method('getToken')
@@ -149,7 +158,7 @@ class LoginControllerTest extends TestCase
             ->expects($this->once())
             ->method('getUser')
             ->willReturn($user);
-        $router
+        $this->router
             ->expects($this->once())
             ->method('generate')
             ->with('dashboard')

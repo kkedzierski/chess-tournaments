@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit;
 
 use PHPUnit\Framework\Constraint\Constraint;
@@ -36,7 +38,7 @@ trait ConsecutiveParamsTrait
 
                 public function __invoke(mixed $actual): bool
                 {
-                    if (count($this->returns) === 0) {
+                    if (0 === count($this->returns)) {
                         return true;
                     }
 

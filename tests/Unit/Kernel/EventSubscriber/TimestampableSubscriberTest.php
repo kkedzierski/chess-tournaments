@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Kernel\EventSubscriber;
 
+use App\Account\Domain\User;
 use App\Kernel\EventSubscriber\TimestampableResourceInterface;
 use App\Kernel\EventSubscriber\TimestampableSubscriber;
-use App\Account\Domain\User;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -14,9 +16,13 @@ use Symfony\Bundle\SecurityBundle\Security;
 class TimestampableSubscriberTest extends TestCase
 {
     private MockObject&TimestampableResourceInterface $entity;
+
     private MockObject&LifecycleEventArgs $event;
+
     private MockObject&Security $security;
+
     private MockObject&LoggerInterface $logger;
+
     private MockObject&User $user;
 
     private TimestampableSubscriber $subscriber;
@@ -111,7 +117,7 @@ class TimestampableSubscriberTest extends TestCase
                 'Setting user data for resource failed.',
                 [
                     'exception' => $exception,
-                    'class' => TimestampableSubscriber::class,
+                    'class'     => TimestampableSubscriber::class,
                 ]
             );
 
@@ -148,7 +154,7 @@ class TimestampableSubscriberTest extends TestCase
                 'Setting user data for resource failed.',
                 [
                     'exception' => $exception,
-                    'class' => TimestampableSubscriber::class,
+                    'class'     => TimestampableSubscriber::class,
                 ]
             );
 
@@ -185,7 +191,7 @@ class TimestampableSubscriberTest extends TestCase
                 'Setting user data for resource failed.',
                 [
                     'exception' => $exception,
-                    'class' => TimestampableSubscriber::class,
+                    'class'     => TimestampableSubscriber::class,
                 ]
             );
 

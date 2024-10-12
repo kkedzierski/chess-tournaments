@@ -1,12 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Dashboard\Ui;
 
-use App\Kernel\Infrastructure\YamlParser;
-use App\Kernel\MultiplyRolesExpression;
-use App\Kernel\Ui\UserInterface;
 use App\Account\Domain\RoleEnum;
 use App\Account\Domain\User;
+use App\Company\Domain\Company;
+use App\Company\Ui\CompanyController;
+use App\Company\Ui\CompanyCrudController;
+use App\Kernel\Security\MultiplyRolesExpression;
+use App\Kernel\Security\UserInterface;
+use App\Kernel\YamlParser\YamlParser;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -20,17 +25,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @method UserInterface getUser()
  */
 #[IsGranted(new MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::SUPER_ADMIN, RoleEnum::MODERATOR))]
-class DashboardController extends AbstractDashboardController
+class DashboardCrudController extends AbstractDashboardController
 {
     public function __construct(
         private readonly AdminUrlGenerator $adminUrlGenerator,
         private readonly YamlParser $yamlParser,
         private readonly AuthorizationCheckerInterface $authorizationChecker,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -54,7 +61,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('panel.dashboard.title')
+            ->setTitle($this->translator->trans('dashboard.panel.mainTitle'))
             ->setFaviconPath('/images/favicon.ico')
             ->disableDarkMode(false);
         //            ->setLocales([
@@ -132,10 +139,11 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('panel.dashboard.menuItems.title', 'fa fa-home');
-        yield MenuItem::section('admin.sections');
-        //        yield MenuItem::linkToCrud('admin.realEstate.all', 'fa fa-building-user', RealEstate::class)
-        //            ->setController(RealEstateController::class);
+        yield MenuItem::linkToDashboard('dashboard.panel.home', 'fa fa-home');
+        yield MenuItem::section('dashboard.company.section.title');
+        yield MenuItem::linkToCrud('dashboard.company.title', 'fa fa-building-user', Company::class)
+            ->setController(CompanyCrudController::class)
+            ->setAction(Action::NEW);
         //        yield MenuItem::linkToCrud('admin.newsPost.all', 'fa fa-regular fa-newspaper', NewsPost::class);
         //        yield MenuItem::linkToCrud('admin.team.all', 'fa fa-people-group', Team::class);
         //        yield MenuItem::linkToCrud('admin.partnerCompany.all', 'fa fa-sitemap', PartnerCompany::class);
@@ -144,7 +152,6 @@ class DashboardController extends AbstractDashboardController
         //            yield MenuItem::linkToCrud('admin.user.all', 'fa fa-users', Account::class)
         //                ->setController(UserController::class);
     }
-
 
     private function getDashboardData(): mixed
     {
