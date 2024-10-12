@@ -9,10 +9,11 @@ grumphp:
         phpstan:
             level: max
             configuration: './phpstan.neon'
+            memory_limit: "-1"
         phpunit:
             always_execute: true  # ... don't use PHPUnit in your project
-#        infection:
-#            threads: 4
-#            min_msi: 95
-#            min_covered_msi: 95
+        infection:
+            threads: 4
+            min_msi: 95
+            min_covered_msi: 95
 
