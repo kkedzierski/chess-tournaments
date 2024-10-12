@@ -42,14 +42,14 @@ class GusApiSearchResult
 
     public function __construct(
         Uuid $id,
-        ?string $userIp,
         string $taxIdentificationNumber,
+        ?string $userIp,
         ?\DateTimeImmutable $updatedAt = null,
         ?\DateTimeImmutable $createdAt = null
     ) {
         $this->id = $id;
-        $this->userIp = $userIp;
         $this->taxIdentificationNumber = $taxIdentificationNumber;
+        $this->userIp = $userIp;
         $this->updatedAt = $updatedAt;
         $this->createdAt = $createdAt;
     }

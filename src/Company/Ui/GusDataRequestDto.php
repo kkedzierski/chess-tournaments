@@ -6,6 +6,11 @@ namespace App\Company\Ui;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @codeCoverageIgnore
+ *
+ * @infection-ignore-all
+ */
 final readonly class GusDataRequestDto
 {
     public function __construct(

@@ -46,22 +46,7 @@ Escaped mutants:
       * @throws RandomException
 
 
-4) /var/www/html/src/Account/Domain/PasswordToken.php:82    [M] LogicalAnd
-
---- Original
-+++ New
-@@ @@
-     }
-     public function expiredAtIsInTheFuture(\DateTimeImmutable $now): bool
-     {
--        return null !== $this->expiredAt && $this->expiredAt >= $now;
-+        return null !== $this->expiredAt || $this->expiredAt >= $now;
-     }
-     /**
-      * @throws RandomException
-
-
-5) /var/www/html/src/Account/Domain/User.php:234    [M] Coalesce
+4) /var/www/html/src/Account/Domain/User.php:234    [M] Coalesce
 
 --- Original
 +++ New
@@ -76,7 +61,7 @@ Escaped mutants:
       * @see UserInterface
 
 
-6) /var/www/html/src/Account/Domain/User.php:342    [M] MethodCallRemoval
+5) /var/www/html/src/Account/Domain/User.php:342    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -91,22 +76,7 @@ Escaped mutants:
      }
 
 
-7) /var/www/html/src/Account/Domain/User.php:375    [M] LogicalAnd
-
---- Original
-+++ New
-@@ @@
-     public function isTokenValid(string $token): bool
-     {
-         foreach ($this->passwordTokens as $passwordToken) {
--            if ($passwordToken->isTokenSame($token) && $passwordToken->isActive(new \DateTimeImmutable())) {
-+            if ($passwordToken->isTokenSame($token) || $passwordToken->isActive(new \DateTimeImmutable())) {
-                 return true;
-             }
-         }
-
-
-8) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:22    [M] LogicalAnd
+6) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:22    [M] LogicalAnd
 
 --- Original
 +++ New
@@ -121,7 +91,7 @@ Escaped mutants:
          }
 
 
-9) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:28    [M] LogicalAnd
+7) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:28    [M] LogicalAnd
 
 --- Original
 +++ New
@@ -136,7 +106,7 @@ Escaped mutants:
          $lastUsername = $authenticationUtils->getLastUsername();
 
 
-10) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:28    [M] LogicalAnd
+8) /var/www/html/src/Account/Ui/Authentication/Login/LoginController.php:28    [M] LogicalAnd
 
 --- Original
 +++ New
@@ -151,6 +121,36 @@ Escaped mutants:
          $lastUsername = $authenticationUtils->getLastUsername();
 
 
+9) /var/www/html/src/Company/Ui/GusCompanyDataController.php:45    [M] Foreach_
+
+--- Original
++++ New
+@@ @@
+         $violations = $this->validator->validate($gusDataRequest);
+         if (count($violations) > 0) {
+             $errorMessages = [];
+-            foreach ($violations as $violation) {
++            foreach ([] as $violation) {
+                 $errorMessages[] = $violation->getMessage();
+             }
+             return new JsonResponse(['errors' => $errorMessages], Response::HTTP_UNPROCESSABLE_ENTITY);
+
+
+10) /var/www/html/src/Company/Ui/GusCompanyDataController.php:48    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+             foreach ($violations as $violation) {
+                 $errorMessages[] = $violation->getMessage();
+             }
+-            return new JsonResponse(['errors' => $errorMessages], Response::HTTP_UNPROCESSABLE_ENTITY);
++            return new JsonResponse([], Response::HTTP_UNPROCESSABLE_ENTITY);
+         }
+         try {
+             $companyDataDto = $this->gusDataProvider->getCompanyDataByTin($gusDataRequest->tin, $request->getClientIp());
+
+
 Timed Out mutants:
 ==================
 
@@ -160,477 +160,7 @@ Skipped mutants:
 Not Covered mutants:
 ====================
 
-1) /var/www/html/src/Account/Application/CreateUserService.php:104    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-      * @throws CannotSendEmailException
-      * @throws TokenGeneratingFailedException
-      */
--    public function resendConfirmationEmail(string $email): void
-+    protected function resendConfirmationEmail(string $email): void
-     {
-         $user = $this->userRepository->getByEmail($email);
-         if (null === $user) {
-
-
-2) /var/www/html/src/Account/Application/CreateUserService.php:107    [M] Identical
-
---- Original
-+++ New
-@@ @@
-     public function resendConfirmationEmail(string $email): void
-     {
-         $user = $this->userRepository->getByEmail($email);
--        if (null === $user) {
-+        if (null !== $user) {
-             throw new TokenGeneratingFailedException();
-         }
-         $this->accountMailerService->sendRegistrationConfirmationEmail($email, $this->tokenService->generateTokenForVerifyAccount($user));
-     }
- }
-
-
-3) /var/www/html/src/Account/Application/CreateUserService.php:108    [M] Throw_
-
---- Original
-+++ New
-@@ @@
-     {
-         $user = $this->userRepository->getByEmail($email);
-         if (null === $user) {
--            throw new TokenGeneratingFailedException();
-+            new TokenGeneratingFailedException();
-         }
-         $this->accountMailerService->sendRegistrationConfirmationEmail($email, $this->tokenService->generateTokenForVerifyAccount($user));
-     }
- }
-
-
-4) /var/www/html/src/Account/Application/CreateUserService.php:111    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-         if (null === $user) {
-             throw new TokenGeneratingFailedException();
-         }
--        $this->accountMailerService->sendRegistrationConfirmationEmail($email, $this->tokenService->generateTokenForVerifyAccount($user));
-+        
-     }
- }
-
-
-5) /var/www/html/src/Account/Domain/PasswordToken.php:137    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->updatedBy;
-     }
--    public function isActivated(): bool
-+    protected function isActivated(): bool
-     {
-         return null !== $this->activatedAt;
-     }
- }
-
-
-6) /var/www/html/src/Account/Domain/PasswordToken.php:139    [M] NotIdentical
-
---- Original
-+++ New
-@@ @@
-     }
-     public function isActivated(): bool
-     {
--        return null !== $this->activatedAt;
-+        return null === $this->activatedAt;
-     }
- }
-
-
-7) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:25    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-     }
-     #[Route('/dashboard/register/resend-confirmation-email', name: 'app_register_resend_confirmation_email')]
--    public function resendConfirmationEmail(Request $request): Response
-+    protected function resendConfirmationEmail(Request $request): Response
-     {
-         $form = $this->createForm(ResendConfirmationFormType::class);
-         $form->handleRequest($request);
-
-
-8) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:29    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-     public function resendConfirmationEmail(Request $request): Response
-     {
-         $form = $this->createForm(ResendConfirmationFormType::class);
--        $form->handleRequest($request);
-+        
-         if ($form->isSubmitted() && $form->isValid()) {
-             try {
-                 $email = $form->get('email')->getData();
-
-
-9) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:31    [M] LogicalAnd
-
---- Original
-+++ New
-@@ @@
-     {
-         $form = $this->createForm(ResendConfirmationFormType::class);
-         $form->handleRequest($request);
--        if ($form->isSubmitted() && $form->isValid()) {
-+        if ($form->isSubmitted() || $form->isValid()) {
-             try {
-                 $email = $form->get('email')->getData();
-                 if (null === $email || false === is_string($email)) {
-
-
-10) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:31    [M] LogicalAndAllSubExprNegation
-
---- Original
-+++ New
-@@ @@
-     {
-         $form = $this->createForm(ResendConfirmationFormType::class);
-         $form->handleRequest($request);
--        if ($form->isSubmitted() && $form->isValid()) {
-+        if (!$form->isSubmitted() && !$form->isValid()) {
-             try {
-                 $email = $form->get('email')->getData();
-                 if (null === $email || false === is_string($email)) {
-
-
-11) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:31    [M] LogicalAndNegation
-
---- Original
-+++ New
-@@ @@
-     {
-         $form = $this->createForm(ResendConfirmationFormType::class);
-         $form->handleRequest($request);
--        if ($form->isSubmitted() && $form->isValid()) {
-+        if (!($form->isSubmitted() && $form->isValid())) {
-             try {
-                 $email = $form->get('email')->getData();
-                 if (null === $email || false === is_string($email)) {
-
-
-12) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:31    [M] LogicalAndSingleSubExprNegation
-
---- Original
-+++ New
-@@ @@
-     {
-         $form = $this->createForm(ResendConfirmationFormType::class);
-         $form->handleRequest($request);
--        if ($form->isSubmitted() && $form->isValid()) {
-+        if (!$form->isSubmitted() && $form->isValid()) {
-             try {
-                 $email = $form->get('email')->getData();
-                 if (null === $email || false === is_string($email)) {
-
-
-13) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:31    [M] LogicalAndSingleSubExprNegation
-
---- Original
-+++ New
-@@ @@
-     {
-         $form = $this->createForm(ResendConfirmationFormType::class);
-         $form->handleRequest($request);
--        if ($form->isSubmitted() && $form->isValid()) {
-+        if ($form->isSubmitted() && !$form->isValid()) {
-             try {
-                 $email = $form->get('email')->getData();
-                 if (null === $email || false === is_string($email)) {
-
-
-14) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:32    [M] CatchBlockRemoval
-
---- Original
-+++ New
-@@ @@
-                 $this->createUserService->resendConfirmationEmail($email);
-                 $this->flasher->success('dashboard.authentication.resendConfirmation.success.description', 'dashboard.authentication.resendConfirmation.success.title');
-                 return $this->redirectToRoute('app_login');
--            } catch (EmailRequiredException $exception) {
--                $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.emailRequired.title');
-             } catch (TokenGeneratingFailedException $exception) {
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.tokenNotFound.title');
-             } catch (CannotSendEmailException $exception) {
-
-
-15) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:32    [M] CatchBlockRemoval
-
---- Original
-+++ New
-@@ @@
-                 return $this->redirectToRoute('app_login');
-             } catch (EmailRequiredException $exception) {
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.emailRequired.title');
--            } catch (TokenGeneratingFailedException $exception) {
--                $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.tokenNotFound.title');
-             } catch (CannotSendEmailException $exception) {
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.cannotSendEmail.title');
-             } catch (\Throwable) {
-
-
-16) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:32    [M] CatchBlockRemoval
-
---- Original
-+++ New
-@@ @@
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.emailRequired.title');
-             } catch (TokenGeneratingFailedException $exception) {
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.tokenNotFound.title');
--            } catch (CannotSendEmailException $exception) {
--                $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.cannotSendEmail.title');
-             } catch (\Throwable) {
-                 $this->flasher->error('dashboard.authentication.register.resendConfirmation.error.description', 'dashboard.authentication.register.resendConfirmation.error.title');
-             }
-
-
-17) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:32    [M] CatchBlockRemoval
-
---- Original
-+++ New
-@@ @@
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.tokenNotFound.title');
-             } catch (CannotSendEmailException $exception) {
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.cannotSendEmail.title');
--            } catch (\Throwable) {
--                $this->flasher->error('dashboard.authentication.register.resendConfirmation.error.description', 'dashboard.authentication.register.resendConfirmation.error.title');
-             }
-         }
-         return $this->render('dashboard/authentication/registration/resend-confirmation-email.twig', ['resendConfirmationForm' => $form]);
-     }
- }
-
-
-18) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:35    [M] Identical
-
---- Original
-+++ New
-@@ @@
-         if ($form->isSubmitted() && $form->isValid()) {
-             try {
-                 $email = $form->get('email')->getData();
--                if (null === $email || false === is_string($email)) {
-+                if (null !== $email || false === is_string($email)) {
-                     throw new EmailRequiredException();
-                 }
-                 $this->createUserService->resendConfirmationEmail($email);
-
-
-19) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:35    [M] FalseValue
-
---- Original
-+++ New
-@@ @@
-         if ($form->isSubmitted() && $form->isValid()) {
-             try {
-                 $email = $form->get('email')->getData();
--                if (null === $email || false === is_string($email)) {
-+                if (null === $email || true === is_string($email)) {
-                     throw new EmailRequiredException();
-                 }
-                 $this->createUserService->resendConfirmationEmail($email);
-
-
-20) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:35    [M] Identical
-
---- Original
-+++ New
-@@ @@
-         if ($form->isSubmitted() && $form->isValid()) {
-             try {
-                 $email = $form->get('email')->getData();
--                if (null === $email || false === is_string($email)) {
-+                if (null === $email || false !== is_string($email)) {
-                     throw new EmailRequiredException();
-                 }
-                 $this->createUserService->resendConfirmationEmail($email);
-
-
-21) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:35    [M] LogicalOr
-
---- Original
-+++ New
-@@ @@
-         if ($form->isSubmitted() && $form->isValid()) {
-             try {
-                 $email = $form->get('email')->getData();
--                if (null === $email || false === is_string($email)) {
-+                if (null === $email && false === is_string($email)) {
-                     throw new EmailRequiredException();
-                 }
-                 $this->createUserService->resendConfirmationEmail($email);
-
-
-22) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:35    [M] LogicalOrAllSubExprNegation
-
---- Original
-+++ New
-@@ @@
-         if ($form->isSubmitted() && $form->isValid()) {
-             try {
-                 $email = $form->get('email')->getData();
--                if (null === $email || false === is_string($email)) {
-+                if (!(null === $email) || false === is_string($email)) {
-                     throw new EmailRequiredException();
-                 }
-                 $this->createUserService->resendConfirmationEmail($email);
-
-
-23) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:35    [M] LogicalOrNegation
-
---- Original
-+++ New
-@@ @@
-         if ($form->isSubmitted() && $form->isValid()) {
-             try {
-                 $email = $form->get('email')->getData();
--                if (null === $email || false === is_string($email)) {
-+                if (!(null === $email || false === is_string($email))) {
-                     throw new EmailRequiredException();
-                 }
-                 $this->createUserService->resendConfirmationEmail($email);
-
-
-24) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:36    [M] Throw_
-
---- Original
-+++ New
-@@ @@
-             try {
-                 $email = $form->get('email')->getData();
-                 if (null === $email || false === is_string($email)) {
--                    throw new EmailRequiredException();
-+                    new EmailRequiredException();
-                 }
-                 $this->createUserService->resendConfirmationEmail($email);
-                 $this->flasher->success('dashboard.authentication.resendConfirmation.success.description', 'dashboard.authentication.resendConfirmation.success.title');
-
-
-25) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:38    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-                 if (null === $email || false === is_string($email)) {
-                     throw new EmailRequiredException();
-                 }
--                $this->createUserService->resendConfirmationEmail($email);
-+                
-                 $this->flasher->success('dashboard.authentication.resendConfirmation.success.description', 'dashboard.authentication.resendConfirmation.success.title');
-                 return $this->redirectToRoute('app_login');
-             } catch (EmailRequiredException $exception) {
-
-
-26) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:40    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-                     throw new EmailRequiredException();
-                 }
-                 $this->createUserService->resendConfirmationEmail($email);
--                $this->flasher->success('dashboard.authentication.resendConfirmation.success.description', 'dashboard.authentication.resendConfirmation.success.title');
-+                
-                 return $this->redirectToRoute('app_login');
-             } catch (EmailRequiredException $exception) {
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.emailRequired.title');
-
-
-27) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:47    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-                 $this->flasher->success('dashboard.authentication.resendConfirmation.success.description', 'dashboard.authentication.resendConfirmation.success.title');
-                 return $this->redirectToRoute('app_login');
-             } catch (EmailRequiredException $exception) {
--                $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.emailRequired.title');
-+                
-             } catch (TokenGeneratingFailedException $exception) {
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.tokenNotFound.title');
-             } catch (CannotSendEmailException $exception) {
-
-
-28) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:52    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-             } catch (EmailRequiredException $exception) {
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.emailRequired.title');
-             } catch (TokenGeneratingFailedException $exception) {
--                $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.tokenNotFound.title');
-+                
-             } catch (CannotSendEmailException $exception) {
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.cannotSendEmail.title');
-             } catch (\Throwable) {
-
-
-29) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:57    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-             } catch (TokenGeneratingFailedException $exception) {
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.tokenNotFound.title');
-             } catch (CannotSendEmailException $exception) {
--                $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.cannotSendEmail.title');
-+                
-             } catch (\Throwable) {
-                 $this->flasher->error('dashboard.authentication.register.resendConfirmation.error.description', 'dashboard.authentication.register.resendConfirmation.error.title');
-             }
-
-
-30) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:62    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-             } catch (CannotSendEmailException $exception) {
-                 $this->flasher->error($exception->getMessage(), 'dashboard.authentication.resendConfirmation.error.cannotSendEmail.title');
-             } catch (\Throwable) {
--                $this->flasher->error('dashboard.authentication.register.resendConfirmation.error.description', 'dashboard.authentication.register.resendConfirmation.error.title');
-+                
-             }
-         }
-         return $this->render('dashboard/authentication/registration/resend-confirmation-email.twig', ['resendConfirmationForm' => $form]);
-     }
- }
-
-
-31) /var/www/html/src/Account/Ui/Authentication/ResendConfirmationEmail/ResendConfirmationEmailController.php:69    [M] ArrayItemRemoval
-
---- Original
-+++ New
-@@ @@
-                 $this->flasher->error('dashboard.authentication.register.resendConfirmation.error.description', 'dashboard.authentication.register.resendConfirmation.error.title');
-             }
-         }
--        return $this->render('dashboard/authentication/registration/resend-confirmation-email.twig', ['resendConfirmationForm' => $form]);
-+        return $this->render('dashboard/authentication/registration/resend-confirmation-email.twig', []);
-     }
- }
-
-
-32) /var/www/html/src/Account/Ui/Authentication/Terms/PrivacyPolicyController.php:14    [M] PublicVisibility
+1) /var/www/html/src/Account/Ui/Authentication/Terms/PrivacyPolicyController.php:14    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -645,21 +175,7 @@ Not Covered mutants:
          return $this->render($this->getTemplate($locale));
 
 
-33) /var/www/html/src/Company/Application/Exception/CannotGetGusDataException.php:13    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
- {
-     public function __construct(string $message = 'exception.cannotGetGusData', int $code = Response::HTTP_EXPECTATION_FAILED, \Throwable $previous = null)
-     {
--        parent::__construct($message, $code, $previous);
-+        
-     }
- }
-
-
-34) /var/www/html/src/Company/Application/GusApi/GusApiService.php:29    [M] MethodCallRemoval
+2) /var/www/html/src/Company/Application/GusApi/GusApiService.php:29    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -674,7 +190,7 @@ Not Covered mutants:
       * @throws NotFoundException
 
 
-35) /var/www/html/src/Company/Application/GusApi/GusApiService.php:50    [M] MethodCallRemoval
+3) /var/www/html/src/Company/Application/GusApi/GusApiService.php:50    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -689,7 +205,7 @@ Not Covered mutants:
      }
 
 
-36) /var/www/html/src/Company/Application/GusApi/GusApiService.php:52    [M] ArrayItemRemoval
+4) /var/www/html/src/Company/Application/GusApi/GusApiService.php:52    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -704,7 +220,7 @@ Not Covered mutants:
      }
 
 
-37) /var/www/html/src/Company/Application/GusApi/GusApiService.php:55    [M] Throw_
+5) /var/www/html/src/Company/Application/GusApi/GusApiService.php:55    [M] Throw_
 
 --- Original
 +++ New
@@ -719,7 +235,7 @@ Not Covered mutants:
      /**
 
 
-38) /var/www/html/src/Company/Application/GusApi/GusApiService.php:67    [M] MethodCallRemoval
+6) /var/www/html/src/Company/Application/GusApi/GusApiService.php:67    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -734,7 +250,7 @@ Not Covered mutants:
              $this->saveGusApiSearchResult($companyData, $userIp);
 
 
-39) /var/www/html/src/Company/Application/GusApi/GusApiService.php:69    [M] IncrementInteger
+7) /var/www/html/src/Company/Application/GusApi/GusApiService.php:69    [M] IncrementInteger
 
 --- Original
 +++ New
@@ -749,7 +265,7 @@ Not Covered mutants:
              return $companyData;
 
 
-40) /var/www/html/src/Company/Application/GusApi/GusApiService.php:78    [M] Ternary
+8) /var/www/html/src/Company/Application/GusApi/GusApiService.php:78    [M] Ternary
 
 --- Original
 +++ New
@@ -764,7 +280,7 @@ Not Covered mutants:
          });
 
 
-41) /var/www/html/src/Company/Application/GusApi/GusApiService.php:81    [M] MethodCallRemoval
+9) /var/www/html/src/Company/Application/GusApi/GusApiService.php:81    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -779,7 +295,7 @@ Not Covered mutants:
      }
 
 
-42) /var/www/html/src/Company/Application/GusApi/GusApiService.php:92    [M] MethodCallRemoval
+10) /var/www/html/src/Company/Application/GusApi/GusApiService.php:92    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -796,7 +312,7 @@ Not Covered mutants:
  }
 
 
-43) /var/www/html/src/Company/Application/GusApi/GusApiService.php:94    [M] MethodCallRemoval
+11) /var/www/html/src/Company/Application/GusApi/GusApiService.php:94    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -811,7 +327,7 @@ Not Covered mutants:
  }
 
 
-44) /var/www/html/src/Company/Application/GusApi/GusApiService.php:96    [M] ArrayItemRemoval
+12) /var/www/html/src/Company/Application/GusApi/GusApiService.php:96    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -826,7 +342,7 @@ Not Covered mutants:
  }
 
 
-45) /var/www/html/src/Company/Domain/Company.php:84    [M] Coalesce
+13) /var/www/html/src/Company/Domain/Company.php:84    [M] Coalesce
 
 --- Original
 +++ New
@@ -841,217 +357,7 @@ Not Covered mutants:
      {
 
 
-46) /var/www/html/src/Company/Domain/Company.php:87    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->name ?? '';
-     }
--    public function getId(): ?Uuid
-+    protected function getId(): ?Uuid
-     {
-         return $this->id;
-     }
-
-
-47) /var/www/html/src/Company/Domain/Company.php:92    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->id;
-     }
--    public function setId(?Uuid $id): self
-+    protected function setId(?Uuid $id): self
-     {
-         $this->id = $id;
-         return $this;
-
-
-48) /var/www/html/src/Company/Domain/Company.php:99    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         $this->id = $id;
-         return $this;
-     }
--    public function getName(): ?string
-+    protected function getName(): ?string
-     {
-         return $this->name;
-     }
-
-
-49) /var/www/html/src/Company/Domain/Company.php:104    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->name;
-     }
--    public function setName(?string $name): self
-+    protected function setName(?string $name): self
-     {
-         $this->name = $name;
-         return $this;
-
-
-50) /var/www/html/src/Company/Domain/Company.php:111    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         $this->name = $name;
-         return $this;
-     }
--    public function getTaxIdentificationNumber(): ?string
-+    protected function getTaxIdentificationNumber(): ?string
-     {
-         return $this->taxIdentificationNumber;
-     }
-
-
-51) /var/www/html/src/Company/Domain/Company.php:116    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->taxIdentificationNumber;
-     }
--    public function setTaxIdentificationNumber(?string $taxIdentificationNumber): self
-+    protected function setTaxIdentificationNumber(?string $taxIdentificationNumber): self
-     {
-         $this->taxIdentificationNumber = $taxIdentificationNumber;
-         return $this;
-
-
-52) /var/www/html/src/Company/Domain/Company.php:123    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         $this->taxIdentificationNumber = $taxIdentificationNumber;
-         return $this;
-     }
--    public function getStreet(): ?string
-+    protected function getStreet(): ?string
-     {
-         return $this->street;
-     }
-
-
-53) /var/www/html/src/Company/Domain/Company.php:128    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->street;
-     }
--    public function setStreet(?string $street): self
-+    protected function setStreet(?string $street): self
-     {
-         $this->street = $street;
-         return $this;
-
-
-54) /var/www/html/src/Company/Domain/Company.php:135    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         $this->street = $street;
-         return $this;
-     }
--    public function getZipCode(): ?string
-+    protected function getZipCode(): ?string
-     {
-         return $this->zipCode;
-     }
-
-
-55) /var/www/html/src/Company/Domain/Company.php:140    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->zipCode;
-     }
--    public function setZipCode(?string $zipCode): self
-+    protected function setZipCode(?string $zipCode): self
-     {
-         $this->zipCode = $zipCode;
-         return $this;
-
-
-56) /var/www/html/src/Company/Domain/Company.php:147    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         $this->zipCode = $zipCode;
-         return $this;
-     }
--    public function getCity(): ?string
-+    protected function getCity(): ?string
-     {
-         return $this->city;
-     }
-
-
-57) /var/www/html/src/Company/Domain/Company.php:152    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->city;
-     }
--    public function setCity(?string $city): self
-+    protected function setCity(?string $city): self
-     {
-         $this->city = $city;
-         return $this;
-
-
-58) /var/www/html/src/Company/Domain/Company.php:159    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         $this->city = $city;
-         return $this;
-     }
--    public function getRegon(): ?string
-+    protected function getRegon(): ?string
-     {
-         return $this->regon;
-     }
-
-
-59) /var/www/html/src/Company/Domain/Company.php:164    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->regon;
-     }
--    public function setRegon(?string $regon): self
-+    protected function setRegon(?string $regon): self
-     {
-         $this->regon = $regon;
-         return $this;
-
-
-60) /var/www/html/src/Company/Domain/Company.php:171    [M] PublicVisibility
+14) /var/www/html/src/Company/Domain/Company.php:171    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1066,7 +372,7 @@ Not Covered mutants:
      }
 
 
-61) /var/www/html/src/Company/Domain/Company.php:176    [M] PublicVisibility
+15) /var/www/html/src/Company/Domain/Company.php:176    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1081,7 +387,7 @@ Not Covered mutants:
          return $this;
 
 
-62) /var/www/html/src/Company/Domain/Company.php:183    [M] PublicVisibility
+16) /var/www/html/src/Company/Domain/Company.php:183    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1096,7 +402,7 @@ Not Covered mutants:
      }
 
 
-63) /var/www/html/src/Company/Domain/Company.php:188    [M] PublicVisibility
+17) /var/www/html/src/Company/Domain/Company.php:188    [M] PublicVisibility
 
 --- Original
 +++ New
@@ -1111,39 +417,7 @@ Not Covered mutants:
          return $this;
 
 
-64) /var/www/html/src/Company/Domain/Company.php:195    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         $this->phoneNumber = $companyPhoneNumber;
-         return $this;
-     }
--    public function getCompanyEmail(): ?string
-+    protected function getCompanyEmail(): ?string
-     {
-         return $this->companyEmail;
-     }
-
-
-65) /var/www/html/src/Company/Domain/Company.php:200    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->companyEmail;
-     }
--    public function setCompanyEmail(?string $companyEmail): self
-+    protected function setCompanyEmail(?string $companyEmail): self
-     {
-         $this->companyEmail = $companyEmail;
-         return $this;
-     }
- }
-
-
-66) /var/www/html/src/Company/Domain/GusApiSearchResult.php:59    [M] Coalesce
+18) /var/www/html/src/Company/Domain/GusApiSearchResult.php:59    [M] Coalesce
 
 --- Original
 +++ New
@@ -1158,115 +432,7 @@ Not Covered mutants:
      {
 
 
-67) /var/www/html/src/Company/Domain/GusApiSearchResult.php:62    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->name ?? '';
-     }
--    public function getId(): ?Uuid
-+    protected function getId(): ?Uuid
-     {
-         return $this->id;
-     }
-
-
-68) /var/www/html/src/Company/Domain/GusApiSearchResult.php:67    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->id;
-     }
--    public function setId(?Uuid $id): ?Uuid
-+    protected function setId(?Uuid $id): ?Uuid
-     {
-         return $this->id;
-     }
-
-
-69) /var/www/html/src/Company/Domain/GusApiSearchResult.php:72    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->id;
-     }
--    public function getUserIp(): ?string
-+    protected function getUserIp(): ?string
-     {
-         return $this->userIp;
-     }
-
-
-70) /var/www/html/src/Company/Domain/GusApiSearchResult.php:77    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->userIp;
-     }
--    public function setUserIp(?string $userIp): self
-+    protected function setUserIp(?string $userIp): self
-     {
-         $this->userIp = $userIp;
-         return $this;
-
-
-71) /var/www/html/src/Company/Domain/GusApiSearchResult.php:84    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         $this->userIp = $userIp;
-         return $this;
-     }
--    public function getTaxIdentificationNumber(): ?string
-+    protected function getTaxIdentificationNumber(): ?string
-     {
-         return $this->taxIdentificationNumber;
-     }
-
-
-72) /var/www/html/src/Company/Domain/GusApiSearchResult.php:89    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->taxIdentificationNumber;
-     }
--    public function setTaxIdentificationNumber(?string $taxIdentificationNumber): self
-+    protected function setTaxIdentificationNumber(?string $taxIdentificationNumber): self
-     {
-         $this->taxIdentificationNumber = $taxIdentificationNumber;
-         return $this;
-     }
- }
-
-
-73) /var/www/html/src/Company/Domain/GusApiSearchResultFactory.php:12    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
- use Symfony\Component\Uid\Uuid;
- class GusApiSearchResultFactory
- {
--    public function createByCompanyDataDto(CompanyDataDto $companyDataDto, ?string $userIp): GusApiSearchResult
-+    protected function createByCompanyDataDto(CompanyDataDto $companyDataDto, ?string $userIp): GusApiSearchResult
-     {
-         return new GusApiSearchResult(Uuid::v4(), $userIp, $companyDataDto->tin, new \DateTimeImmutable());
-     }
- }
-
-
-74) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:27    [M] MethodCallRemoval
+19) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:27    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1281,7 +447,7 @@ Not Covered mutants:
      {
 
 
-75) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:32    [M] MethodCallRemoval
+20) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:32    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1296,7 +462,7 @@ Not Covered mutants:
          $progressBar = $this->commandManager->generateProgressBar($output);
 
 
-76) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:33    [M] MethodCallRemoval
+21) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:33    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1311,7 +477,7 @@ Not Covered mutants:
          $progressBar->start(count($gusData));
 
 
-77) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:38    [M] MethodCallRemoval
+22) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:38    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1326,7 +492,7 @@ Not Covered mutants:
              foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
 
 
-78) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:41    [M] DecrementInteger
+23) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:41    [M] DecrementInteger
 
 --- Original
 +++ New
@@ -1341,7 +507,7 @@ Not Covered mutants:
                  if (0 === ++$i % 20) {
 
 
-79) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:42    [M] Foreach_
+24) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:42    [M] Foreach_
 
 --- Original
 +++ New
@@ -1356,7 +522,7 @@ Not Covered mutants:
                      $this->entityManager->flush();
 
 
-80) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:43    [M] MethodCallRemoval
+25) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:43    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1371,7 +537,7 @@ Not Covered mutants:
                  }
 
 
-81) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] DecrementInteger
+26) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] DecrementInteger
 
 --- Original
 +++ New
@@ -1386,7 +552,7 @@ Not Covered mutants:
              }
 
 
-82) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] Increment
+27) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] Increment
 
 --- Original
 +++ New
@@ -1401,7 +567,7 @@ Not Covered mutants:
              }
 
 
-83) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] DecrementInteger
+28) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] DecrementInteger
 
 --- Original
 +++ New
@@ -1416,7 +582,7 @@ Not Covered mutants:
              }
 
 
-84) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] IncrementInteger
+29) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] IncrementInteger
 
 --- Original
 +++ New
@@ -1431,7 +597,7 @@ Not Covered mutants:
              }
 
 
-85) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] Modulus
+30) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] Modulus
 
 --- Original
 +++ New
@@ -1446,7 +612,7 @@ Not Covered mutants:
              }
 
 
-86) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] Identical
+31) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] Identical
 
 --- Original
 +++ New
@@ -1461,7 +627,7 @@ Not Covered mutants:
              }
 
 
-87) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:45    [M] MethodCallRemoval
+32) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:45    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1476,7 +642,7 @@ Not Covered mutants:
              $this->entityManager->flush();
 
 
-88) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:48    [M] MethodCallRemoval
+33) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:48    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1491,7 +657,7 @@ Not Covered mutants:
              return Command::FAILURE;
 
 
-89) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:50    [M] MethodCallRemoval
+34) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:50    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1506,7 +672,7 @@ Not Covered mutants:
          $this->commandManager->success('Old GUS API search data has been removed.');
 
 
-90) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:55    [M] MethodCallRemoval
+35) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:55    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1521,7 +687,7 @@ Not Covered mutants:
  }
 
 
-91) /var/www/html/src/Company/Ui/CompanyCrudController.php:50    [M] NullSafeMethodCall
+36) /var/www/html/src/Company/Ui/CompanyCrudController.php:50    [M] NullSafeMethodCall
 
 --- Original
 +++ New
@@ -1536,7 +702,7 @@ Not Covered mutants:
              if (null !== $company) {
 
 
-92) /var/www/html/src/Company/Ui/CompanyCrudController.php:52    [M] NotIdentical
+37) /var/www/html/src/Company/Ui/CompanyCrudController.php:52    [M] NotIdentical
 
 --- Original
 +++ New
@@ -1551,7 +717,7 @@ Not Covered mutants:
                  /** @phpstan-ignore-next-line */
 
 
-93) /var/www/html/src/Company/Ui/CompanyCrudController.php:54    [M] NotIdentical
+38) /var/www/html/src/Company/Ui/CompanyCrudController.php:54    [M] NotIdentical
 
 --- Original
 +++ New
@@ -1566,7 +732,7 @@ Not Covered mutants:
                  return new RedirectResponse($editUrl);
 
 
-94) /var/www/html/src/Company/Ui/CompanyCrudController.php:62    [M] NewObject
+39) /var/www/html/src/Company/Ui/CompanyCrudController.php:62    [M] NewObject
 
 --- Original
 +++ New
@@ -1582,7 +748,7 @@ Not Covered mutants:
          return parent::new($context);
 
 
-95) /var/www/html/src/Company/Ui/CompanyCrudController.php:74    [M] InstanceOf_
+40) /var/www/html/src/Company/Ui/CompanyCrudController.php:74    [M] InstanceOf_
 
 --- Original
 +++ New
@@ -1597,7 +763,7 @@ Not Covered mutants:
                  if (null === $entityInstance->getId()) {
 
 
-96) /var/www/html/src/Company/Ui/CompanyCrudController.php:74    [M] InstanceOf_
+41) /var/www/html/src/Company/Ui/CompanyCrudController.php:74    [M] InstanceOf_
 
 --- Original
 +++ New
@@ -1612,7 +778,7 @@ Not Covered mutants:
                  if (null === $entityInstance->getId()) {
 
 
-97) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] NotIdentical
+42) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] NotIdentical
 
 --- Original
 +++ New
@@ -1627,7 +793,7 @@ Not Covered mutants:
                  }
 
 
-98) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] Identical
+43) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] Identical
 
 --- Original
 +++ New
@@ -1642,7 +808,7 @@ Not Covered mutants:
                  }
 
 
-99) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] LogicalAnd
+44) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] LogicalAnd
 
 --- Original
 +++ New
@@ -1657,7 +823,7 @@ Not Covered mutants:
                  }
 
 
-100) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] LogicalAndAllSubExprNegation
+45) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] LogicalAndAllSubExprNegation
 
 --- Original
 +++ New
@@ -1672,7 +838,7 @@ Not Covered mutants:
                  }
 
 
-101) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] LogicalAndNegation
+46) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] LogicalAndNegation
 
 --- Original
 +++ New
@@ -1687,7 +853,7 @@ Not Covered mutants:
                  }
 
 
-102) /var/www/html/src/Company/Ui/CompanyCrudController.php:78    [M] Identical
+47) /var/www/html/src/Company/Ui/CompanyCrudController.php:78    [M] Identical
 
 --- Original
 +++ New
@@ -1702,7 +868,7 @@ Not Covered mutants:
                  $user->setCompanyId($entityInstance->getId());
 
 
-103) /var/www/html/src/Company/Ui/CompanyCrudController.php:79    [M] MethodCallRemoval
+48) /var/www/html/src/Company/Ui/CompanyCrudController.php:79    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1717,7 +883,7 @@ Not Covered mutants:
              }
 
 
-104) /var/www/html/src/Company/Ui/CompanyCrudController.php:82    [M] MethodCallRemoval
+49) /var/www/html/src/Company/Ui/CompanyCrudController.php:82    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1732,7 +898,7 @@ Not Covered mutants:
          parent::persistEntity($entityManager, $entityInstance);
 
 
-105) /var/www/html/src/Company/Ui/CompanyCrudController.php:85    [M] MethodCallRemoval
+50) /var/www/html/src/Company/Ui/CompanyCrudController.php:85    [M] MethodCallRemoval
 
 --- Original
 +++ New
@@ -1747,7 +913,7 @@ Not Covered mutants:
      {
 
 
-106) /var/www/html/src/Company/Ui/CompanyCrudController.php:104    [M] TrueValue
+51) /var/www/html/src/Company/Ui/CompanyCrudController.php:104    [M] TrueValue
 
 --- Original
 +++ New
@@ -1762,7 +928,7 @@ Not Covered mutants:
          yield TextField::new('city')->setLabel('dashboard.company.city.title')->onlyOnForms();
 
 
-107) /var/www/html/src/Company/Ui/CompanyCrudController.php:105    [M] DecrementInteger
+52) /var/www/html/src/Company/Ui/CompanyCrudController.php:105    [M] DecrementInteger
 
 --- Original
 +++ New
@@ -1777,7 +943,7 @@ Not Covered mutants:
          yield TextField::new('city')->setLabel('dashboard.company.city.title')->onlyOnForms();
 
 
-108) /var/www/html/src/Company/Ui/CompanyCrudController.php:105    [M] IncrementInteger
+53) /var/www/html/src/Company/Ui/CompanyCrudController.php:105    [M] IncrementInteger
 
 --- Original
 +++ New
@@ -1792,7 +958,7 @@ Not Covered mutants:
          yield TextField::new('city')->setLabel('dashboard.company.city.title')->onlyOnForms();
 
 
-109) /var/www/html/src/Company/Ui/CompanyCrudController.php:109    [M] TrueValue
+54) /var/www/html/src/Company/Ui/CompanyCrudController.php:109    [M] TrueValue
 
 --- Original
 +++ New
@@ -1805,140 +971,3 @@ Not Covered mutants:
          yield TextField::new('province')->setLabel('dashboard.company.province.title')->onlyOnForms();
          yield TextField::new('city')->setLabel('dashboard.company.city.title')->onlyOnForms();
          yield TextField::new('zipCode')->setLabel('dashboard.company.zipCode.title')->onlyOnForms();
-
-
-110) /var/www/html/src/Company/Ui/GusCompanyDataController.php:28    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-     }
-     #[Route('/dashboard/company/fetch-gus-data', name: 'app_company_gus_data', methods: ['POST'])]
--    public function getCompanyDataFromGus(Request $request): JsonResponse
-+    protected function getCompanyDataFromGus(Request $request): JsonResponse
-     {
-         $user = $this->security->getUser();
-         if (null === $user) {
-
-
-111) /var/www/html/src/Company/Ui/GusCompanyDataController.php:33    [M] Identical
-
---- Original
-+++ New
-@@ @@
-     public function getCompanyDataFromGus(Request $request): JsonResponse
-     {
-         $user = $this->security->getUser();
--        if (null === $user) {
-+        if (null !== $user) {
-             throw new AccessDeniedException();
-         }
-         $gusDataRequest = $this->serializer->deserialize($request->getContent(), GusDataRequestDto::class, 'json');
-
-
-112) /var/www/html/src/Company/Ui/GusCompanyDataController.php:34    [M] Throw_
-
---- Original
-+++ New
-@@ @@
-     {
-         $user = $this->security->getUser();
-         if (null === $user) {
--            throw new AccessDeniedException();
-+            new AccessDeniedException();
-         }
-         $gusDataRequest = $this->serializer->deserialize($request->getContent(), GusDataRequestDto::class, 'json');
-         $violations = $this->validator->validate($gusDataRequest);
-
-
-113) /var/www/html/src/Company/Ui/GusCompanyDataController.php:40    [M] GreaterThan
-
---- Original
-+++ New
-@@ @@
-         }
-         $gusDataRequest = $this->serializer->deserialize($request->getContent(), GusDataRequestDto::class, 'json');
-         $violations = $this->validator->validate($gusDataRequest);
--        if (count($violations) > 0) {
-+        if (count($violations) >= 0) {
-             $errorMessages = [];
-             foreach ($violations as $violation) {
-                 $errorMessages[] = $violation->getMessage();
-
-
-114) /var/www/html/src/Company/Ui/GusCompanyDataController.php:40    [M] GreaterThanNegotiation
-
---- Original
-+++ New
-@@ @@
-         }
-         $gusDataRequest = $this->serializer->deserialize($request->getContent(), GusDataRequestDto::class, 'json');
-         $violations = $this->validator->validate($gusDataRequest);
--        if (count($violations) > 0) {
-+        if (count($violations) <= 0) {
-             $errorMessages = [];
-             foreach ($violations as $violation) {
-                 $errorMessages[] = $violation->getMessage();
-
-
-115) /var/www/html/src/Company/Ui/GusCompanyDataController.php:42    [M] Foreach_
-
---- Original
-+++ New
-@@ @@
-         $violations = $this->validator->validate($gusDataRequest);
-         if (count($violations) > 0) {
-             $errorMessages = [];
--            foreach ($violations as $violation) {
-+            foreach ([] as $violation) {
-                 $errorMessages[] = $violation->getMessage();
-             }
-             return new JsonResponse(['errors' => $errorMessages], Response::HTTP_UNPROCESSABLE_ENTITY);
-
-
-116) /var/www/html/src/Company/Ui/GusCompanyDataController.php:45    [M] ArrayItemRemoval
-
---- Original
-+++ New
-@@ @@
-             foreach ($violations as $violation) {
-                 $errorMessages[] = $violation->getMessage();
-             }
--            return new JsonResponse(['errors' => $errorMessages], Response::HTTP_UNPROCESSABLE_ENTITY);
-+            return new JsonResponse([], Response::HTTP_UNPROCESSABLE_ENTITY);
-         }
-         $companyDataDto = $this->gusDataProvider->getCompanyDataByTin($gusDataRequest->tin, $request->getClientIp());
-         return new JsonResponse($companyDataDto);
-     }
- }
-
-
-117) /var/www/html/src/Company/Ui/GusDataRequestDto.php:14    [M] DecrementInteger
-
---- Original
-+++ New
-@@ @@
- use Symfony\Component\Validator\Constraints as Assert;
- final readonly class GusDataRequestDto
- {
--    public function __construct(#[Assert\NotBlank] #[Assert\Length(max: 10)] public string $tin)
-+    public function __construct(#[Assert\NotBlank] #[Assert\Length(max: 9)] public string $tin)
-     {
-     }
- }
-
-
-118) /var/www/html/src/Company/Ui/GusDataRequestDto.php:14    [M] IncrementInteger
-
---- Original
-+++ New
-@@ @@
- use Symfony\Component\Validator\Constraints as Assert;
- final readonly class GusDataRequestDto
- {
--    public function __construct(#[Assert\NotBlank] #[Assert\Length(max: 10)] public string $tin)
-+    public function __construct(#[Assert\NotBlank] #[Assert\Length(max: 11)] public string $tin)
-     {
-     }
- }

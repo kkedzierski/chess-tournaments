@@ -13,8 +13,8 @@ class GusApiSearchResultFactory
     {
         return new GusApiSearchResult(
             Uuid::v4(),
-            $userIp,
             $companyDataDto->tin,
+            $userIp,
             new \DateTimeImmutable(),
         );
     }

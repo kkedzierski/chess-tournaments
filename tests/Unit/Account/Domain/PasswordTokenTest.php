@@ -39,6 +39,7 @@ class PasswordTokenTest extends TestCase
         $this->assertSame($updatedBy, $entity->getUpdatedBy());
         $this->assertTrue($entity->isActive(new \DateTimeImmutable('now')));
         $this->assertTrue($entity->isTokenSame($token));
+        $this->assertTrue($entity->isActivated());
 
         $passwordTokenTwoDays = $entity::generateForDate($user, '+2 day');
         $this->assertTrue($passwordTokenTwoDays->expiredAtIsInTheFuture(new \DateTimeImmutable('+1 day')));

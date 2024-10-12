@@ -60,9 +60,14 @@ class UserTest extends TestCase
         $this->assertFalse($entity->isSuperAdmin());
         $this->assertSame([RoleEnum::USER->value], $entity->getRoles());
 
+        $passwordToken = new PasswordToken($entity, token: 'token', expiredAt: new \DateTimeImmutable('-1 day'));
+        $entity->addPasswordToken($passwordToken);
+        $this->assertSame($entity, $passwordToken->getUser());
+        $this->assertFalse($entity->isTokenValid('token'));
+
         $passwordToken = new PasswordToken($entity, token: 'token', expiredAt: new \DateTimeImmutable('+1 day'), activatedAt: new \DateTimeImmutable());
         $entity->addPasswordToken($passwordToken);
-        $this->assertSame($passwordToken, $entity->getPasswordTokens()->first());
+        $this->assertSame($passwordToken, $entity->getPasswordTokens()->toArray()[1]);
         $this->assertSame($passwordToken, $entity->getActiveToken(new \DateTimeImmutable()));
         $this->assertTrue($entity->isTokenValid('token'));
 

@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Account\Application;
 use App\Account\Application\AccountMailerService;
 use App\Account\Application\CreateUserService;
 use App\Account\Application\Exception\CreateNewUserException;
+use App\Account\Application\Exception\TokenGeneratingFailedException;
 use App\Account\Application\Exception\TokenNotFoundException;
 use App\Account\Application\Password\TokenService;
 use App\Account\Domain\PasswordToken;
@@ -139,10 +140,6 @@ class CreateUserServiceTest extends TestCase
 
     public function testThrowExceptionWhenTokenNotFoundOnVerifyByToken(): void
     {
-
-        $this->expectException(TokenNotFoundException::class);
-        $this->expectExceptionMessage('exception.tokenNotFound');
-
         $now = new \DateTimeImmutable('now');
         $this->passwordTokenRepository
             ->expects($this->once())
@@ -155,6 +152,9 @@ class CreateUserServiceTest extends TestCase
         $this->passwordTokenRepository
             ->expects($this->never())
             ->method('save');
+
+        $this->expectException(TokenNotFoundException::class);
+        $this->expectExceptionMessage('exception.tokenNotFound');
 
         $this->service->verifyByToken('token');
 
@@ -229,5 +229,43 @@ class CreateUserServiceTest extends TestCase
             ->method('error');
 
         $this->assertSame($user, $this->service->verifyByToken('token'));
+    }
+
+    public function testThrowExceptionWhenUserNotFoundOnResendConfirmationEmail(): void
+    {
+        $this->userRepository
+            ->expects($this->once())
+            ->method('getByEmail')
+            ->with('email')
+            ->willReturn(null);
+        $this->accountMailerService
+            ->expects($this->never())
+            ->method('sendRegistrationConfirmationEmail');
+
+        $this->expectException(TokenGeneratingFailedException::class);
+        $this->expectExceptionMessage('exception.tokenGeneratingFailed');
+
+        $this->service->resendConfirmationEmail('email');
+    }
+
+    public function testSendResendConfirmationEmailWhenUserFound(): void
+    {
+        $user = new User();
+        $this->userRepository
+            ->expects($this->once())
+            ->method('getByEmail')
+            ->with('email')
+            ->willReturn($user);
+        $this->tokenService
+            ->expects($this->once())
+            ->method('generateTokenForVerifyAccount')
+            ->with($user)
+            ->willReturn($passwordToken = new PasswordToken($user));
+        $this->accountMailerService
+            ->expects($this->once())
+            ->method('sendRegistrationConfirmationEmail')
+            ->with('email', $passwordToken);
+
+        $this->service->resendConfirmationEmail('email');
     }
 }

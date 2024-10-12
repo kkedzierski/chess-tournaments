@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Company\Ui;
 
 use ApiPlatform\Symfony\Security\Exception\AccessDeniedException;
+use App\Company\Application\Exception\CannotGetGusDataException;
 use App\Company\Application\GusApi\GusDataProviderInterface;
+use App\Kernel\Flasher\FlasherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,6 +24,7 @@ class GusCompanyDataController extends AbstractController
         private readonly Security $security,
         private readonly ValidatorInterface $validator,
         private readonly SerializerInterface $serializer,
+        private readonly FlasherInterface $flasher,
     ) {
     }
 
@@ -45,8 +48,17 @@ class GusCompanyDataController extends AbstractController
             return new JsonResponse(['errors' => $errorMessages], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $companyDataDto = $this->gusDataProvider->getCompanyDataByTin($gusDataRequest->tin, $request->getClientIp());
+        try {
+            $companyDataDto = $this->gusDataProvider->getCompanyDataByTin($gusDataRequest->tin, $request->getClientIp());
 
-        return new JsonResponse($companyDataDto);
+            return new JsonResponse($companyDataDto);
+        } catch (CannotGetGusDataException $exception) {
+            $this->flasher->error($exception->getMessage());
+            return new JsonResponse(null, Response::HTTP_SERVICE_UNAVAILABLE);
+        } catch (\Throwable) {
+            $this->flasher->error('exception.fetchingGusData');
+
+            return new JsonResponse(null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
