@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Ui;
 
 use App\Account\Application\Password\DashboardPasswordService;
-use App\Kernel\Flasher\FlasherInterface;
-use App\Kernel\MultiplyRolesExpression;
-use App\Kernel\Ui\AbstractBaseCrudController;
-use App\Kernel\Ui\Form\Field\VichImageField;
 use App\Account\Domain\RoleEnum;
 use App\Account\Domain\User;
+use App\Kernel\EventSubscriber\AbstractBaseCrudController;
+use App\Kernel\Flasher\FlasherInterface;
+use App\Kernel\Form\Field\VichImageField;
+use App\Kernel\Security\MultiplyRolesExpression;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -25,7 +27,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(new MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::SUPER_ADMIN, RoleEnum::MODERATOR))]
-class AccountController extends AbstractBaseCrudController
+class AccountCrudController extends AbstractBaseCrudController
 {
     public function __construct(
         private readonly DashboardPasswordService $dashboardPasswordService,
@@ -70,10 +72,10 @@ class AccountController extends AbstractBaseCrudController
         yield TextField::new('password')
             ->setFormType(RepeatedType::class)
             ->setFormTypeOptions([
-                'type' => PasswordType::class,
-                'first_options' => ['label' => 'admin.account.password'],
+                'type'           => PasswordType::class,
+                'first_options'  => ['label' => 'admin.account.password'],
                 'second_options' => ['label' => 'admin.account.confirmPassword'],
-                'mapped' => false,
+                'mapped'         => false,
             ])
             ->setRequired(false)
             ->onlyOnForms()

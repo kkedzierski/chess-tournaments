@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Application\Password;
 
 use App\Account\Application\AccountMailerService;
@@ -61,8 +63,8 @@ class ResetPasswordService
                 'An error occurred while resetting password.',
                 [
                     'exception' => $exception,
-                    'email' => $email,
-                    'class' => __CLASS__,
+                    'email'     => $email,
+                    'class'     => __CLASS__,
                 ]
             );
             throw new ResetPasswordException();

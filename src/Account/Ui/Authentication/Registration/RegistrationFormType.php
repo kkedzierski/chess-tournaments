@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Ui\Authentication\Registration;
 
 use App\Account\Domain\User;
@@ -31,10 +33,24 @@ class RegistrationFormType extends AbstractType
                 'label' => 'dashboard.authentication.register.fields.email',
             ])
             ->add('agreeTerms', CheckboxType::class, [
-                'required' => true,
-                'label' => 'dashboard.authentication.register.fields.agreeTerms',
-                'label_html' => true,
-                'mapped' => false,
+                'required'    => true,
+                'label'       => 'dashboard.authentication.register.fields.agreeTerms',
+                'label_html'  => true,
+                'mapped'      => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'validation.agreeTerms.isTrue',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'form-check-input',
+                ],
+            ])
+            ->add('agreePrivacyPolicy', CheckboxType::class, [
+                'required'    => true,
+                'label'       => 'dashboard.authentication.register.fields.agreePrivacyPolicy',
+                'label_html'  => true,
+                'mapped'      => false,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'validation.agreeTerms.isTrue',
@@ -45,24 +61,24 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'required' => true,
+                'type'            => PasswordType::class,
+                'required'        => true,
                 'invalid_message' => 'validation.password.repeat',
-                'first_options' => ['label' => 'dashboard.authentication.register.fields.password'],
-                'second_options' => ['label' => 'dashboard.authentication.register.fields.repeatPassword'],
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
+                'first_options'   => ['label' => 'dashboard.authentication.register.fields.password'],
+                'second_options'  => ['label' => 'dashboard.authentication.register.fields.repeatPassword'],
+                'attr'            => ['autocomplete' => 'new-password'],
+                'constraints'     => [
                     new NotBlank([
                         'message' => 'validation.password.notBlank',
                     ]),
                     new Length([
-                        'min' => 10,
+                        'min'        => 10,
                         'minMessage' => 'validation.password.minLength',
-                        'max' => 191,
+                        'max'        => 191,
                     ]),
                     new PasswordStrength([
                         'minScore' => PasswordStrength::STRENGTH_MEDIUM,
-                    ])
+                    ]),
                 ],
             ])
         ;

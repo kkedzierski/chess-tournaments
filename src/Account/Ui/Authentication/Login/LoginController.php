@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Ui\Authentication\Login;
 
 use App\Account\Application\AccountAuthenticatorService;
@@ -18,7 +20,9 @@ class LoginController extends AbstractBaseController
         $error = $authenticationUtils->getLastAuthenticationError();
 
         if (null === $error && $user && false === $user->isVerified()) {
-            $flasher->error('dashboard.authentication.login.verifyEmail');
+            $resendUrl = $this->generateUrl('app_register_resend_confirmation_email');
+
+            $flasher->error('dashboard.authentication.login.verifyEmail', translateParams: ['%resend_url%' => $resendUrl]);
         }
 
         if ($user && $user->isAdmin() && $user->isVerified()) {
@@ -33,8 +37,8 @@ class LoginController extends AbstractBaseController
             'dashboard/authentication/login/login.html.twig',
             [
                 'last_username' => $lastUsername,
-                'error' => $error,
-                'loginForm' => $form->createView(),
+                'error'         => $error,
+                'loginForm'     => $form->createView(),
             ]
         );
     }

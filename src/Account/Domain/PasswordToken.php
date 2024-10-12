@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Domain;
 
 use ApiPlatform\Metadata\ApiProperty;
@@ -72,14 +74,12 @@ class PasswordToken
 
     public function isActive(\DateTimeImmutable $now): bool
     {
-        return
-            $this->activatedAt !== null
-            && $this->expiredAtIsInThePast($now) === false;
+        return $this->expiredAtIsInTheFuture($now);
     }
 
-    public function expiredAtIsInThePast(\DateTimeImmutable $now): bool
+    public function expiredAtIsInTheFuture(\DateTimeImmutable $now): bool
     {
-        return $this->expiredAt !== null && $this->expiredAt < $now;
+        return null !== $this->expiredAt && $this->expiredAt >= $now;
     }
 
     /**
@@ -132,5 +132,10 @@ class PasswordToken
     public function getUpdatedBy(): ?string
     {
         return $this->updatedBy;
+    }
+
+    public function isActivated(): bool
+    {
+        return null !== $this->activatedAt;
     }
 }

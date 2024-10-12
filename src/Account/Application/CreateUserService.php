@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Application;
 
+use App\Account\Application\Exception\CannotSendEmailException;
 use App\Account\Application\Exception\CreateNewUserException;
+use App\Account\Application\Exception\TokenGeneratingFailedException;
 use App\Account\Application\Exception\TokenNotFoundException;
 use App\Account\Application\Password\TokenService;
 use App\Account\Domain\PasswordTokenRepositoryInterface;
@@ -51,8 +55,8 @@ class CreateUserService
                 'An error occurred while creating a new user.',
                 [
                     'exception' => $e,
-                    'email' => $email,
-                    'class' => __CLASS__,
+                    'email'     => $email,
+                    'class'     => __CLASS__,
                 ]
             );
 
@@ -61,7 +65,6 @@ class CreateUserService
 
         return $user;
     }
-
 
     /**
      * @throws TokenNotFoundException
@@ -85,12 +88,29 @@ class CreateUserService
                 'An error occurred while verifying password token.',
                 [
                     'exception' => $exception,
-                    'token' => $token,
-                    'class' => __CLASS__,
+                    'token'     => $token,
+                    'class'     => __CLASS__,
                 ]
             );
 
             throw new TokenNotFoundException();
         }
+    }
+
+    /**
+     * @throws CannotSendEmailException
+     * @throws TokenGeneratingFailedException
+     */
+    public function resendConfirmationEmail(string $email): void
+    {
+        $user = $this->userRepository->getByEmail($email);
+        if (null === $user) {
+            throw new TokenGeneratingFailedException();
+        }
+
+        $this->accountMailerService->sendRegistrationConfirmationEmail(
+            $email,
+            $this->tokenService->generateTokenForVerifyAccount($user),
+        );
     }
 }

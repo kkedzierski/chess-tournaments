@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Ui\Authentication\Registration;
 
 use App\Account\Application\CreateUserService;
@@ -17,8 +19,8 @@ use Symfony\Component\Routing\Attribute\Route;
 class RegistrationController extends AbstractController
 {
     public function __construct(
-        private readonly CreateUserService    $createUserService,
-        private readonly FlasherInterface              $flasher,
+        private readonly CreateUserService $createUserService,
+        private readonly FlasherInterface  $flasher,
     ) {
     }
 
@@ -61,7 +63,7 @@ class RegistrationController extends AbstractController
                     $exception->getMessage(),
                     'dashboard.authentication.register.password.error.passwordRequired.title'
                 );
-            } catch (\Throwable) {
+            } catch (\Throwable $exception) {
                 $this->flasher->error(
                     'dashboard.authentication.register.error.description',
                     'dashboard.authentication.register.error.title'

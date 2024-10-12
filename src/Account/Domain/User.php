@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Account\Domain;
 
 use ApiPlatform\Metadata\ApiProperty;
 use App\Account\Domain\ValueObject\TotpSecret;
 use App\Account\Infrastructure\UserRepository;
+use App\Kernel\EventSubscriber\IdResourceInterface;
 use App\Kernel\EventSubscriber\TimestampableResourceInterface;
+use App\Kernel\Security\CompanyResourceInterface;
+use App\Kernel\Security\UserInterface;
 use App\Kernel\Traits\TimestampableTrait;
-use App\Kernel\Ui\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -29,11 +33,14 @@ class User implements
     UserInterface,
     PasswordAuthenticatedUserInterface,
     TwoFactorInterface,
-    TimestampableResourceInterface
+    TimestampableResourceInterface,
+    IdResourceInterface,
+    CompanyResourceInterface
 {
     use TimestampableTrait;
 
     private const TOTP_CONFIGURATION_DIGITS = 6;
+
     private const TOTP_CONFIGURATION_PERIOD = 30;
 
     private const TOTP_CONFIGURATION = [
@@ -48,6 +55,9 @@ class User implements
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private ?Uuid $id;
+
+    #[ORM\Column(type: 'uuid', nullable: true)]
+    private ?Uuid $companyId = null;
 
     #[ORM\Column(type: Types::STRING, length: 180, unique: true, nullable: false)]
     #[Assert\NotNull]
@@ -113,6 +123,18 @@ class User implements
     public function setId(?Uuid $id): self
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function getCompanyId(): ?Uuid
+    {
+        return $this->companyId;
+    }
+
+    public function setCompanyId(?Uuid $companyId): self
+    {
+        $this->companyId = $companyId;
 
         return $this;
     }

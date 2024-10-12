@@ -1,0 +1,31 @@
+{% extends "dashboard/authentication/base-authentication.html.twig" %}
+{% block body %}
+    <div class="form-container-background">
+        <img src="{{ asset('assets/dashboard-ui/authentication/assets/images/chess-board.webp') }}"
+             class="chess-board-img" alt="chessboard background image" width="150" height="150"/>
+    </div>
+    <div class="form-container form-login-container">
+        <h3>{% trans %}dashboard.authentication.resendConfirmation.title{% endtrans %}</h3>
+        {{ form_start(resendConfirmationForm) }}
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"/>
+        <p>
+            {% trans %}dashboard.authentication.resendConfirmation.email.description{% endtrans %}
+        </p>
+
+        {% if form_errors(resendConfirmationForm) %}
+            <div class="alert-danger">{{ form_errors(resendConfirmationForm) }}</div>
+        {% endif %}
+
+        {{ form_row(resendConfirmationForm.email) }}
+        <button class='button button-submit' type="submit">
+            {% trans %}dashboard.authentication.resendConfirmation.email.submit{% endtrans %}
+        </button>
+        {{ form_end(resendConfirmationForm) }}
+        <div class="additional-links">
+            <a href="{{ path('app_login') }}" class="button button-additional">
+                {% trans %}dashboard.authentication.login.submit{% endtrans %}
+            </a>
+        </div>
+    </div>
+{% endblock %}
