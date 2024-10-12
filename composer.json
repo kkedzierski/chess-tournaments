@@ -17,6 +17,7 @@
         "easycorp/easyadmin-bundle": "^4.10",
         "elasticsearch/elasticsearch": "^8.15",
         "gedmo/doctrine-extensions": "^3.14",
+        "gusapi/gusapi": "^3.3",
         "nelmio/cors-bundle": "^2.4",
         "php-flasher/flasher-symfony": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.4",

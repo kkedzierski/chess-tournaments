@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "512e4eadda4a2866c5719af483b0ffef",
+    "content-hash": "886d952f7c8ebaba3f748c1bf2ffa35a",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1963,6 +1963,60 @@
                 }
             ],
             "time": "2024-06-25T16:22:14+00:00"
+        },
+        {
+            "name": "gusapi/gusapi",
+            "version": "3.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/johnzuk/GusApi.git",
+                "reference": "235234a12437e4c41bf3277f826dab25e8e6bdb8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johnzuk/GusApi/zipball/235234a12437e4c41bf3277f826dab25e8e6bdb8",
+                "reference": "235234a12437e4c41bf3277f826dab25e8e6bdb8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7",
+                "squizlabs/php_codesniffer": "^3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GusApi\\": "src/GusApi/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-only"
+            ],
+            "authors": [
+                {
+                    "name": "Janusz Żukowicz",
+                    "email": "john_zuk@wp.pl"
+                }
+            ],
+            "description": "Gus Api Library for PHP",
+            "keywords": [
+                "CEGID",
+                "GUS",
+                "api",
+                "krs",
+                "library",
+                "nip",
+                "regon",
+                "soap"
+            ],
+            "support": {
+                "issues": "https://github.com/johnzuk/GusApi/issues",
+                "source": "https://github.com/johnzuk/GusApi/tree/3.3.2"
+            },
+            "time": "2018-04-27T13:33:01+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -14551,7 +14605,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -14559,6 +14613,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }

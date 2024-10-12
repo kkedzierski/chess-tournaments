@@ -190,8 +190,12 @@ form > div > ul > li,
 .form-agree-terms-container {
     display: flex;
     align-items: flex-end;
-    margin-top: 20px;
     justify-content: space-between;
+}
+
+.form-agree-terms-wrapper {
+    display: flex;
+    flex-direction: column;
 }
 
 .form-check-input {
