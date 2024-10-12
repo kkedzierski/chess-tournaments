@@ -16,4 +16,3 @@ grumphp:
             threads: 4
             min_msi: 95
             min_covered_msi: 95
-
