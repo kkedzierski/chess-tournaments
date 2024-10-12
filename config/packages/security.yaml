@@ -42,7 +42,10 @@ security:
         - { path: ^/dashboard/forgot-password, roles: PUBLIC_ACCESS }
         - { path: ^/dashboard/reset-password, roles: PUBLIC_ACCESS }
         - { path: ^/dashboard/terms, roles: PUBLIC_ACCESS }
-        - { path: ^/dashboard, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_USER, ROLE_MODERATOR] }
+        - { path: ^/dashboard/privacy-policy, roles: PUBLIC_ACCESS }
+        - { path: ^/dashboard/company/[a-zA-Z0-9]+$, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_USER, ROLE_MODERATOR] }
+        - { path: ^/dashboard/company/[a-zA-Z0-9]+$, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_USER, ROLE_MODERATOR] }
+        - { path: ^/trans/[a-zA-Z0-9]+$, roles: PUBLIC_ACCESS }
         - { path: ^/logout, role: PUBLIC_ACCESS }
         - { path: ^/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
 

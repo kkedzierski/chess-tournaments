@@ -13,3 +13,13 @@ controllers_tournament:
         path: ../src/Tournament/Ui/
         namespace: App\Tournament\Ui
     type: attribute
+controllers_company:
+    resource:
+        path: ../src/Company/Ui/
+        namespace: App\Company\Ui
+    type: attribute
+translation_controller:
+    resource:
+        path: ../src/Kernel/Translator/
+        namespace: App\Kernel\Translator
+    type: attribute

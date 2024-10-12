@@ -8,5 +8,7 @@ validation:
         strength: " Musi zawierać co najmniej jedną cyfrę (0-9), jedną literę oraz jeden znak specjalny (np. !@#$%^&*)."
     agreeTerms:
         isTrue: "Musisz zaakceptować regulamin"
+    agreePrivacyPolicy:
+        isTrue: "Musisz zaakceptować politykę prywatności"
     token:
         invalid: "Token wygasł lub jest niepoprawny"

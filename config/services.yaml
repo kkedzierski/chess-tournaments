@@ -22,5 +22,11 @@ services:
         arguments:
             $companyName: '%env(CT_NAME)%'
             $companyEmail: '%env(CT_EMAIL)%'
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+
+    App\Company\Application\GusApi\GusApiService:
+        arguments:
+            $gusApiKey: '%env(GUS_API_KEY)%'
+
+    App\Kernel\Translator\TranslatorUXController:
+        arguments:
+            $cacheTTl: '%env(CACHE_TTL)%'

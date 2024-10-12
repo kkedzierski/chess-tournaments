@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+  },
+  "include": ["assets/**/main/*.ts"],  // Uwzględnij wszystkie pliki .ts w katalogu assets
+  "exclude": ["node_modules"]
+}

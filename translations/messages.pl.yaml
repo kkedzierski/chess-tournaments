@@ -1,7 +1,18 @@
 Email: "Adres e-mail"
 Password: "Hasło"
 dashboard:
-  mainTitle: "Szachowymistrz.pl"
+  panel:
+    mainInformation: "Główne informacje"
+    images: "Zdjęcia"
+    mainTitle: "Szachowymistrz.pl"
+    home: "Strona główna"
+    gusApi:
+      error:
+        title: 'Dane z GUS'
+        description: 'Nie udało się pobrać danych z GUS.'
+      pending:
+        title: 'Dane z GUS'
+        description: 'Pobieranie danych z GUS...'
   authentication:
     back: 'Powrót'
     login:
@@ -10,7 +21,7 @@ dashboard:
       password: "Hasło"
       submit: "Zaloguj"
       forgotPassword: "Zapomniałeś hasła?"
-      verifyEmail: "Odwiedź swoją skrzynkę i kliknij w link, aby zweryfikować adres e-mail."
+      verifyEmail: "Odwiedź swoją skrzynkę i kliknij w link, aby zweryfikować adres e-mail. Jeżeli nie otrzymałeś e-maila, kliknij w <a href=\"%resend_url%\">ten link</a>."
       fields:
         email: "Adres e-mail"
         password: "Hasło"
@@ -33,7 +44,8 @@ dashboard:
         email: "Adres e-mail"
         password: "Hasło"
         repeatPassword: "Potwierdź hasło"
-        agreeTerms: 'Zgadzam się z <a href="/dashboard/terms" id="terms-link">regulaminem</a>'
+        agreeTerms: 'Zgadzam się z <a href="/dashboard/terms" class="terms-link">regulaminem</a>'
+        agreePrivacyPolicy: 'Zgadzam się z <a href="/dashboard/privacy-policy" class="terms-link">polityką prywatności</a>'
       confirmation:
         title: 'Potwierdź adres e-mail'
       email:
@@ -70,6 +82,20 @@ dashboard:
       error:
         title: "Nie udało się zresetować hasła"
         description: "Nie udało się zresetować hasła. Spróbuj ponownie."
+        passwordRequired:
+          title: 'Hasło jest wymagane'
+        resetPassword:
+          title: 'Nie udało się zresetować hasła'
+        tokenNotFound:
+          title: 'Token wygasł lub jest niepoprawny'
+        userNotFound:
+          title: 'Użytkownik nie został znaleziony'
+        cannotSendEmail:
+          title: 'Nie udało się wysłać e-maila'
+        tokenGenerating:
+          title: 'Nie udało się wygenerować tokenu'
+        emailRequired:
+          title: 'Adres e-mail jest wymagany'
       email:
         description: "Podaj adres e-mail, na który wyślemy link do zresetowania hasła"
         sent:
@@ -78,27 +104,54 @@ dashboard:
         error:
           title: 'Nie udało się zresetować hasła'
           description: 'Nie udało się zresetować hasła. Spróbuj ponownie.'
-          passwordRequired:
-            title: 'Hasło jest wymagane'
-          resetPassword:
-            title: 'Nie udało się zresetować hasła'
-          tokenNotFound:
-            title: 'Token wygasł lub jest niepoprawny'
-          userNotFound:
-            title: 'Użytkownik nie został znaleziony'
-          cannotSendEmail:
-            title: 'Nie udało się wysłać e-maila'
-          tokenGenerating:
-            title: 'Nie udało się wygenerować tokenu'
-          emailRequired:
-            title: 'Adres e-mail jest wymagany'
         submit: "Wyślij"
         template:
           description: 'Wygląda na to, że poprosiłeś o zresetowanie hasła. Kliknij w link, aby zresetować hasło. Jeśli nie prosiłeś o zresetowanie hasła, zignoruj tę wiadomość.'
           submit: 'Kliknij w link, aby zresetować hasło'
           ignoreInfo: 'Jeśli nie prosiłeś o zresetowanie hasła, zignoruj tę wiadomość.'
+    resendConfirmation:
+      title: "Link weryfikacyjny"
+      email:
+        description: "Podaj adres e-mail, na który wyślemy link weryfikacyjny"
+        submit: "Wyślij"
+      success:
+        title: "Link weryfikacyjny został wysłany"
+        description: "Na podany adres e-mail został wysłany link weryfikacyjny. Sprawdź swoją skrzynkę."
+      error:
+        title: "Nie udało się wysłać linku weryfikacyjnego"
+        description: "Nie udało się wysłać linku weryfikacyjnego. Spróbuj ponownie."
+        emailRequired:
+          title: 'Adres e-mail jest wymagany.'
+        tokenNotFound:
+          title: 'Token wygasł lub jest niepoprawny.'
+        cannotSendEmail:
+          title: 'Nie udało się wysłać e-maila.'
   tournaments:
     all: "Wszystkie turnieje"
+  company:
+    section:
+      title: "Twoja firma"
+    name:
+      title: "Nazwa firmy"
+    phoneNumber:
+      title: "Numer telefonu"
+    companyEmail:
+      title: "Adres e-mail"
+    city:
+      title: "Miasto"
+    street:
+      title: "Ulica"
+    zipCode:
+      title: "Kod pocztowy"
+    province:
+      title: "Województwo"
+    taxIdentificationNumber:
+      title: "NIP"
+      help: "Po wpisaniu NIP-u, dane firmy zostaną automatycznie uzupełnione na podstawie informacji z GUS'u"
+    logo:
+      title: "Logo"
+    title: "Dane firmy"
+    description: "Szachowymistrz.pl to platforma do organizacji turniejów szachowych online. Zarejestruj się i zagraj w turnieju."
 
 exception:
   cannotSendEmail: "Nie udało się wysłać e-maila."
@@ -109,3 +162,7 @@ exception:
   tokenGeneratingFailed: "Nie udało się wygenerować tokenu."
   createNewUserFailed: "Nie udało się utworzyć nowego użytkownika."
   tokenNotFound: "Token wygasł lub jest niepoprawny."
+  companyNotFound: "Firma nie została znaleziona."
+  cannotGetGusData: "Nie udało się pobrać danych z GUS."
+  invalidGusTin: "Niepoprawny nip do pobierania danych z GUS."
+  fetchingGusData: "Wystąpił błąd podczas pobierania danych z GUS."

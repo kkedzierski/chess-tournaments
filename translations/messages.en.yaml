@@ -1,0 +1,164 @@
+Email: "Email address"
+Password: "Password"
+dashboard:
+  panel:
+    mainInformation: "Main information"
+    images: "Images"
+    mainTitle: "szachowymistrz.pl"
+    home: "Home"
+    gusApi:
+      error:
+        title: 'Data from GUS'
+        description: 'Failed to retrieve data from GUS.'
+  authentication:
+    back: 'Back'
+    login:
+      title: "Login"
+      email: "Email address"
+      password: "Password"
+      submit: "Login"
+      forgotPassword: "Forgot your password?"
+      verifyEmail: "Check your inbox and click the link to verify your email address. If you haven’t received an email, click <a href=\"%resend_url%\">this link</a>."
+      fields:
+        email: "Email address"
+        password: "Password"
+    email:
+      template:
+        ignoreInfo: 'If you didn’t initiate this action, ignore this message.'
+    register:
+      title: "Register"
+      password:
+        title: "Password"
+        error:
+          passwordRequired:
+            title: 'Password is required'
+      passwordConfirmation: "Confirm password"
+      submit: "Sign up"
+      alreadyRegistered: "Already have an account?"
+      verificationEmailSent: "A verification link has been sent to your email address. Please check your inbox."
+      tokenIsInvalid: "The token has expired or is invalid."
+      fields:
+        email: "Email address"
+        password: "Password"
+        repeatPassword: "Confirm password"
+        agreeTerms: 'I agree to the <a href="/dashboard/terms" class="terms-link">terms and conditions</a>'
+        agreePrivacyPolicy: 'I agree to the <a href="/dashboard/privacy-policy" class="terms-link">privacy policy</a>'
+      confirmation:
+        title: 'Confirm email address'
+      email:
+        template:
+          description: 'Confirm your email address by clicking the link below. If you did not request email verification, please ignore this message.'
+          submit: 'Click the link to verify your email address'
+        error:
+          emailRequired:
+            title: 'Email address is required'
+      success:
+        title: 'Registration successful'
+        description: 'A verification link has been sent to your email address. Please check your inbox.'
+      error:
+        title: 'Registration failed'
+        description: 'Failed to register. Please try again.'
+      confirm:
+        template:
+          description: 'Click the link to verify your email address.'
+          submit: 'Click the link to verify your email address'
+        error:
+          title: 'Failed to verify email address'
+          description: 'Failed to verify email address. Please try again.'
+          tokenNotFound:
+            title: 'The token has expired or is invalid'
+        success:
+          title: 'Email address verified'
+          description: 'Thank you for confirming your email address.'
+    resetPassword:
+      title: "Reset password"
+      description: "Reset your password"
+      success:
+        title: "Password reset successfully"
+        description: "Your password has been reset. You can now log in."
+      error:
+        title: "Failed to reset password"
+        description: "Failed to reset password. Please try again."
+        passwordRequired:
+          title: 'Password is required'
+        resetPassword:
+          title: 'Failed to reset password'
+        tokenNotFound:
+          title: 'The token has expired or is invalid'
+        userNotFound:
+          title: 'User not found'
+        cannotSendEmail:
+          title: 'Failed to send email'
+        tokenGenerating:
+          title: 'Failed to generate token'
+        emailRequired:
+          title: 'Email address is required'
+      email:
+        description: "Enter the email address where we will send a link to reset your password"
+        sent:
+          title: 'Password reset link sent'
+          description: 'A link to reset your password has been sent to the provided email address. Please check your inbox.'
+        error:
+          title: 'Failed to reset password'
+          description: 'Failed to reset password. Please try again.'
+        submit: "Send"
+        template:
+          description: 'It appears you requested a password reset. Click the link below to reset your password. If you didn’t request a reset, please ignore this message.'
+          submit: 'Click the link to reset your password'
+          ignoreInfo: 'If you didn’t request a password reset, please ignore this message.'
+    resendConfirmation:
+      title: "Verification link"
+      email:
+        description: "Enter the email address where we will send the verification link"
+        submit: "Send"
+      success:
+        title: "Verification link sent"
+        description: "A verification link has been sent to the provided email address. Please check your inbox."
+      error:
+        title: "Failed to send verification link"
+        description: "Failed to send verification link. Please try again."
+        emailRequired:
+          title: 'Email address is required.'
+        tokenNotFound:
+          title: 'The token has expired or is invalid.'
+        cannotSendEmail:
+          title: 'Failed to send email.'
+  tournaments:
+    all: "All tournaments"
+  company:
+    section:
+      title: "Your company"
+    name:
+      title: "Company name"
+    phoneNumber:
+      title: "Phone number"
+    companyEmail:
+      title: "Email address"
+    city:
+      title: "City"
+    street:
+      title: "Street"
+    zipCode:
+      title: "Postal code"
+    province:
+      title: "Province"
+    taxIdentificationNumber:
+      title: "Tax ID"
+      help: "After entering the Tax ID, the company data will be automatically filled in based on GUS information"
+    logo:
+      title: "Logo"
+    title: "Company information"
+    description: "szachowymistrz.pl is a platform for organizing online chess tournaments. Register and participate in a tournament."
+
+exception:
+  cannotSendEmail: "Failed to send email."
+  emailRequired: "Email address is required."
+  userNotFound: "User not found."
+  resetPassword: "Failed to reset password."
+  passwordRequired: "Password is required."
+  tokenGeneratingFailed: "Failed to generate token."
+  createNewUserFailed: "Failed to create new user."
+  tokenNotFound: "The token has expired or is invalid."
+  companyNotFound: "Company not found."
+  cannotGetGusData: "Failed to retrieve data from GUS."
+  invalidGusTin: "Invalid Tax ID for retrieving data from GUS."
