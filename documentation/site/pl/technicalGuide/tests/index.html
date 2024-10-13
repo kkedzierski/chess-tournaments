@@ -71,6 +71,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#testy-jednostkowe" class="md-skip">
+          Przejdź do treści
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -515,6 +520,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Testy
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -524,6 +540,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Spis treści">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Spis treści
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#testy-jednostkowe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testy jednostkowe
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testy-mutacyjne" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testy mutacyjne
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wszystkie-testy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wszystkie testy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#konfiguracja" class="md-nav__link">
+    <span class="md-ellipsis">
+      Konfiguracja
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -596,6 +665,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Spis treści
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#testy-jednostkowe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testy jednostkowe
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testy-mutacyjne" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testy mutacyjne
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wszystkie-testy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wszystkie testy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#konfiguracja" class="md-nav__link">
+    <span class="md-ellipsis">
+      Konfiguracja
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -611,7 +724,25 @@
 
   <h1>Testy</h1>
 
-
+<h3 id="testy-jednostkowe">Testy jednostkowe</h3>
+<p>Testy są napisane w PHP i wykorzystują framework PHPUnit.
+Aby uruchomić testy jednostkowe.
+Wykonaj polecenie w głównym katalogu projektu:</p>
+<pre><code class="language-sh">bash bin/unit.sh
+</code></pre>
+<h3 id="testy-mutacyjne">Testy mutacyjne</h3>
+<p>Testy są napisane w PHP i wykorzystują (Infection)[https://infection.github.io/guide/].
+Aby uruchomić testy mutacyjne.
+Wykonaj polecenie w głównym katalogu projektu:</p>
+<pre><code class="language-sh">bash bin/infection.sh
+</code></pre>
+<h3 id="wszystkie-testy">Wszystkie testy</h3>
+<p>Aby uruchomić wszystkie testy
+Wykonaj polecenie w głównym katalogu projektu:</p>
+<pre><code class="language-sh">bash bin/test.sh
+</code></pre>
+<h3 id="konfiguracja">Konfiguracja</h3>
+<p>Testy mutacyjne są konfigurowane w pliku <code>.infection.json5</code>.</p>
 
 
 
