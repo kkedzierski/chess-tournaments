@@ -71,6 +71,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#unit-tests" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -515,6 +520,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Tests
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -524,6 +540,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit tests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutation-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mutation tests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#all-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      All tests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -596,6 +665,50 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit tests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutation-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mutation tests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#all-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      All tests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -611,7 +724,22 @@
 
   <h1>Tests</h1>
 
-
+<h3 id="unit-tests">Unit tests</h3>
+<p>Unit tests are written in PHP and use (PHPUnit)[https://phpunit.de/].
+To run unit tests, execute the following command in the main project directory:</p>
+<pre><code class="language-sh">bash bin/unit.sh
+</code></pre>
+<h3 id="mutation-tests">Mutation tests</h3>
+<p>The tests are written in PHP and use (Infection)[https://infection.github.io/guide/].
+To run mutation tests, execute the following command in the main project directory:</p>
+<pre><code class="language-sh">bash bin/infection.sh
+</code></pre>
+<h3 id="all-tests">All tests</h3>
+<p>To run all tests, execute the following command in the main project directory:</p>
+<pre><code class="language-sh">bash bin/test.sh
+</code></pre>
+<h3 id="configuration">Configuration</h3>
+<p>The mutation tests are configured in the <code>.infection.json5</code> file.</p>
 
 
 
