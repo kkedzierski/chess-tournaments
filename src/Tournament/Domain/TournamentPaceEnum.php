@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tournament\Domain\ValueObject\Pace;
+namespace App\Tournament\Domain;
 
 enum TournamentPaceEnum: string
 {

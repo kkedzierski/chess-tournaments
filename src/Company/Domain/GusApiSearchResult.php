@@ -7,6 +7,7 @@ namespace App\Company\Domain;
 use ApiPlatform\Metadata\ApiProperty;
 use App\Company\Infrastructure\GusApiSearchResultRepository;
 use App\Kernel\Traits\TimestampableTrait;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
@@ -27,14 +28,14 @@ class GusApiSearchResult
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private ?Uuid $id;
 
-    #[ORM\Column(type: 'string', length: 191, nullable: false)]
+    #[ORM\Column(type: Types::STRING, length: 191, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(
         max: 191
     )]
     private ?string $userIp;
 
-    #[ORM\Column(name: 'tin', type: 'string', length: 168, nullable: true)]
+    #[ORM\Column(name: 'tin', type: Types::STRING, length: 168, nullable: true)]
     #[Assert\Length(
         max: 10
     )]

@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use App\Company\Infrastructure\CompanyRepository;
 use App\Kernel\EventSubscriber\TimestampableResourceInterface;
 use App\Kernel\Traits\TimestampableTrait;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Uid\Uuid;
@@ -25,55 +26,55 @@ class Company implements TimestampableResourceInterface
     #[ApiProperty(identifier: true)]
     private ?Uuid $id = null;
 
-    #[ORM\Column(type: 'string', length: 191, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 191, nullable: true)]
     #[Assert\NotNull]
     #[Assert\Length(
         max: 191
     )]
     private ?string $name = null;
 
-    #[ORM\Column(name: 'tin', type: 'string', length: 168, nullable: true)]
+    #[ORM\Column(name: 'tin', type: Types::STRING, length: 168, nullable: true)]
     #[Assert\Length(
         min: 10,
         max: 10,
     )]
     private ?string $taxIdentificationNumber = null;
 
-    #[ORM\Column(type: 'string', length: 168, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 168, nullable: true)]
     #[Assert\Length(
         max: 20
     )]
     private ?string $regon = null;
 
-    #[ORM\Column(type: 'string', length: 191, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 191, nullable: true)]
     #[Assert\Length(
         max: 191
     )]
     private ?string $province = null;
 
-    #[ORM\Column(type: 'string', length: 191, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 191, nullable: true)]
     #[Assert\Length(
         max: 191
     )]
     private ?string $street = null;
 
-    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
     #[Assert\Length(
         max: 10
     )]
     private ?string $zipCode = null;
 
-    #[ORM\Column(type: 'string', length: 191, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 191, nullable: true)]
     #[Assert\Length(
         max: 191
     )]
     private ?string $city = null;
 
-    #[ORM\Column(type: 'string', length: 15, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 15, nullable: true)]
     #[Assert\Length(max: 15)]
     private ?string $phoneNumber = null;
 
-    #[ORM\Column(type: 'string', length: 191, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 191, nullable: true)]
     #[Assert\Length(
         max: 180
     )]

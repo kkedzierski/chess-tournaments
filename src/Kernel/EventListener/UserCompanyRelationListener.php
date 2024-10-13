@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Kernel\EventListener;
 
 use App\Account\Domain\User;
+use App\Company\Domain\Company;
+use App\Kernel\Security\CompanyResourceInterface;
 use App\Kernel\Security\UserInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeCrudActionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -30,13 +32,14 @@ final class UserCompanyRelationListener implements EventSubscriberInterface
         if (($entity instanceof UserInterface) && !$user->getId()->equals($entity->getId())) {
             throw new AccessDeniedException('You don\'t have permission to use this resource.');
         }
-
+        //
         //        $companyUuid = null;
         //        if ($entity instanceof CompanyResourceInterface) {
-        //            $companyUuid = $entity->getCompany()?->getUuid();
+        //            $companyUuid = $entity->getCompanyId();
         //        }
+        //
         //        if ($entity instanceof Company) {
-        //            $companyUuid = $entity->getUuid();
+        //            $companyUuid = $entity->getId();
         //        }
         //
         //        $userCompany = $user->getCompany();

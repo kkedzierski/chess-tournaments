@@ -36,6 +36,7 @@ class CompanyCrudController extends AbstractBaseCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
+            ->setPageTitle(Crud::PAGE_NEW, 'dashboard.company.title')
             ->setPageTitle(Crud::PAGE_EDIT, 'dashboard.company.title');
     }
 

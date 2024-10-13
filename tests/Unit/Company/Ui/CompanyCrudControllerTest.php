@@ -73,9 +73,9 @@ class CompanyCrudControllerTest extends TestCase
     public function testConfigureCrud(): void
     {
         $this->crud
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('setPageTitle')
-            ->with(Crud::PAGE_EDIT, 'dashboard.company.title')
+            ->with(...$this->consecutiveParams([Crud::PAGE_NEW, 'dashboard.company.title'], [Crud::PAGE_EDIT, 'dashboard.company.title']))
             ->willReturnSelf();
 
         $this->controller->configureCrud($this->crud);

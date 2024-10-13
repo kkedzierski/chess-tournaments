@@ -31,7 +31,6 @@ class RemoveOldGusApiSearchDataCommandTest extends TestCase
     protected function setUp(): void
     {
         BypassFinals::enable();
-        BypassFinals::enable();
         $this->gusApiSearchResultRepository = $this->createMock(GusApiSearchResultRepositoryInterface::class);
         $this->commandManager = $this->createMock(CommandManagerInterface::class);
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
