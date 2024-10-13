@@ -32,7 +32,6 @@ class GusCompanyDataController extends AbstractController
     public function getCompanyDataFromGus(Request $request): JsonResponse
     {
         $user = $this->security->getUser();
-
         if (null === $user) {
             throw new AccessDeniedException();
         }
@@ -54,6 +53,7 @@ class GusCompanyDataController extends AbstractController
             return new JsonResponse($companyDataDto);
         } catch (CannotGetGusDataException $exception) {
             $this->flasher->error($exception->getMessage());
+
             return new JsonResponse(null, Response::HTTP_SERVICE_UNAVAILABLE);
         } catch (\Throwable) {
             $this->flasher->error('exception.fetchingGusData');

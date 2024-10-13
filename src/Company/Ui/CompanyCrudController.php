@@ -42,7 +42,10 @@ class CompanyCrudController extends AbstractBaseCrudController
     public function configureActions(Actions $actions): Actions
     {
         return parent::configureActions($actions)
-            ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN);
+            ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN)
+            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE, fn (Action $action) => $action->setLabel('dashboard.company.save'))
+            ->remove(Crud::PAGE_NEW, Action::SAVE_AND_RETURN)
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER, fn (Action $action) => $action->setLabel('dashboard.company.save'));
     }
 
     public function new(AdminContext $context): KeyValueStore|Response
@@ -90,7 +93,6 @@ class CompanyCrudController extends AbstractBaseCrudController
         yield FormField::addTab('dashboard.panel.mainInformation');
         yield FormField::addFieldset('dashboard.panel.mainInformation')
             ->addCssFiles('build/dashboard-main.css')
-            ->addCssClass('real-estate-form-panel')
             ->setIcon('fa fa-house')
             ->collapsible();
         yield TextField::new('uuid')
@@ -106,7 +108,8 @@ class CompanyCrudController extends AbstractBaseCrudController
             ->onlyOnForms();
         yield TextField::new('name')
             ->setLabel('dashboard.company.name.title')
-            ->setRequired(true);
+            ->setRequired(true)
+            ->onlyOnForms();
         yield TextField::new('province')
             ->setLabel('dashboard.company.province.title')
             ->onlyOnForms();

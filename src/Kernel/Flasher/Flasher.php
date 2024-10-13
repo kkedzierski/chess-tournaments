@@ -8,7 +8,7 @@ use Flasher\Prime\FlasherInterface as BaseFlasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @codeCoverageIgnore
+ * @codeCoverageIgnore Simple service
  *
  * @infection-ignore-all
  */

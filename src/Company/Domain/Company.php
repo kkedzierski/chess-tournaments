@@ -34,7 +34,8 @@ class Company implements TimestampableResourceInterface
 
     #[ORM\Column(name: 'tin', type: 'string', length: 168, nullable: true)]
     #[Assert\Length(
-        max: 10
+        min: 10,
+        max: 10,
     )]
     private ?string $taxIdentificationNumber = null;
 

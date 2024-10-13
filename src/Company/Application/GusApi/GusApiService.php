@@ -7,6 +7,7 @@ namespace App\Company\Application\GusApi;
 use App\Company\Application\Exception\CannotGetGusDataException;
 use App\Company\Domain\GusApiSearchResultFactory;
 use App\Company\Domain\GusApiSearchResultRepositoryInterface;
+use GusApi\Adapter\AdapterInterface;
 use GusApi\Exception\NotFoundException;
 use GusApi\GusApi;
 use GusApi\SearchReport;
@@ -17,16 +18,21 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 final class GusApiService extends GusApi implements GusDataProviderInterface
 {
-    private const CACHE_EXPIRATION = 86400;
+    private const CACHE_EXPIRATION_TIME = 86400;
 
+    /**
+     * @param AdapterInterface $adapter
+     */
     public function __construct(
         private readonly TagAwareCacheInterface $cache,
         private readonly GusApiSearchResultFactory $gusApiSearchResultFactory,
         private readonly GusApiSearchResultRepositoryInterface $gusApiSearchResultRepository,
         private readonly LoggerInterface $logger,
         private readonly string $gusApiKey,
+        private readonly int $cacheExpirationTime = self::CACHE_EXPIRATION_TIME,
+        protected $adapter = null,
     ) {
-        parent::__construct($this->gusApiKey);
+        parent::__construct($this->gusApiKey, $this->adapter);
     }
 
     /**
@@ -64,7 +70,7 @@ final class GusApiService extends GusApi implements GusDataProviderInterface
         $key = sprintf('gus_data_%s_%s', $tin, $userIp);
 
         return $this->cache->get($key, function (ItemInterface $item) use ($tin, $userIp) {
-            $item->expiresAfter(self::CACHE_EXPIRATION);
+            $item->expiresAfter($this->cacheExpirationTime);
 
             $searchReport = $this->getGusDataByTin($tin)[0];
 

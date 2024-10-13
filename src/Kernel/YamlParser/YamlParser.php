@@ -7,7 +7,7 @@ namespace App\Kernel\YamlParser;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Yaml\Yaml;
 
-class YamlParser
+class YamlParser implements YamlParserInterface
 {
     public function getDataFromFile(string $filePath): mixed
     {

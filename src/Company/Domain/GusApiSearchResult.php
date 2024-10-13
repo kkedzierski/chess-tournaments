@@ -54,11 +54,6 @@ class GusApiSearchResult
         $this->createdAt = $createdAt;
     }
 
-    public function __toString(): string
-    {
-        return $this->name ?? '';
-    }
-
     public function getId(): ?Uuid
     {
         return $this->id;

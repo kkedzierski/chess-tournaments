@@ -16,10 +16,12 @@ class TranslatorUXController extends AbstractController
 {
     private const ALL = 'ALL';
 
+    private const CACHE_TTL = 3600;
+
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly CacheInterface $cache,
-        private readonly int $cacheTTl = 3600,
+        private readonly int $cacheTTl = self::CACHE_TTL,
     ) {
     }
 

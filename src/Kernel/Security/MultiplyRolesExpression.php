@@ -7,6 +7,11 @@ namespace App\Kernel\Security;
 use App\Account\Domain\RoleEnum;
 use Symfony\Component\ExpressionLanguage\Expression;
 
+/**
+ * @codeCoverageIgnore
+ *
+ * @infection-ignore-all Simple service
+ */
 class MultiplyRolesExpression extends Expression
 {
     /**

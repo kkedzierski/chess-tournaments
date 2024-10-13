@@ -7,11 +7,10 @@ namespace App\Dashboard\Ui;
 use App\Account\Domain\RoleEnum;
 use App\Account\Domain\User;
 use App\Company\Domain\Company;
-use App\Company\Ui\CompanyController;
 use App\Company\Ui\CompanyCrudController;
 use App\Kernel\Security\MultiplyRolesExpression;
 use App\Kernel\Security\UserInterface;
-use App\Kernel\YamlParser\YamlParser;
+use App\Kernel\YamlParser\YamlParserInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -35,7 +34,7 @@ class DashboardCrudController extends AbstractDashboardController
 {
     public function __construct(
         private readonly AdminUrlGenerator $adminUrlGenerator,
-        private readonly YamlParser $yamlParser,
+        private readonly YamlParserInterface $yamlParser,
         private readonly AuthorizationCheckerInterface $authorizationChecker,
         private readonly TranslatorInterface $translator,
     ) {

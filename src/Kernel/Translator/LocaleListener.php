@@ -9,6 +9,11 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @codeCoverageIgnore
+ *
+ * @infection-ignore-all Simple service
+ */
 readonly class LocaleListener implements EventSubscriberInterface
 {
     public function __construct(

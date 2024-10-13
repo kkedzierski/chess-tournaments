@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class AccountControllerTest extends TestCase
+class AccountCrudControllerTest extends TestCase
 {
     private MockObject&DashboardPasswordService $dashboardPasswordService;
 
