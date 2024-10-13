@@ -26,6 +26,7 @@ services:
   App\Company\Application\GusApi\GusApiService:
     arguments:
       $gusApiKey: '%env(GUS_API_KEY)%'
+      $cacheExpirationTime: '%env(CACHE_EXPIRATION_TIME)%'
 
   App\Kernel\Translator\TranslatorUXController:
     arguments:

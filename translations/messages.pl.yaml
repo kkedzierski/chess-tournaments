@@ -152,6 +152,7 @@ dashboard:
       title: "Logo"
     title: "Dane firmy"
     description: "Szachowymistrz.pl to platforma do organizacji turniejów szachowych online. Zarejestruj się i zagraj w turnieju."
+    save: "Zapisz"
 
 exception:
   cannotSendEmail: "Nie udało się wysłać e-maila."

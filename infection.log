@@ -121,91 +121,7 @@ Escaped mutants:
          $lastUsername = $authenticationUtils->getLastUsername();
 
 
-9) /var/www/html/src/Company/Ui/GusCompanyDataController.php:45    [M] Foreach_
-
---- Original
-+++ New
-@@ @@
-         $violations = $this->validator->validate($gusDataRequest);
-         if (count($violations) > 0) {
-             $errorMessages = [];
--            foreach ($violations as $violation) {
-+            foreach ([] as $violation) {
-                 $errorMessages[] = $violation->getMessage();
-             }
-             return new JsonResponse(['errors' => $errorMessages], Response::HTTP_UNPROCESSABLE_ENTITY);
-
-
-10) /var/www/html/src/Company/Ui/GusCompanyDataController.php:48    [M] ArrayItemRemoval
-
---- Original
-+++ New
-@@ @@
-             foreach ($violations as $violation) {
-                 $errorMessages[] = $violation->getMessage();
-             }
--            return new JsonResponse(['errors' => $errorMessages], Response::HTTP_UNPROCESSABLE_ENTITY);
-+            return new JsonResponse([], Response::HTTP_UNPROCESSABLE_ENTITY);
-         }
-         try {
-             $companyDataDto = $this->gusDataProvider->getCompanyDataByTin($gusDataRequest->tin, $request->getClientIp());
-
-
-Timed Out mutants:
-==================
-
-Skipped mutants:
-================
-
-Not Covered mutants:
-====================
-
-1) /var/www/html/src/Account/Ui/Authentication/Terms/PrivacyPolicyController.php:14    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
- class PrivacyPolicyController extends AbstractBaseController
- {
-     #[Route('/dashboard/privacy-policy', name: 'app_privacy_policy')]
--    public function showPrivacyPolicy(TranslatorInterface $translator): Response
-+    protected function showPrivacyPolicy(TranslatorInterface $translator): Response
-     {
-         $locale = $translator->getLocale();
-         return $this->render($this->getTemplate($locale));
-
-
-2) /var/www/html/src/Company/Application/GusApi/GusApiService.php:29    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-     private const CACHE_EXPIRATION = 86400;
-     public function __construct(private readonly TagAwareCacheInterface $cache, private readonly GusApiSearchResultFactory $gusApiSearchResultFactory, private readonly GusApiSearchResultRepositoryInterface $gusApiSearchResultRepository, private readonly LoggerInterface $logger, private readonly string $gusApiKey)
-     {
--        parent::__construct($this->gusApiKey);
-+        
-     }
-     /**
-      * @throws NotFoundException
-
-
-3) /var/www/html/src/Company/Application/GusApi/GusApiService.php:50    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-         try {
-             return $this->saveDataAndGetByCache($tin, $userIp);
-         } catch (\Throwable $exception) {
--            $this->logger->error('Error while getting gusData from cache.', ['exception' => $exception]);
-+            
-             throw new CannotGetGusDataException();
-         }
-     }
-
-
-4) /var/www/html/src/Company/Application/GusApi/GusApiService.php:52    [M] ArrayItemRemoval
+9) /var/www/html/src/Company/Application/GusApi/GusApiService.php:54    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -220,114 +136,7 @@ Not Covered mutants:
      }
 
 
-5) /var/www/html/src/Company/Application/GusApi/GusApiService.php:55    [M] Throw_
-
---- Original
-+++ New
-@@ @@
-             return $this->saveDataAndGetByCache($tin, $userIp);
-         } catch (\Throwable $exception) {
-             $this->logger->error('Error while getting gusData from cache.', ['exception' => $exception]);
--            throw new CannotGetGusDataException();
-+            new CannotGetGusDataException();
-         }
-     }
-     /**
-
-
-6) /var/www/html/src/Company/Application/GusApi/GusApiService.php:67    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-     {
-         $key = sprintf('gus_data_%s_%s', $tin, $userIp);
-         return $this->cache->get($key, function (ItemInterface $item) use ($tin, $userIp) {
--            $item->expiresAfter(self::CACHE_EXPIRATION);
-+            
-             $searchReport = $this->getGusDataByTin($tin)[0];
-             $companyData = new CompanyDataDto($tin, $searchReport->getName(), $searchReport->getRegon(), $searchReport->getProvince(), $searchReport->getStreet(), $searchReport->getZipCode(), empty($searchReport->getCity()) ? $searchReport->getCommunity() : $searchReport->getCity());
-             $this->saveGusApiSearchResult($companyData, $userIp);
-
-
-7) /var/www/html/src/Company/Application/GusApi/GusApiService.php:69    [M] IncrementInteger
-
---- Original
-+++ New
-@@ @@
-         $key = sprintf('gus_data_%s_%s', $tin, $userIp);
-         return $this->cache->get($key, function (ItemInterface $item) use ($tin, $userIp) {
-             $item->expiresAfter(self::CACHE_EXPIRATION);
--            $searchReport = $this->getGusDataByTin($tin)[0];
-+            $searchReport = $this->getGusDataByTin($tin)[1];
-             $companyData = new CompanyDataDto($tin, $searchReport->getName(), $searchReport->getRegon(), $searchReport->getProvince(), $searchReport->getStreet(), $searchReport->getZipCode(), empty($searchReport->getCity()) ? $searchReport->getCommunity() : $searchReport->getCity());
-             $this->saveGusApiSearchResult($companyData, $userIp);
-             return $companyData;
-
-
-8) /var/www/html/src/Company/Application/GusApi/GusApiService.php:78    [M] Ternary
-
---- Original
-+++ New
-@@ @@
-         return $this->cache->get($key, function (ItemInterface $item) use ($tin, $userIp) {
-             $item->expiresAfter(self::CACHE_EXPIRATION);
-             $searchReport = $this->getGusDataByTin($tin)[0];
--            $companyData = new CompanyDataDto($tin, $searchReport->getName(), $searchReport->getRegon(), $searchReport->getProvince(), $searchReport->getStreet(), $searchReport->getZipCode(), empty($searchReport->getCity()) ? $searchReport->getCommunity() : $searchReport->getCity());
-+            $companyData = new CompanyDataDto($tin, $searchReport->getName(), $searchReport->getRegon(), $searchReport->getProvince(), $searchReport->getStreet(), $searchReport->getZipCode(), empty($searchReport->getCity()) ? $searchReport->getCity() : $searchReport->getCommunity());
-             $this->saveGusApiSearchResult($companyData, $userIp);
-             return $companyData;
-         });
-
-
-9) /var/www/html/src/Company/Application/GusApi/GusApiService.php:81    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-             $item->expiresAfter(self::CACHE_EXPIRATION);
-             $searchReport = $this->getGusDataByTin($tin)[0];
-             $companyData = new CompanyDataDto($tin, $searchReport->getName(), $searchReport->getRegon(), $searchReport->getProvince(), $searchReport->getStreet(), $searchReport->getZipCode(), empty($searchReport->getCity()) ? $searchReport->getCommunity() : $searchReport->getCity());
--            $this->saveGusApiSearchResult($companyData, $userIp);
-+            
-             return $companyData;
-         });
-     }
-
-
-10) /var/www/html/src/Company/Application/GusApi/GusApiService.php:92    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-     {
-         try {
-             $gusApiSearchResult = $this->gusApiSearchResultFactory->createByCompanyDataDto($companyDataDto, $userIp);
--            $this->gusApiSearchResultRepository->save($gusApiSearchResult);
-+            
-         } catch (\Throwable $exception) {
-             $this->logger->error('Error while saving gusApiSearchResult.', ['exception' => $exception]);
-         }
-     }
- }
-
-
-11) /var/www/html/src/Company/Application/GusApi/GusApiService.php:94    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-             $gusApiSearchResult = $this->gusApiSearchResultFactory->createByCompanyDataDto($companyDataDto, $userIp);
-             $this->gusApiSearchResultRepository->save($gusApiSearchResult);
-         } catch (\Throwable $exception) {
--            $this->logger->error('Error while saving gusApiSearchResult.', ['exception' => $exception]);
-+            
-         }
-     }
- }
-
-
-12) /var/www/html/src/Company/Application/GusApi/GusApiService.php:96    [M] ArrayItemRemoval
+10) /var/www/html/src/Company/Application/GusApi/GusApiService.php:98    [M] ArrayItemRemoval
 
 --- Original
 +++ New
@@ -342,632 +151,221 @@ Not Covered mutants:
  }
 
 
-13) /var/www/html/src/Company/Domain/Company.php:84    [M] Coalesce
+11) /var/www/html/src/Company/Ui/GusCompanyDataController.php:44    [M] Foreach_
 
 --- Original
 +++ New
 @@ @@
-     private ?string $companyEmail = null;
-     public function __toString(): string
-     {
--        return $this->name ?? '';
-+        return '' ?? $this->name;
-     }
-     public function getId(): ?Uuid
-     {
+         $violations = $this->validator->validate($gusDataRequest);
+         if (count($violations) > 0) {
+             $errorMessages = [];
+-            foreach ($violations as $violation) {
++            foreach ([] as $violation) {
+                 $errorMessages[] = $violation->getMessage();
+             }
+             return new JsonResponse(['errors' => $errorMessages], Response::HTTP_UNPROCESSABLE_ENTITY);
 
 
-14) /var/www/html/src/Company/Domain/Company.php:171    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         $this->regon = $regon;
-         return $this;
-     }
--    public function getProvince(): ?string
-+    protected function getProvince(): ?string
-     {
-         return $this->province;
-     }
-
-
-15) /var/www/html/src/Company/Domain/Company.php:176    [M] PublicVisibility
+12) /var/www/html/src/Company/Ui/GusCompanyDataController.php:47    [M] ArrayItemRemoval
 
 --- Original
 +++ New
 @@ @@
-     {
-         return $this->province;
-     }
--    public function setProvince(?string $province): self
-+    protected function setProvince(?string $province): self
-     {
-         $this->province = $province;
-         return $this;
-
-
-16) /var/www/html/src/Company/Domain/Company.php:183    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-         $this->province = $province;
-         return $this;
-     }
--    public function getPhoneNumber(): ?string
-+    protected function getPhoneNumber(): ?string
-     {
-         return $this->phoneNumber;
-     }
-
-
-17) /var/www/html/src/Company/Domain/Company.php:188    [M] PublicVisibility
-
---- Original
-+++ New
-@@ @@
-     {
-         return $this->phoneNumber;
-     }
--    public function setPhoneNumber(?string $companyPhoneNumber): self
-+    protected function setPhoneNumber(?string $companyPhoneNumber): self
-     {
-         $this->phoneNumber = $companyPhoneNumber;
-         return $this;
-
-
-18) /var/www/html/src/Company/Domain/GusApiSearchResult.php:59    [M] Coalesce
-
---- Original
-+++ New
-@@ @@
-     }
-     public function __toString(): string
-     {
--        return $this->name ?? '';
-+        return '' ?? $this->name;
-     }
-     public function getId(): ?Uuid
-     {
-
-
-19) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:27    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
- {
-     public function __construct(private readonly GusApiSearchResultRepositoryInterface $gusApiSearchResultRepository, private readonly CommandManagerInterface $commandManager, private readonly EntityManagerInterface $entityManager)
-     {
--        parent::__construct();
-+        
-     }
-     protected function execute(InputInterface $input, OutputInterface $output): int
-     {
-
-
-20) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:32    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-     }
-     protected function execute(InputInterface $input, OutputInterface $output): int
-     {
--        $this->commandManager->initialize($input, $output);
-+        
-         $this->commandManager->info('Start removing old GUS API search data.');
-         $gusData = $this->gusApiSearchResultRepository->findAllCreatedAfter(new \DateTimeImmutable('-3 month'));
-         $progressBar = $this->commandManager->generateProgressBar($output);
-
-
-21) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:33    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-     protected function execute(InputInterface $input, OutputInterface $output): int
-     {
-         $this->commandManager->initialize($input, $output);
--        $this->commandManager->info('Start removing old GUS API search data.');
-+        
-         $gusData = $this->gusApiSearchResultRepository->findAllCreatedAfter(new \DateTimeImmutable('-3 month'));
-         $progressBar = $this->commandManager->generateProgressBar($output);
-         $progressBar->start(count($gusData));
-
-
-22) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:38    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-         $this->commandManager->info('Start removing old GUS API search data.');
-         $gusData = $this->gusApiSearchResultRepository->findAllCreatedAfter(new \DateTimeImmutable('-3 month'));
-         $progressBar = $this->commandManager->generateProgressBar($output);
--        $progressBar->start(count($gusData));
-+        
+             foreach ($violations as $violation) {
+                 $errorMessages[] = $violation->getMessage();
+             }
+-            return new JsonResponse(['errors' => $errorMessages], Response::HTTP_UNPROCESSABLE_ENTITY);
++            return new JsonResponse([], Response::HTTP_UNPROCESSABLE_ENTITY);
+         }
          try {
-             $i = 0;
-             foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
+             $companyDataDto = $this->gusDataProvider->getCompanyDataByTin($gusDataRequest->tin, $request->getClientIp());
 
 
-23) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:41    [M] DecrementInteger
-
---- Original
-+++ New
-@@ @@
-         $progressBar = $this->commandManager->generateProgressBar($output);
-         $progressBar->start(count($gusData));
-         try {
--            $i = 0;
-+            $i = -1;
-             foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
-                 $this->entityManager->remove($gusApiSearchResult);
-                 if (0 === ++$i % 20) {
-
-
-24) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:42    [M] Foreach_
+13) /var/www/html/src/Kernel/CommandManager/CommandManager.php:35    [M] MethodCallRemoval
 
 --- Original
 +++ New
 @@ @@
-         $progressBar->start(count($gusData));
-         try {
-             $i = 0;
--            foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
-+            foreach ([] as $gusApiSearchResult) {
-                 $this->entityManager->remove($gusApiSearchResult);
-                 if (0 === ++$i % 20) {
-                     $this->entityManager->flush();
+         if (null === $this->io) {
+             throw new \LogicException('SymfonyStyle is not initialized. Call initialize() method first.');
+         }
+-        $this->io->info($info);
++        
+         $this->logger->info($info);
+         return $this;
+     }
 
 
-25) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:43    [M] MethodCallRemoval
+14) /var/www/html/src/Kernel/CommandManager/CommandManager.php:47    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         if (null === $this->io) {
+             throw new \LogicException('SymfonyStyle is not initialized. Call initialize() method first.');
+         }
+-        $this->io->error($error);
++        
+         $this->logger->error($error);
+         return $this;
+     }
+
+
+15) /var/www/html/src/Kernel/CommandManager/CommandManager.php:59    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         if (null === $this->io) {
+             throw new \LogicException('SymfonyStyle is not initialized. Call initialize() method first.');
+         }
+-        $this->io->success($success);
++        
+         $this->logger->info($success);
+         return $this;
+     }
+
+
+16) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:47    [M] NullSafeMethodCall
 
 --- Original
 +++ New
 @@ @@
          try {
-             $i = 0;
-             foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
--                $this->entityManager->remove($gusApiSearchResult);
-+                
-                 if (0 === ++$i % 20) {
-                     $this->entityManager->flush();
-                 }
+             $user = $this->security->getUser();
+             if (null === $entity->getCreatedBy()) {
+-                $entity->setCreatedBy($user?->getUserIdentifier());
++                $entity->setCreatedBy($user->getUserIdentifier());
+             }
+             $entity->setUpdatedBy($user?->getUserIdentifier());
+         } catch (\Throwable $exception) {
 
 
-26) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] DecrementInteger
+17) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:50    [M] NullSafeMethodCall
 
 --- Original
 +++ New
 @@ @@
-             $i = 0;
-             foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
-                 $this->entityManager->remove($gusApiSearchResult);
--                if (0 === ++$i % 20) {
-+                if (-1 === ++$i % 20) {
-                     $this->entityManager->flush();
-                 }
+             if (null === $entity->getCreatedBy()) {
+                 $entity->setCreatedBy($user?->getUserIdentifier());
              }
+-            $entity->setUpdatedBy($user?->getUserIdentifier());
++            $entity->setUpdatedBy($user->getUserIdentifier());
+         } catch (\Throwable $exception) {
+             $this->logger->error('Setting user data for resource failed.', ['exception' => $exception, 'class' => TimestampableSubscriber::class]);
+         }
 
 
-27) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] Increment
+18) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:50    [M] MethodCallRemoval
 
 --- Original
 +++ New
 @@ @@
-             $i = 0;
-             foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
-                 $this->entityManager->remove($gusApiSearchResult);
--                if (0 === ++$i % 20) {
-+                if (0 === --$i % 20) {
-                     $this->entityManager->flush();
-                 }
+             if (null === $entity->getCreatedBy()) {
+                 $entity->setCreatedBy($user?->getUserIdentifier());
              }
-
-
-28) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] DecrementInteger
-
---- Original
-+++ New
-@@ @@
-             $i = 0;
-             foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
-                 $this->entityManager->remove($gusApiSearchResult);
--                if (0 === ++$i % 20) {
-+                if (0 === ++$i % 19) {
-                     $this->entityManager->flush();
-                 }
-             }
-
-
-29) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] IncrementInteger
-
---- Original
-+++ New
-@@ @@
-             $i = 0;
-             foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
-                 $this->entityManager->remove($gusApiSearchResult);
--                if (0 === ++$i % 20) {
-+                if (0 === ++$i % 21) {
-                     $this->entityManager->flush();
-                 }
-             }
-
-
-30) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] Modulus
-
---- Original
-+++ New
-@@ @@
-             $i = 0;
-             foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
-                 $this->entityManager->remove($gusApiSearchResult);
--                if (0 === ++$i % 20) {
-+                if (0 === ++$i * 20) {
-                     $this->entityManager->flush();
-                 }
-             }
-
-
-31) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:44    [M] Identical
-
---- Original
-+++ New
-@@ @@
-             $i = 0;
-             foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
-                 $this->entityManager->remove($gusApiSearchResult);
--                if (0 === ++$i % 20) {
-+                if (0 !== ++$i % 20) {
-                     $this->entityManager->flush();
-                 }
-             }
-
-
-32) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:45    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-             foreach ($progressBar->iterate($gusData) as $gusApiSearchResult) {
-                 $this->entityManager->remove($gusApiSearchResult);
-                 if (0 === ++$i % 20) {
--                    $this->entityManager->flush();
-+                    
-                 }
-             }
-             $this->entityManager->flush();
-
-
-33) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:48    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-                     $this->entityManager->flush();
-                 }
-             }
--            $this->entityManager->flush();
+-            $entity->setUpdatedBy($user?->getUserIdentifier());
 +            
-         } catch (\Exception $exception) {
-             $this->commandManager->error(sprintf('Error on removing old GUS API search data [%s]', $exception->getMessage()));
-             return Command::FAILURE;
-
-
-34) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:50    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-             }
-             $this->entityManager->flush();
-         } catch (\Exception $exception) {
--            $this->commandManager->error(sprintf('Error on removing old GUS API search data [%s]', $exception->getMessage()));
-+            
-             return Command::FAILURE;
+         } catch (\Throwable $exception) {
+             $this->logger->error('Setting user data for resource failed.', ['exception' => $exception, 'class' => TimestampableSubscriber::class]);
          }
-         $this->commandManager->success('Old GUS API search data has been removed.');
 
 
-35) /var/www/html/src/Company/Ui/Command/RemoveOldGusApiSearchDataCommand.php:55    [M] MethodCallRemoval
+19) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:68    [M] InstanceOf_
 
 --- Original
 +++ New
 @@ @@
-             $this->commandManager->error(sprintf('Error on removing old GUS API search data [%s]', $exception->getMessage()));
-             return Command::FAILURE;
+     public function preUpdate(LifecycleEventArgs $args): void
+     {
+         $entity = $args->getObject();
+-        if (!$entity instanceof TimestampableResourceInterface) {
++        if (!true) {
+             return;
          }
--        $this->commandManager->success('Old GUS API search data has been removed.');
-+        
-         return Command::SUCCESS;
-     }
- }
+         $entity->setUpdatedAt($this->getDateTimeNow());
 
 
-36) /var/www/html/src/Company/Ui/CompanyCrudController.php:50    [M] NullSafeMethodCall
+20) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:76    [M] NullSafeMethodCall
 
 --- Original
 +++ New
 @@ @@
-     }
-     public function new(AdminContext $context): KeyValueStore|Response
-     {
--        $companyId = $this->getUser()?->getCompanyId();
-+        $companyId = $this->getUser()->getCompanyId();
-         if (null !== $companyId) {
-             $company = $this->companyRepository->getCompanyById($companyId);
-             if (null !== $company) {
-
-
-37) /var/www/html/src/Company/Ui/CompanyCrudController.php:52    [M] NotIdentical
-
---- Original
-+++ New
-@@ @@
-     public function new(AdminContext $context): KeyValueStore|Response
-     {
-         $companyId = $this->getUser()?->getCompanyId();
--        if (null !== $companyId) {
-+        if (null === $companyId) {
-             $company = $this->companyRepository->getCompanyById($companyId);
-             if (null !== $company) {
-                 /** @phpstan-ignore-next-line */
-
-
-38) /var/www/html/src/Company/Ui/CompanyCrudController.php:54    [M] NotIdentical
-
---- Original
-+++ New
-@@ @@
-         $companyId = $this->getUser()?->getCompanyId();
-         if (null !== $companyId) {
-             $company = $this->companyRepository->getCompanyById($companyId);
--            if (null !== $company) {
-+            if (null === $company) {
-                 /** @phpstan-ignore-next-line */
-                 $editUrl = $this->container->get(AdminUrlGenerator::class)->setController(__CLASS__)->setAction('edit')->setEntityId($companyId)->generateUrl();
-                 return new RedirectResponse($editUrl);
-
-
-39) /var/www/html/src/Company/Ui/CompanyCrudController.php:62    [M] NewObject
-
---- Original
-+++ New
-@@ @@
-             if (null !== $company) {
-                 /** @phpstan-ignore-next-line */
-                 $editUrl = $this->container->get(AdminUrlGenerator::class)->setController(__CLASS__)->setAction('edit')->setEntityId($companyId)->generateUrl();
--                return new RedirectResponse($editUrl);
-+                new RedirectResponse($editUrl);
-+                return null;
-             }
+         $entity->setUpdatedAt($this->getDateTimeNow());
+         try {
+             $user = $this->security->getUser();
+-            $entity->setUpdatedBy($user?->getUserIdentifier());
++            $entity->setUpdatedBy($user->getUserIdentifier());
+         } catch (\Throwable $exception) {
+             $this->logger->error('Setting user data for resource failed.', ['exception' => $exception, 'class' => TimestampableSubscriber::class]);
          }
-         return parent::new($context);
 
 
-40) /var/www/html/src/Company/Ui/CompanyCrudController.php:74    [M] InstanceOf_
+21) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:94    [M] InstanceOf_
 
 --- Original
 +++ New
 @@ @@
-      */
-     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+     public function preRemove(LifecycleEventArgs $args): void
      {
--        if ($entityInstance instanceof Company) {
-+        if (true) {
-             $user = $this->getUser();
-             if (null !== $user && null === $user->getCompanyId()) {
-                 if (null === $entityInstance->getId()) {
-
-
-41) /var/www/html/src/Company/Ui/CompanyCrudController.php:74    [M] InstanceOf_
-
---- Original
-+++ New
-@@ @@
-      */
-     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
-     {
--        if ($entityInstance instanceof Company) {
-+        if (false) {
-             $user = $this->getUser();
-             if (null !== $user && null === $user->getCompanyId()) {
-                 if (null === $entityInstance->getId()) {
-
-
-42) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] NotIdentical
-
---- Original
-+++ New
-@@ @@
-     {
-         if ($entityInstance instanceof Company) {
-             $user = $this->getUser();
--            if (null !== $user && null === $user->getCompanyId()) {
-+            if (null === $user && null === $user->getCompanyId()) {
-                 if (null === $entityInstance->getId()) {
-                     $entityInstance->setId(Uuid::v4());
-                 }
-
-
-43) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] Identical
-
---- Original
-+++ New
-@@ @@
-     {
-         if ($entityInstance instanceof Company) {
-             $user = $this->getUser();
--            if (null !== $user && null === $user->getCompanyId()) {
-+            if (null !== $user && null !== $user->getCompanyId()) {
-                 if (null === $entityInstance->getId()) {
-                     $entityInstance->setId(Uuid::v4());
-                 }
-
-
-44) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] LogicalAnd
-
---- Original
-+++ New
-@@ @@
-     {
-         if ($entityInstance instanceof Company) {
-             $user = $this->getUser();
--            if (null !== $user && null === $user->getCompanyId()) {
-+            if (null !== $user || null === $user->getCompanyId()) {
-                 if (null === $entityInstance->getId()) {
-                     $entityInstance->setId(Uuid::v4());
-                 }
-
-
-45) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] LogicalAndAllSubExprNegation
-
---- Original
-+++ New
-@@ @@
-     {
-         if ($entityInstance instanceof Company) {
-             $user = $this->getUser();
--            if (null !== $user && null === $user->getCompanyId()) {
-+            if (!(null !== $user) && !(null === $user->getCompanyId())) {
-                 if (null === $entityInstance->getId()) {
-                     $entityInstance->setId(Uuid::v4());
-                 }
-
-
-46) /var/www/html/src/Company/Ui/CompanyCrudController.php:77    [M] LogicalAndNegation
-
---- Original
-+++ New
-@@ @@
-     {
-         if ($entityInstance instanceof Company) {
-             $user = $this->getUser();
--            if (null !== $user && null === $user->getCompanyId()) {
-+            if (!(null !== $user && null === $user->getCompanyId())) {
-                 if (null === $entityInstance->getId()) {
-                     $entityInstance->setId(Uuid::v4());
-                 }
-
-
-47) /var/www/html/src/Company/Ui/CompanyCrudController.php:78    [M] Identical
-
---- Original
-+++ New
-@@ @@
-         if ($entityInstance instanceof Company) {
-             $user = $this->getUser();
-             if (null !== $user && null === $user->getCompanyId()) {
--                if (null === $entityInstance->getId()) {
-+                if (null !== $entityInstance->getId()) {
-                     $entityInstance->setId(Uuid::v4());
-                 }
-                 $user->setCompanyId($entityInstance->getId());
-
-
-48) /var/www/html/src/Company/Ui/CompanyCrudController.php:79    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-             $user = $this->getUser();
-             if (null !== $user && null === $user->getCompanyId()) {
-                 if (null === $entityInstance->getId()) {
--                    $entityInstance->setId(Uuid::v4());
-+                    
-                 }
-                 $user->setCompanyId($entityInstance->getId());
-             }
-
-
-49) /var/www/html/src/Company/Ui/CompanyCrudController.php:82    [M] MethodCallRemoval
-
---- Original
-+++ New
-@@ @@
-                 if (null === $entityInstance->getId()) {
-                     $entityInstance->setId(Uuid::v4());
-                 }
--                $user->setCompanyId($entityInstance->getId());
-+                
-             }
+         $entity = $args->getObject();
+-        if (!$entity instanceof TimestampableResourceInterface) {
++        if (!true) {
+             return;
          }
-         parent::persistEntity($entityManager, $entityInstance);
+         $entity->setDeletedAt($this->getDateTimeNow());
 
 
-50) /var/www/html/src/Company/Ui/CompanyCrudController.php:85    [M] MethodCallRemoval
+22) /var/www/html/src/Kernel/EventSubscriber/TimestampableSubscriber.php:102    [M] NullSafeMethodCall
 
 --- Original
 +++ New
 @@ @@
-                 $user->setCompanyId($entityInstance->getId());
-             }
+         $entity->setDeletedAt($this->getDateTimeNow());
+         try {
+             $user = $this->security->getUser();
+-            $entity->setDeletedBy($user?->getUserIdentifier());
++            $entity->setDeletedBy($user->getUserIdentifier());
+         } catch (\Throwable $exception) {
+             $this->logger->error('Setting user data for resource failed.', ['exception' => $exception, 'class' => TimestampableSubscriber::class]);
          }
--        parent::persistEntity($entityManager, $entityInstance);
-+        
-     }
-     public function configureFields(string $pageName): iterable
+
+
+23) /var/www/html/src/Kernel/Translator/TranslatorUXController.php:34    [M] Identical
+
+--- Original
++++ New
+@@ @@
+     #[Route('/trans/{key}', name: 'app_translation', methods: ['GET'])]
+     public function trans(string $key): JsonResponse
      {
+-        $cacheKey = self::ALL === $key ? 'translations_all' : sprintf('translations_%s', $key);
++        $cacheKey = self::ALL !== $key ? 'translations_all' : sprintf('translations_%s', $key);
+         $translation = $this->cache->get($cacheKey, function (ItemInterface $item) use ($key) {
+             $item->expiresAfter($this->cacheTTl);
+             /** @phpstan-ignore-next-line */
 
 
-51) /var/www/html/src/Company/Ui/CompanyCrudController.php:104    [M] TrueValue
-
---- Original
-+++ New
-@@ @@
-         yield FormField::addTab('dashboard.panel.mainInformation');
-         yield FormField::addFieldset('dashboard.panel.mainInformation')->addCssFiles('build/dashboard-main.css')->addCssClass('real-estate-form-panel')->setIcon('fa fa-house')->collapsible();
-         yield TextField::new('uuid')->setLabel('uuid')->onlyOnForms()->setPermission(RoleEnum::SUPER_ADMIN->value)->setDisabled();
--        yield TextField::new('taxIdentificationNumber')->setLabel('dashboard.company.taxIdentificationNumber.title')->setHelp('dashboard.company.taxIdentificationNumber.help')->setRequired(true)->setMaxLength(10)->onlyOnForms();
-+        yield TextField::new('taxIdentificationNumber')->setLabel('dashboard.company.taxIdentificationNumber.title')->setHelp('dashboard.company.taxIdentificationNumber.help')->setRequired(false)->setMaxLength(10)->onlyOnForms();
-         yield TextField::new('name')->setLabel('dashboard.company.name.title')->setRequired(true);
-         yield TextField::new('province')->setLabel('dashboard.company.province.title')->onlyOnForms();
-         yield TextField::new('city')->setLabel('dashboard.company.city.title')->onlyOnForms();
-
-
-52) /var/www/html/src/Company/Ui/CompanyCrudController.php:105    [M] DecrementInteger
+24) /var/www/html/src/Kernel/Translator/TranslatorUXController.php:34    [M] Ternary
 
 --- Original
 +++ New
 @@ @@
-         yield FormField::addTab('dashboard.panel.mainInformation');
-         yield FormField::addFieldset('dashboard.panel.mainInformation')->addCssFiles('build/dashboard-main.css')->addCssClass('real-estate-form-panel')->setIcon('fa fa-house')->collapsible();
-         yield TextField::new('uuid')->setLabel('uuid')->onlyOnForms()->setPermission(RoleEnum::SUPER_ADMIN->value)->setDisabled();
--        yield TextField::new('taxIdentificationNumber')->setLabel('dashboard.company.taxIdentificationNumber.title')->setHelp('dashboard.company.taxIdentificationNumber.help')->setRequired(true)->setMaxLength(10)->onlyOnForms();
-+        yield TextField::new('taxIdentificationNumber')->setLabel('dashboard.company.taxIdentificationNumber.title')->setHelp('dashboard.company.taxIdentificationNumber.help')->setRequired(true)->setMaxLength(9)->onlyOnForms();
-         yield TextField::new('name')->setLabel('dashboard.company.name.title')->setRequired(true);
-         yield TextField::new('province')->setLabel('dashboard.company.province.title')->onlyOnForms();
-         yield TextField::new('city')->setLabel('dashboard.company.city.title')->onlyOnForms();
+     #[Route('/trans/{key}', name: 'app_translation', methods: ['GET'])]
+     public function trans(string $key): JsonResponse
+     {
+-        $cacheKey = self::ALL === $key ? 'translations_all' : sprintf('translations_%s', $key);
++        $cacheKey = self::ALL === $key ? sprintf('translations_%s', $key) : 'translations_all';
+         $translation = $this->cache->get($cacheKey, function (ItemInterface $item) use ($key) {
+             $item->expiresAfter($this->cacheTTl);
+             /** @phpstan-ignore-next-line */
 
 
-53) /var/www/html/src/Company/Ui/CompanyCrudController.php:105    [M] IncrementInteger
+Timed Out mutants:
+==================
 
---- Original
-+++ New
-@@ @@
-         yield FormField::addTab('dashboard.panel.mainInformation');
-         yield FormField::addFieldset('dashboard.panel.mainInformation')->addCssFiles('build/dashboard-main.css')->addCssClass('real-estate-form-panel')->setIcon('fa fa-house')->collapsible();
-         yield TextField::new('uuid')->setLabel('uuid')->onlyOnForms()->setPermission(RoleEnum::SUPER_ADMIN->value)->setDisabled();
--        yield TextField::new('taxIdentificationNumber')->setLabel('dashboard.company.taxIdentificationNumber.title')->setHelp('dashboard.company.taxIdentificationNumber.help')->setRequired(true)->setMaxLength(10)->onlyOnForms();
-+        yield TextField::new('taxIdentificationNumber')->setLabel('dashboard.company.taxIdentificationNumber.title')->setHelp('dashboard.company.taxIdentificationNumber.help')->setRequired(true)->setMaxLength(11)->onlyOnForms();
-         yield TextField::new('name')->setLabel('dashboard.company.name.title')->setRequired(true);
-         yield TextField::new('province')->setLabel('dashboard.company.province.title')->onlyOnForms();
-         yield TextField::new('city')->setLabel('dashboard.company.city.title')->onlyOnForms();
+Skipped mutants:
+================
 
-
-54) /var/www/html/src/Company/Ui/CompanyCrudController.php:109    [M] TrueValue
-
---- Original
-+++ New
-@@ @@
-         yield FormField::addFieldset('dashboard.panel.mainInformation')->addCssFiles('build/dashboard-main.css')->addCssClass('real-estate-form-panel')->setIcon('fa fa-house')->collapsible();
-         yield TextField::new('uuid')->setLabel('uuid')->onlyOnForms()->setPermission(RoleEnum::SUPER_ADMIN->value)->setDisabled();
-         yield TextField::new('taxIdentificationNumber')->setLabel('dashboard.company.taxIdentificationNumber.title')->setHelp('dashboard.company.taxIdentificationNumber.help')->setRequired(true)->setMaxLength(10)->onlyOnForms();
--        yield TextField::new('name')->setLabel('dashboard.company.name.title')->setRequired(true);
-+        yield TextField::new('name')->setLabel('dashboard.company.name.title')->setRequired(false);
-         yield TextField::new('province')->setLabel('dashboard.company.province.title')->onlyOnForms();
-         yield TextField::new('city')->setLabel('dashboard.company.city.title')->onlyOnForms();
-         yield TextField::new('zipCode')->setLabel('dashboard.company.zipCode.title')->onlyOnForms();
+Not Covered mutants:
+====================

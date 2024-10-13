@@ -6,7 +6,7 @@
         ],
         "excludes": [
             "Dashboard/", // TODO temporary not implemented
-            "Kernel/",
+            "Kernel/EventListener/", // TODO temporary not implemented
             "Tournament/", // TODO temporary not implemented
         ],
     },
